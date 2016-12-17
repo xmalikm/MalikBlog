@@ -12,7 +12,6 @@
 	<!-- Latest compiled JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	{{-- Custom bootstrap css --}}
-	<link href="css/bootstrap_custom.css" rel="stylesheet" type="text/css">
 
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 
@@ -20,15 +19,20 @@
 <body>
 
 	<div class="container container-header">
-	<div class="row">
-		<div class="col-md-12">
+
 		{{-- logo --}}
 		<img src="http://placehold.it/100x50" class="logo">
+
+		 {{--   <form class="navbar-form navbar-left">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search">
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+      </form> --}}
 		{{-- social media links --}}
 		<a href="" class = "pull-right"><img src="images/icons/facebook-icon.png" class = "social-media"></a>
 		<a href="" class = "pull-right"><img src="images/icons/google-icon.png" class = "social-media"></a>
-		</div>
-</div>
+		<span class="pull-right">FORM - treba spravit</span>
 	</div>
 
 	@include('partials/_headerNavbar')
