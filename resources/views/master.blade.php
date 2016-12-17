@@ -46,7 +46,7 @@
 		<div class="row">
 			
 			{{-- lava strana kontajnera --}}
-			<div class="col-lg-8 col-md-8 col-sm-8" style="box-shadow: 0px 9px 41px -5px black;">
+			<div class="col-lg-7 col-md-8 col-sm-8 col-left" style="box-shadow: 0px 9px 41px -5px black;">
 
 				{{-- nadpis a kategorie --}}
 			    <div class="row row-title-categories">
@@ -78,7 +78,7 @@
 
 			</div>{{-- lava strana kontajnera --}}
 
-			<div class="col-lg-4 col-md-4 col-sm-4" style="box-shadow: 0px 9px 41px -5px black;">
+			<div class="col-lg-4 col-lg-offset-1 col-md-4 col-sm-4 col-right" style="box-shadow: 0px 9px 41px -5px black;">
 				<div class="panel panel-info panel-tabulka">
       				<div class="panel-heading panel-tabulka-heading">
       					Najčítanejšie blogy
