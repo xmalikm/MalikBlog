@@ -2,14 +2,41 @@ body {
 	/*font-size: 1.8em;*/
 }
 
+.container-header {
+	line-height: 99px;
+}
+
+.container-body {
+	background-color: white;
+    box-shadow: 0px 9px 41px -5px black;
+}
+
 .social-media {
 	/*width: 50px;*/
 	width: 70%;
 	padding: 5px;
 }
 
-.logo {
-	margin-bottom: 0;
+.navbar-inverse {
+	border-radius: 0;
+}
+
+.row-title-categories {
+	line-height: 80px;
+	border-bottom: 2px solid black;
+	margin-bottom: 30px;
+}
+
+.categories a {
+	border-radius: 0;
+}
+
+.panel-tabulka {
+	border-radius: 0;
+}
+
+.panel-tabulka-heading {
+	border-radius: 0;
 }
 
 @media only screen and (min-width: 600px) {

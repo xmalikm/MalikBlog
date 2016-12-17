@@ -1,5 +1,5 @@
 {{-- Hlavne menu --}}
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-inverse">
     
     {{-- pridany margin po stranach --}}
     <div class="container">
@@ -15,8 +15,8 @@
 
             </button>
 
-            <a class="navbar-brand navbar-active" href="#">Najnovšie</a>
-            <a class="navbar-brand" href="#">Najčítajenšie</a>
+            <a class="navbar-brand navbar-active" href="#">Všetky blogy</a>
+            
 
         </div>
 
@@ -24,30 +24,37 @@
     <div class="collapse navbar-collapse" id="navbar-collapse-responsive">
 
     <ul class="nav navbar-nav">
+        <li ><a href="#">Blogery</a></li>
 
-        <li ><a href="#">Najviac komentované</a></li>
-        <li><a href="#">Blogery</a></li>
+        {{-- neprihlaseny --}}
+        <li><a href="#">Chcem písať blog</a></li>
+
+        {{-- prihlaseny --}}
+        {{-- <li class="imp"><a href="#">Nový blog</a></li> --}}
 
     </ul>
    
+    {{-- prava strana navbaru --}}
     <ul class="nav navbar-nav navbar-right">
+        
+        {{-- prihlaseny --}}
+        {{-- <li class="imp"><a href="#">Moje blogy</a></li> --}}
 
-        <li class="imp"><a href="#">Chcem písať blog</a></li>
-        <li class="dropdown">
+        {{-- neprihlaseny --}}
+        <li class="imp"><a href="#">Prihlásiť sa</a></li>
 
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Prihlásiť sa<span class="caret"></span></a>
+        {{-- Ak je user prihlaseny!!!!!!!!!!!! --}}
+     {{--   <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Martin Malik<span class="caret"></span></a>
 
             <ul class="dropdown-menu">
 
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="#">Separated link</a></li>
+                <li><a href="#">Odhlásiť sa</a></li>
+                <li><a href="#">Este nieco ine</a></li>
 
             </ul>
 
-        </li>
+        </li> --}}
 
       </ul>
 
