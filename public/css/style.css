@@ -6,10 +6,12 @@ body {
 	line-height: 99px;
 }
 
-.container-body {
+
+
+/*.container-body {
 	background-color: white;
     box-shadow: 0px 9px 41px -5px black;
-}
+}*/
 
 .social-media {
 	/*width: 50px;*/
@@ -19,6 +21,7 @@ body {
 
 .navbar-inverse {
 	border-radius: 0;
+	margin-bottom: 0;
 }
 
 .row-title-categories {
@@ -39,8 +42,20 @@ body {
 	border-radius: 0;
 }
 
-@media only screen and (min-width: 600px) {
-	body {
+@media only screen and (min-width: 1200px) {
+	.container-body {
+	padding: 20px 15%;
+}
+}
 
-	}
+@media only screen and (min-width: 992px) {
+	.container-body {
+	padding: 20px 10%;
+}
+}
+
+@media only screen and (min-width: 768px) {
+	.container-body {
+	padding: 20px 5%;
+}
 }

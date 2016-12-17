@@ -37,47 +37,48 @@
 
 	@include('partials/_headerNavbar')
 
-	{{-- hlavny kontajner --}}
-	<div class="container container-body" >
+	
 	{{-- @include('partials/_blog-categories') --}}
 
-	<div class="row">
+	{{-- hlavny kontajner --}}	
+	<div class="container-fluid container-body">
 
-		{{-- lava strana kontajnera --}}
-		<div class="col-md-8" >
+		<div class="row">
+			
+			{{-- lava strana kontajnera --}}
+			<div class="col-lg-8 col-md-8 col-sm-8" style="box-shadow: 0px 9px 41px -5px black;">
 
-			{{-- nadpis a kategorie --}}
-		    <div class="row row-title-categories">
-        
-        		{{-- nadpis --}}
-        		<div class="col-lg-6 col-md-12">
-        			<h2 class="text-center" style="">Vsetky blogy na portali</h2>
-        		</div>
+				{{-- nadpis a kategorie --}}
+			    <div class="row row-title-categories">
+	        
+	        		{{-- nadpis --}}
+	        		<div class="col-lg-6 col-md-12">
+	        			<h2 class="text-center" style="">Vsetky blogy na portali</h2>
+	        		</div>
 
-				{{-- kategorie --}}
-        		<div class="col-lg-6 col-md-12 text-center categories">
+					{{-- kategorie --}}
+	        		<div class="col-lg-6 col-md-12 text-center categories">
 
-	        		<div class="btn-group ">
+		        		<div class="btn-group ">
 
-	            		<a href="#" class="btn btn-info">Najnovšie</a>
-	  					<a href="#" class="btn btn-info">Najčítanejšie</a>
-	  					<a href="#" class="btn btn-info">Najviac komentované</a>
+		            		<a href="#" class="btn btn-info">Najnovšie</a>
+		  					<a href="#" class="btn btn-info">Najčítanejšie</a>
+		  					<a href="#" class="btn btn-info">Najviac komentované</a>
 
-					</div>{{-- btn-group --}}
+						</div>{{-- btn-group --}}
 
-        		</div>{{-- kategorie --}}
+	        		</div>{{-- kategorie --}}
 
-    		</div>{{-- nadpis a kategorie --}}
-				<h1>Vsetky blogy</h1>
-				<h1>Vsetky blogy</h1>
-				<h1>Vsetky blogy</h1>
-				<h1>Vsetky blogy</h1>
-				<h1>Vsetky blogy</h1>
-			</div>
+	    		</div>{{-- nadpis a kategorie --}}
+	    		<h1>Vsetky blogy</h1>
+					<h1>Vsetky blogy</h1>
+					<h1>Vsetky blogy</h1>
+					<h1>Vsetky blogy</h1>
+					<h1>Vsetky blogy</h1>
 
-			{{-- sidebary --}}
-			<div class="col-md-4" >
-				
+			</div>{{-- lava strana kontajnera --}}
+
+			<div class="col-lg-4 col-md-4 col-sm-4" style="box-shadow: 0px 9px 41px -5px black;">
 				<div class="panel panel-info panel-tabulka">
       				<div class="panel-heading panel-tabulka-heading">
       					Najčítanejšie blogy
@@ -94,12 +95,11 @@
 
       				</div>
     			</div>
-
 			</div>
 
-		</div>	{{-- bootstrap row --}}
+		</div>
 
-	</div>	{{-- hlavny kontajner --}}
+	</div>{{-- hlavny kontajner --}}
 
 </body>
 </html>
