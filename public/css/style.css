@@ -1,0 +1,15 @@
+.social-media {
+	/*width: 50px;*/
+	width: 70%;
+	padding: 5px;
+}
+
+.logo {
+	margin-bottom: 0;
+}
+
+@media only screen and (min-width: 600px) {
+	body {
+
+	}
+}
