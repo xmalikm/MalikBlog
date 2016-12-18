@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Mockery\Generator\factory;
 
 class DatabaseSeeder extends Seeder
 {
@@ -11,6 +12,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+        factory(App\User::class, 5)->create();
+        factory(App\Post::class, 5)->create();
+        factory(App\Tag::class, 5)->create();
     }
 }

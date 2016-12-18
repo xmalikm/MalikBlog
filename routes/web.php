@@ -11,6 +11,14 @@
 |
 */
 
-Route::get('/', function () {
-    return view('master');
+Route::get('/', 'PostController@index');
+
+Route::get('categories', function(){
+	return view('categories');
 });
+
+Route::get('blogers', function(){
+	return view('blogers');
+});
+
+Route::resource('post', 'PostController');

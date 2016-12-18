@@ -1,17 +1,8 @@
-body {
-	/*font-size: 1.8em;*/
+html, body {
+	font-size: 1em;
+	font-family: Arial, Times, serif;
+	box-sizing: border-box;
 }
-
-.container-header {
-	line-height: 99px;
-}
-
-
-
-/*.container-body {
-	background-color: white;
-    box-shadow: 0px 9px 41px -5px black;
-}*/
 
 .social-media {
 	/*width: 50px;*/
@@ -24,39 +15,100 @@ body {
 	margin-bottom: 0;
 }
 
-.row-title-categories {
+nav.navbar.navbar-inverse {
+	background-color: #293a48;
+	border-color: #293a48;
+}
+
+nav.navbar.navbar-inverse a{
+	font-weight: 700;
+	color: white;
+}
+
+/*navbar taby hover !!!!!!!!!!!!!!!!!!!!!!!!!!*/
+/*nav.navbar.navbar-inverse a:hover{
+	color: red;	
+	border-bottom: 2px solid red;
+}*/
+
+.container-header {
+	line-height: 99px;
+}
+
+.container-body {
+	margin: 0;
+	/*background-color: red;*/
+}
+
+.row-title {
 	line-height: 80px;
 	border-bottom: 2px solid black;
 	margin-bottom: 30px;
 }
 
-.categories a {
+/*buttony - sortovanie*/
+.btn-group .btn-sort {
+	font-size: 1.2em;
+}
+
+/*buttony sortovanie - linky*/
+.sort a {
 	border-radius: 0;
 }
 
-.panel-tabulka {
+/*pravy sidebar*/
+.panel-table {
+	border-radius: 0;
+	margin-top: 30px;
+}
+
+.panel-table-heading {
 	border-radius: 0;
 }
 
-.panel-tabulka-heading {
-	border-radius: 0;
+.article-excerpt {
+	border-bottom: 1px solid grey;
 }
 
-
-@media only screen and (min-width: 1200px) {
-	.container-body {
-	padding: 20px 15%;
-}
+.article-excerpt:not(:nth-child(2)) {
+	margin-top: 30px;
 }
 
-@media only screen and (min-width: 992px) {
-	.container-body {
-	padding: 20px 10%;
-}
+/*kategorie blogov*/
+.categories {
+	
 }
 
 @media only screen and (min-width: 768px) {
 	.container-body {
-	padding: 20px 5%;
+		margin: 10px 0;
+	}
+	/*pravy sidebar*/
+	.panel-table {
+		border-radius: 0;
+		margin-top: 0;
+	}
 }
+
+@media only screen and (min-width: 992px) {
+	.container-body {
+		margin: 10px 2%;
+	}
+	/*pravy sidebar*/
+	.panel-table {
+		border-radius: 0;
+		margin-top: 0;
+	}
+}
+
+@media only screen and (min-width: 1200px) {
+	.container-body {
+		margin: 10px 10%;
+	}
+
+	/*pravy sidebar*/
+	.panel-table {
+		border-radius: 0;
+		margin-top: 0;
+	}
 }

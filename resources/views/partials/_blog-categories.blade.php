@@ -1,32 +1,24 @@
-{{-- <div class="container container-categories">
+{{-- prvy row: kategorie + pravy sidebar --}}
+        <div class="row ">
 
-    <nav class="navbar navbar-default">
+            {{-- kategorie --}}
+            <div class="col-lg-6 col-md-12 text-left sort">
 
-        <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#">Page 1</a></li>
-            <li><a href="#">Page 2</a></li>
-            <li><a href="#">Page 3</a></li>
-        </ul>
+                <div class="btn-group ">
 
-    </nav>
+                    <a href="#" class="btn btn-info btn-sort">Najnovšie</a>
+                    <a href="#" class="btn btn-info btn-sort">Najčítanejšie</a>
+                    <a href="#" class="btn btn-info btn-sort">Najviac komentované</a>
 
-</div> --}}
+                </div>{{-- btn-group --}}
 
-<div class="container">
-    
-    <div class="row row-title-categories">
-        
-        <div class="col-md-8 col-xs-12">
-        <h1 class="text-center" style="">Vsetky blogy na portali</h1>
-        </div>
+            </div>{{-- kategorie --}}
 
-        <div class="col-md-4 col-xs-12 text-right">
-            <span>Najnovšie</span>
-            <span>Najčítanejšie</span>
-            <span>Najviac komentované</span>
-        </div>
+            {{-- pravy side bar --}}
+            <div class="col-lg-6">
 
-    </div>
+                <button class="btn btn-info btn-lg pull-right">ddddd</button>
 
-</div>
+            </div>{{-- pravy side bar --}}
+
+        </div>{{-- prvy riadok: kategorie + pravy sidebar --}}
