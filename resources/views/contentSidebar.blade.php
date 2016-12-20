@@ -26,7 +26,7 @@
 		<div class="col-lg-4  col-md-4 col-sm-4">
 
 			{{-- sidebary --}}
-			@include('partials/_sidebars')
+			@yield('sidebars')
 
 		</div>{{-- prava strana -> sidebary --}}
 

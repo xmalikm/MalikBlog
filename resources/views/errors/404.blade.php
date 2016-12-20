@@ -1,0 +1,1 @@
+<h1>404 Chyba stranky</h1>

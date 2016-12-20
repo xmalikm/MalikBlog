@@ -33,7 +33,7 @@
 			{{-- foto clanku --}}
 			<div class="col-lg-4">
 
-				<img src="http://placehold.it/200x140" class="logo" style="">
+				<img src="http://placehold.it/200x140" class="logo">
 							
 			</div>{{-- foto clanku --}}
 
@@ -41,14 +41,14 @@
 			<div class="col-lg-8">
 						
 				{{-- meno autora --}}
-				<p><a href="">Martin Malik</a></p>
+				<p>Martin Malik</p>
 
 				{{-- nadpis clanku --}}
 				<h3 style="margin-top: 0;"><a href="{{ url('post', $post->id) }}">{{ $post->title }}</a></h3>
 
 				{{-- uryvok --}}
 				<p>
-					{{ substr($post->text, 0, 140) }} <br><a href="{{ url('post', $post->id) }}">viac&raquo;</a>
+					{{ $post->text_teaser }} <br><a href="{{ url('post', $post->id) }}">viac&raquo;</a>
 					</p>
 
 				{{-- doplnkove info --}}
@@ -59,5 +59,32 @@
    		</div>{{-- ukazka clanku --}}
 
 	@endforeach
+
+@endsection
+
+@section('sidebars')
+
+	{{-- najcitanejsie blogy --}}
+	<div class="panel panel-info panel-table">
+
+		<div class="panel-heading panel-table-heading">
+
+	    	Najčítanejšie blogy
+
+	    </div>
+
+	    <div class="panel-body">
+	      					
+			<ol>
+				<li>nazov clanku</li>
+				<li>nazov clanku</li>
+				<li>nazov clanku</li>
+				<li>nazov clanku</li>
+				<li>nazov clanku</li>
+			</ol>
+
+	    </div>{{-- panel body --}}
+
+	</div>{{-- najcitanejsie blogy --}}
 
 @endsection

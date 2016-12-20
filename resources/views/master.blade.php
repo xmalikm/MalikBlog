@@ -30,9 +30,10 @@
         <button type="submit" class="btn btn-default">Submit</button>
       </form> --}}
 		{{-- social media links --}}
-		<a href="" class = "pull-right"><img src="images/icons/facebook-icon.png" class = "social-media"></a>
-		<a href="" class = "pull-right"><img src="images/icons/google-icon.png" class = "social-media"></a>
+		<a href="" class = "pull-right"><img src="{{ asset('images/icons/facebook-icon.png') }}" class = "social-media"></a>
+		<a href="" class = "pull-right"><img src="{{ asset('images/icons/google-icon.png') }}" class = "social-media"></a>
 		<span class="pull-right">FORM - treba spravit</span>
+		<h2>breadcrumbs | vsade davat obrazky</h2>
 	</div>
 
 	@include('partials/_headerNavbar')

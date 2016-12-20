@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class PostController extends Controller
 {
@@ -14,6 +15,7 @@ class PostController extends Controller
      */
     public function index()
     {
+        
         $posts = Post::all();
         return view('posts.index')
             ->with([
@@ -51,7 +53,9 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        $post = Post::findOrFail($id);
+        return view('posts.show')
+            ->with('post', $post);
     }
 
     /**

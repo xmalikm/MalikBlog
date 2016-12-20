@@ -15,7 +15,7 @@
 
             </button>
 
-            <a class="navbar-brand navbar-active" href="#">Všetky blogy</a>
+            <a class="navbar-brand navbar-active" href="{{ url('post') }}">Všetky blogy</a>
             
 
         </div>
@@ -42,7 +42,7 @@
         {{-- <li class="imp"><a href="#">Moje blogy</a></li> --}}
 
         {{-- neprihlaseny --}}
-        <li class="imp"><a href="#">Prihlásiť sa</a></li>
+        <li class="imp"><a href="{{ url('login') }}">Prihlásiť sa</a></li>
 
         {{-- Ak je user prihlaseny!!!!!!!!!!!! --}}
      {{--   <li class="dropdown">
