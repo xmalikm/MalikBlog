@@ -19,7 +19,7 @@
 
    		<div class="col-lg-12 col-md-12">
 
-       		<h2 class="text-left" style="">Vsetky blogy na portali</h2>
+       		<h2 class="text-left" style=""> {!! $title or "Vsetky blogy na portali" !!}</h2>
 
        	</div>
 
@@ -33,7 +33,7 @@
 			{{-- foto clanku --}}
 			<div class="col-lg-4">
 
-				<img src="http://placehold.it/200x140" class="logo">
+				<img src="http://placehold.it/200x160" class="logo">
 							
 			</div>{{-- foto clanku --}}
 
@@ -41,7 +41,9 @@
 			<div class="col-lg-8">
 						
 				{{-- meno autora --}}
-				<p>Martin Malik</p>
+				<p>
+					<a href=" stranka autora {{-- {{ url('user', $post->user->id) }} --}} " style="color: #797979;"> {{ $post->user->name}} </a>
+				</p>
 
 				{{-- nadpis clanku --}}
 				<h3 style="margin-top: 0;"><a href="{{ url('post', $post->id) }}">{{ $post->title }}</a></h3>

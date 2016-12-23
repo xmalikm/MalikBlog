@@ -12,18 +12,16 @@
 */
 
 Route::get('/', 'PostController@index');
-
 Route::get('categories', function(){
 	return view('categories');
 });
-
 Route::get('blogers', function(){
 	return view('blogers');
 });
-
 Route::resource('post', 'PostController');
+Route::get('tag/{id}', 'TagController@show');
+Route::get('user/{id}', 'UserController@show');
+
 Auth::routes();
-
-
 
 Route::get('/home', 'HomeController@index');
