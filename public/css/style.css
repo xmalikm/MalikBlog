@@ -74,7 +74,17 @@ nav.navbar.navbar-inverse a{
 	margin-top: 30px;
 }
 
+.profile-boxes {
+	padding-left: 10px;
+	padding-right: 10px;
+	font-size: 0.85em;
+}
 
+li.dropdown .dropdown-menu-login {
+	background-color: #333333;
+    box-shadow: 1px 2px 2px black;
+    border-radius: 0;
+}
 
 @media only screen and (min-width: 768px) {
 	.container-body {

@@ -27,35 +27,38 @@
         <li ><a href="#">Kategórie</a></li>
         <li ><a href="#">Blogery</a></li>
 
-        {{-- neprihlaseny --}}
-        <li><a href="#">Chcem písať blog</a></li>
-
         {{-- prihlaseny --}}
-        {{-- <li class="imp"><a href="#">Nový blog</a></li> --}}
+        @if( Auth::check() )
+            <li class="imp"><a href="#">Nový blog</a></li>
+        @else
+            {{-- neprihlaseny --}}
+            <li><a href="#">Chcem písať blog</a></li>
+        @endif
 
     </ul>
    
     {{-- prava strana navbaru --}}
     <ul class="nav navbar-nav navbar-right">
-        
-        {{-- prihlaseny --}}
-        {{-- <li class="imp"><a href="#">Moje blogy</a></li> --}}
-
-        {{-- neprihlaseny --}}
-        <li class="imp"><a href="{{ url('login') }}">Prihlásiť sa</a></li>
 
         {{-- Ak je user prihlaseny!!!!!!!!!!!! --}}
-     {{--   <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Martin Malik<span class="caret"></span></a>
+        @if( Auth::check() )
+            <li class="imp"><a href="#">Moje blogy</a></li>
 
-            <ul class="dropdown-menu">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> {{ Auth::user()->name }} <span class="caret"></span></a>
 
-                <li><a href="#">Odhlásiť sa</a></li>
-                <li><a href="#">Este nieco ine</a></li>
+                <ul class="dropdown-menu dropdown-menu-login">
 
-            </ul>
+                    <li><a href="{{ url('profile') }}">Ukaz profil</a></li>
+                    <li><a href="{{ url('logout') }}" >Odhlásiť sa</a></li>
 
-        </li> --}}
+                </ul>
+
+            </li>
+        @else
+            {{-- neprihlaseny --}}
+            <li class="imp"><a href="{{ url('login') }}">Prihlásiť sa</a></li>
+        @endif
 
       </ul>
 

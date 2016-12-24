@@ -25,7 +25,7 @@
 
 	</div>{{-- nadpis --}}
 
-	@foreach($posts as $post)
+	@foreach($user->posts as $post)
 
 		{{-- ukazka clanku --}}
 		<div class="row article-excerpt">
@@ -40,11 +40,6 @@
 			{{-- info k clanku --}}
 			<div class="col-lg-8">
 						
-				{{-- meno autora --}}
-				<p>
-					<a href=" {{ url('user', $post->user->id) }} " style="color: #797979;"> {{ $post->user->name}} </a>
-				</p>
-
 				{{-- nadpis clanku --}}
 				<h3 style="margin-top: 0;"><a href="{{ url('post', $post->id) }}">{{ $post->title }}</a></h3>
 
@@ -66,6 +61,7 @@
 
 @section('sidebars')
 
-	@include('partials/sideBars/_mostViewed')
+	<button class="btn btn-info btn-block">Pridaj medzi oblubenych</button><br>
+	@include('partials/sidebars/_profileInfo')
 
 @endsection

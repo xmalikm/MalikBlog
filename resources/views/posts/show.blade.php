@@ -9,7 +9,7 @@
 
    		<div class="col-lg-12 col-md-12">
 
-       		<h3 class="text-left"><b>Blog</b> Meno Priezvisko</h3>
+       		<h3 class="text-left" >Blog <b style="color: red;">{{ $post->user->name }} </b> </h3>
 
        	</div>
 
@@ -44,7 +44,7 @@
 
 		<div class="col-lg-12 col-md-12">
 
-			<small>Datum | Autor</small>
+			<small> {{ $post->createdAt }} | {{ $post->user->name }}</small>
 
 		</div>
 
@@ -85,6 +85,7 @@
 		
 		<div class="col-lg-12 col-md-12">
 			
+			<h1>karma clanku</h1>	
 			@include('partials/_tags')
 
 		</div>

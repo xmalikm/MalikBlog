@@ -20,8 +20,9 @@ Route::get('blogers', function(){
 });
 Route::resource('post', 'PostController');
 Route::get('tag/{id}', 'TagController@show');
-Route::get('user/{id}', 'UserController@show');
+Route::get('user/{id}', 'UserController@showUserProfile');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
+Route::get('logout', 'Auth\LogoutController@logout');
+Route::get('profile', 'UserController@showMyProfile');
