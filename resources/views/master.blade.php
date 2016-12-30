@@ -15,6 +15,9 @@
 
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
 
+	{{-- umoznoje pridavanie css suborov na konkretne stranky --}}
+	@yield('stylesheets')
+
 </head>
 <body>
 
@@ -33,7 +36,7 @@
 		<a href="" class = "pull-right"><img src="{{ asset('images/icons/facebook-icon.png') }}" class = "social-media"></a>
 		<a href="" class = "pull-right"><img src="{{ asset('images/icons/google-icon.png') }}" class = "social-media"></a>
 		<span class="pull-right">FORM - treba spravit</span>
-		<h2>breadcrumbs | vsade davat obrazky</h2>
+		<h2>breadcrumbs | VYMAZAT STARU FOTKU USERA!!!!</h2>
 	</div>
 
 	@include('partials/_headerNavbar')
@@ -47,5 +50,7 @@
 
 	</div>{{-- hlavny kontajner --}}
 
+	{{-- umoznoje pridavanie js suborov na konkretne stranky --}}
+	@yield('scripts')
 </body>
 </html>

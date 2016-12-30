@@ -26,3 +26,4 @@ Auth::routes();
 
 Route::get('logout', 'Auth\LogoutController@logout');
 Route::get('profile', 'UserController@showMyProfile');
+Route::post('profile', 'UserController@updateProfilePhoto');

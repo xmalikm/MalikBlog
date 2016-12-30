@@ -14,11 +14,55 @@
 
 @section('content')
 
-	{{-- profilova fotka --}}
-	<img src="http://placehold.it/200x250" class="profile-photo">
+	{{-- avatar + informacie --}}
+	<div class="row">
+		<div class="col-md-12">
 
+			{{-- profilova fotka --}}
+			<img src=" {{asset('uploads/profile_photos/'. $user->profile_photo)}}" style="width: 200px; height: 250px; border: 1px solid grey;">
+			<h2>{{ $user->name }}</h2>
+			<h3>{{ $user->email }}</h3>
+			<h3><b>O autorovi</b>{{ $user->about }}</h3>
 
-	
+			{{ Form::open(['url' => 'profile', 'method' => 'post', 'enctype' => 'multipart/form-data']) }}
+
+				{{ Form::file('profile_photo') }}
+				{{ Form::submit('uloz', ['class' => 'btn btn-primary']) }}
+
+			{{ Form::close() }}
+
+			<a href="edit udajov" class="btn btn-primary">Zmena udajov</a>
+			<a href="edit hesla" class="btn btn-primary">Zmena hesla</a>
+
+		</div>
+	</div>{{-- avatar + informacie --}}	
+
+	<div class="row">
+		<div class="col-md-4">
+			<div class="well">
+				<span class="profile-statistics">
+					Pocet clankov
+				</span><br>
+				<b>	10 </b>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="well">
+				<span class="profile-statistics">
+					Priemerna citatelnost
+				</span><br>
+				<b>	10 </b>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="well">
+				<span class="profile-statistics">
+					Priemerna diskutovanost
+				</span><br>
+				<b>	10 </b>
+			</div>
+		</div>
+	</div>
 
 @endsection
 

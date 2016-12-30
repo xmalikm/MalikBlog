@@ -31,7 +31,7 @@
 
 		<div class="col-lg-12 col-md-12">
 
-			<img src="http://placehold.it/500x300" class="logo">
+			<img src=" {{asset('uploads/blog_photos/'. $post->blog_photo)}}" style="width: 500; height: 300px; border: 1px solid grey;">
 
 		</div>
 

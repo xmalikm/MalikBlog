@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\BlogCreated;
 use App\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Image;
 
 class PostController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    // vylistovanie vsetkych clankov defaultne zoradenych podla datumu
     public function index()
     {
         
@@ -24,33 +23,32 @@ class PostController extends Controller
                 ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    // formular pre vytvorenie noveho clanku
     public function create()
     {
-        //
+        return view('posts.create')
+            ->with('title', 'Nový blog');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    // samotne vytvorenie(logika) noveho clanku
     public function store(Request $request)
     {
-        //
+        $post = Auth::user()->posts()->create($request->only(['title', 'text', 'category']));
+        // event(new BlogCreated($post, $request));
+
+        if($request->hasFile('blog_photo')) {
+            $blog_foto = $request->file('blog_photo');
+            $file_name = time() . '.' . $blog_foto->getClientOriginalExtension();
+            Image::make($blog_foto)->resize(500, 300)->save( public_path('uploads/blog_photos/' . $file_name));
+            $post->blog_photo = $file_name;
+            $post->save();
+        }
+        
+        // zvysit pocet blogov usera
+
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    // zobrazenie konkretneho clanku
     public function show($id)
     {
         $post = Post::findOrFail($id);

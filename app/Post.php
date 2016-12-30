@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
+	protected $fillable = [
+		'title', 'text', 'slug', 'category', 'blog_photo'
+	];
+
 	public function getCreatedAtAttribute($value) {
 		$c = Carbon::parse($value);
         return $c->format('Y-m-d') .' o '. $c->format('H:i');

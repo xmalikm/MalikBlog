@@ -1,10 +1,16 @@
 @extends('contentSidebar')
 
+@section('stylesheets')
+    
+    <link rel="stylesheet" type="text/css" href="css/parsley.css">
+
+@endsection
+
 @section('content')
     <h1>Login page</h1>
 
     {{-- prihlasovaci formular --}}
-    {{ Form::open(['url' => url('/login'), 'method' => 'post']) }}
+    {{ Form::open(['url' => url('/login'), 'method' => 'post', 'data-parsley-validate' => '']) }}
 
         <div class="row">
 
@@ -25,7 +31,8 @@
                     {!! Form::email('email', old('email'), [
                         'placeholder' => 'E-mail',
                         'autofocus' => true,
-                        'class' => 'form-control'
+                        'class' => 'form-control',
+                        'required' => ''
                     ]) !!}
                     {{-- error message -> ak nie je zadany mail --}}
                     @if ($errors->has('email'))
@@ -44,7 +51,8 @@
                     
                     {!! Form::password('password', [
                             'placeholder' => 'heslo',
-                            'class' => 'form-control'
+                            'class' => 'form-control',
+                            'required' => ''
                     ]) !!}
                     
                     {{-- error message -> ak nie je zadane heslo --}}
@@ -106,5 +114,11 @@
         </div>{{-- panel body --}}
 
     </div>{{-- najcitanejsie blogy --}}
+
+@endsection
+
+@section('scripts')
+
+    <link rel="stylesheet" type="text/css" href="js/parsley.min.js">
 
 @endsection
