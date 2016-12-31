@@ -2,7 +2,7 @@
 
 @section('stylesheets')
 
-
+	<link rel="stylesheet" href="{{ asset('css/selectize-css/normalize.css') }}">
 
 @endsection
 
@@ -36,7 +36,14 @@
 @endsection
 
 @section('scripts')
-
 	
-
+	<script src=" {{ asset('js/selectize-js/index.js') }}"></script>
+	<script src=" {{ asset('js/selectize-js/selectize.js') }}"></script>
+	<script>
+		$('#input-tags').selectize({
+			persist: false,
+			createOnBlur: true,
+			create: true
+		});
+	</script>
 @endsection

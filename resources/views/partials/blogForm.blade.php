@@ -3,7 +3,7 @@
 {{-- nazov blogu --}}
 <div class="form-group">
 	{!! Form::label('text', 'Nadpis') !!}
-	{!! Form::text('title', null, [
+	{!! Form::text('title', "Nadpis clanku", [
 		'class' => 'form-control',
 		'placeholder' => 'Nadpis článku'
 	]) !!}
@@ -12,7 +12,7 @@
 {{-- obsah clanku --}}
 <div class="form-group">
 	{!! Form::label('text', 'Obsah') !!}
-	{!! Form::textarea('text', null, [
+	{!! Form::textarea('text', "Ahoj ako sa mas", [
 		'class' => 'form-control',
 		'placeholder' => 'Obsah článku',
 		'rows' => 16
@@ -42,9 +42,10 @@
 
 {{-- tagy blogu --}}
 <div class="form-group">
-	{!! Form::text('tags', null, [
-		'placeholder' => 'Tagy',
-		'class' => 'form-control'
+	{!! Form::label('text', 'Tagy') !!}
+	{!! Form::text('tags', "ako sa mas", [
+		'placeholder' => 'Zadaj slová alebo výrazy',
+		'id' => 'input-tags'
 	]) !!}
 </div>{{-- tagy blogu --}}
 
