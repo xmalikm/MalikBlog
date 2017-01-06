@@ -5,6 +5,7 @@
 	<title> @yield('title') | Malik blog </title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<!-- jQuery library -->
@@ -36,7 +37,7 @@
 		<a href="" class = "pull-right"><img src="{{ asset('images/icons/facebook-icon.png') }}" class = "social-media"></a>
 		<a href="" class = "pull-right"><img src="{{ asset('images/icons/google-icon.png') }}" class = "social-media"></a>
 		<span class="pull-right">FORM - treba spravit</span>
-		<h2>breadcrumbs | VYMAZAT STARU FOTKU USERA!!!!</h2>
+		<h2>VYMAZAT STARU FOTKU USERA!!!!</h2>
 	</div>
 
 	@include('partials/_headerNavbar')

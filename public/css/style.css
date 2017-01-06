@@ -48,7 +48,7 @@ nav.navbar.navbar-inverse a{
 
 /*buttony - sortovanie*/
 .btn-group .btn-sort {
-	font-size: 1.2em;
+	font-size: 1.0em;
 }
 
 /*buttony sortovanie - linky*/
@@ -84,6 +84,13 @@ li.dropdown .dropdown-menu-login {
 	background-color: #333333;
     box-shadow: 1px 2px 2px black;
     border-radius: 0;
+}
+
+
+/* presunut do parsley.css */
+.parsley-required, .parsley-type {
+	color: red;
+	font-weight: 800;
 }
 
 @media only screen and (min-width: 768px) {

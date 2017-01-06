@@ -24,7 +24,7 @@
     <div class="collapse navbar-collapse" id="navbar-collapse-responsive">
 
     <ul class="nav navbar-nav">
-        <li ><a href="#">Kategórie</a></li>
+        <li ><a href=" {{ url('category') }} ">Kategórie</a></li>
         <li ><a href="#">Blogery</a></li>
 
         {{-- prihlaseny --}}

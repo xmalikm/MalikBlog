@@ -1,30 +1,25 @@
-@extends('contentSidebar')
+@extends('contentWithSidebars')
 
 {{-- title stranky --}}
 @section('title', $title)
+
+{{-- breadcrumbs --}}
+@section('breadcrumbs')
+	{!! Breadcrumbs::render('allPosts') !!}
+@endsection
 
 {{-- buttony na zoradovanie clankov --}}
 @section('sortingButtons')
 
 	{{-- prvy row: kategorie + pravy sidebar --}}
-	@include('partials/_blogCategories')
+	@include('partials/_sorting')
 
 @endsection
 
+@section('pageTitle', 'Všetky články')
 
 @section('content')
-
-	{{-- nadpis treba potom presunut !!!!!!!!!!!!!!!!!!!!!!!--}}
-   	<div class="row row-title">
-
-   		<div class="col-lg-12 col-md-12">
-
-       		<h2 class="text-left" style=""> {!! $title or "Vsetky blogy na portali" !!}</h2>
-
-       	</div>
-
-	</div>{{-- nadpis --}}
-
+	
 	@foreach($posts as $post)
 
 		{{-- ukazka clanku --}}
@@ -42,6 +37,7 @@
 			<div class="col-lg-8">
 						
 				{{-- meno autora --}}
+				<b>Kategoria: </b> {{ $post->category->name }} <br>
 				<p>
 					<a href=" {{ url('user', $post->user->id) }} " style="color: #797979;"> {{ $post->user->name}} </a>
 				</p>

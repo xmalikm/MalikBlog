@@ -1,5 +1,7 @@
 @extends('contentWithoutSidebars')
 
+@section('title', $title)
+
 @section('stylesheets')
 
     <link rel="stylesheet" href="{{ asset('css/parsley.css') }}">
@@ -9,10 +11,10 @@
 @endsection
 
 @section('breadcrumbs')
-	{!! Breadcrumbs::render('createPost') !!}
+	{!! Breadcrumbs::render('editPost', $post) !!}
 @endsection
 
-@section('pageTitle', 'Nový článok')
+@section('pageTitle', 'Úprava článku')
 
 @section('content')
  	@if(count($errors) >0)
@@ -23,7 +25,7 @@
         </ul>
     @endif
 
-	{!! Form::open(['url' => url('post'), 'method' => 'post', 'enctype' => 'multipart/form-data', 'data-parsley-validate' => '']) !!}
+	{!! Form::model($post, ['url' => url('post', $post->id), 'method' => 'put', 'enctype' => 'multipart/form-data', 'data-parsley-validate' => '']) !!}
 		@include('partials.blogForm')
 	{!! Form::close() !!}
 
@@ -60,5 +62,21 @@
 			createOnBlur: true,
 			create: true
 		});
+
+         function getMessage(){
+            $.ajax({
+               	type:'POST',
+               	url:'/session',
+                headers: {
+				    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				},
+               	data: {
+            		session:'{{$post->id}}',
+               	},
+               success:function(data){
+                  
+               }
+            });
+         }
 	</script>
 @endsection

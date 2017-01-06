@@ -1,40 +1,58 @@
-{{-- formular pre vytvaranie, resp. editaciu blogov --}}
+@if(Session::has('newCatMessage'))
+	<div class="alert alert-success alert-dismissable fade in">
+	    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+	    <strong> {{Session::get('newCatMessage')}} </strong>
+ 	</div>
+ @endif
+
+{{-- kategoria blogu --}}
+<div class="form-group">
+	{!! Form::label('text', 'Kategória') !!}
+	{{-- ak editujem blog -> zobraz kategoriu blogu, ak vytvaram novy blog -> zobraz defaultnu kategoriu --}}
+	{{ Form::select('category_id', $categories, isset($post->category_id) ? $post->category_id : 0, ['class' => 'form-control']) }}
+	{{-- {{Session::forget('postSession')}} --}}
+	{{-- {{Session::forget('previousUrl')}} --}}
+	{{-- {{Session::put('postSession', "ahoooooooooooooooooooooooj")}} --}}
+	@if(Route::currentRouteName() == 'post.edit')
+		<a href="{{ Route('category.create') }}?post={{$post->id}}" class="btn btn-primary" id = "new-category" >Alebo vytvor novu kategoriu</a>
+	@else
+		<a href="{{ Route('category.create') }}" class="btn btn-primary" id = "new-category" >Alebo vytvor novu kategoriu</a>
+	@endif
+	<div id = 'msg'>This message will be replaced using Ajax. 
+         Click the button to replace the message.</div>
+</div>{{-- kategoria blogu --}}
 
 {{-- nazov blogu --}}
 <div class="form-group">
 	{!! Form::label('text', 'Nadpis') !!}
-	{!! Form::text('title', "Nadpis clanku", [
+	{!! Form::text('title', null, [
 		'class' => 'form-control',
-		'placeholder' => 'Nadpis článku'
+		'placeholder' => 'Nadpis článku',
+		'required' => '',
+		'maxlength' => 255
 	]) !!}
 </div>{{-- nazov blogu --}}
 
 {{-- obsah clanku --}}
 <div class="form-group">
 	{!! Form::label('text', 'Obsah') !!}
-	{!! Form::textarea('text', "Ahoj ako sa mas", [
+	{!! Form::textarea('text', null, [
 		'class' => 'form-control',
 		'placeholder' => 'Obsah článku',
-		'rows' => 16
+		'rows' => 16,
+		'required' => ''
 	]) !!}
 </div>{{-- obsah clanku --}}
-
-{{-- kategoria blogu --}}
-<div class="form-group">
-	{!! Form::label('text', 'Kategória') !!}
-	{{ Form::select('category', [
-		"Politika" => "Politika", "Šport" => "Šport", "Ekonomika" => "Ekonomika",
-		"Automoto" => "Automoto", "Cestovanie" => "Cestovanie", "Jedlo" => "Jedlo",
-		"Veda a technika" => "Veda a technika", "Zábava" => "Zábava",
-		"Zaujimavosti" => "Zaujimavosti", "Lifestyle" => "Lifestyle", "Kultúra" => "Kultúra",
-		"Nezaradené" => "Nezaradené"
-	],"politics", ['class' => 'form-control']) }}
-</div>{{-- kategoria blogu --}}
 
 {{-- obrazok blogu --}}
 <div class="form-group">
 	{!! Form::label('text', 'Obrázok') !!}
-	{{-- {{ Form::open(['url' => 'profile', 'method' => 'post', 'enctype' => 'multipart/form-data']) }} --}}
+	<br>
+	{{-- ak prave editujem clanok, zobraz mi akrualnu fotku k clanku --}}
+	@if(Route::currentRouteName() === 'post.edit')
+		{{-- aktualny obrazok clanku --}}
+		<img src=" {{asset('uploads/blog_photos/'. $post->blog_photo)}}" style="width: 200px; height: 250px; border: 1px solid grey;">
+	@endif
 		{{ Form::file('blog_photo') }}
 	{{-- {{ Form::close() }} --}}
 </div>
@@ -43,18 +61,25 @@
 {{-- tagy blogu --}}
 <div class="form-group">
 	{!! Form::label('text', 'Tagy') !!}
-	{!! Form::text('tags', "ako sa mas", [
+	{!! Form::text('tags', isset($tags) ? $tags : null, [
 		'placeholder' => 'Zadaj slová alebo výrazy',
-		'id' => 'input-tags'
+		'id' => 'input-tags',
 	]) !!}
 </div>{{-- tagy blogu --}}
 
 {{-- subbmit button --}}
 <div class="form-group">
-	{!! Form::button('Vytvoriť blog', [
-		'type' => 'submit',
-		'class' => 'btn btn-primary'
-	]) !!}
+	@if(Route::currentRouteName() === 'post.create')
+		{!! Form::button('Vytvor článok', [
+			'type' => 'submit',
+			'class' => 'btn btn-primary'
+		]) !!}
+	@else 
+		{!! Form::button('Uprav článok', [
+			'type' => 'submit',
+			'class' => 'btn btn-primary'
+		]) !!}
+	@endif
 </div>{{-- subbmit button --}}
 
 {{-- button naspat --}}

@@ -1,8 +1,11 @@
-@extends('contentSidebar')
+@extends('contentWithSidebars')
 
+@section('breadcrumbs')
+	{!! Breadcrumbs::render('showPost', $post) !!}
+@endsection
+
+{{-- obsah stranky --}}
 @section('content')
-
-	{{-- obsah stranky --}}
 	
 	{{-- blog --}}
    	<div class="row show-post">
@@ -56,7 +59,10 @@
 	<div class="row">
 
 		<div class="col-lg-12 col-md-12">
-
+			{{-- ak je user vlastnikom clanku, zobraz edit button --}}
+			@can('updatePost', $post)
+				<a href="{{ route('post.edit', $post->id) }}" class="btn btn-default">Uprav blog</a>
+			@endcan
 			<button class="btn btn-primary">Zdielat</button>
 			<button class="btn btn-warning">Zdielat</button>
 
@@ -96,21 +102,6 @@
 
 @section('sidebars')
 
-	{{-- najcitanejsie blogy --}}
-	<div class="panel panel-info panel-table">
-
-		<div class="panel-heading panel-table-heading">
-
-	    	Autor clanku
-
-	    </div>
-
-	    <div class="panel-body">
-	      					
-			Info o autorovi
-
-	    </div>{{-- panel body --}}
-
-	</div>{{-- najcitanejsie blogy --}}
+	@include('partials/sidebars/_profileInfo')
 
 @endsection

@@ -9,12 +9,14 @@
 				<div class="col-lg-12 text-center">
 					
 					{{-- profilova fotka --}}
-					<img src="http://placehold.it/200x200" class="center-block profile-photo">
+					<img src=" {{asset('uploads/profile_photos/'. $user->profile_photo)}}" style="width: 200px; height: 200px; border: 1px solid grey;">
 					
 					{{-- meno --}}
 					<div class="info">
-						
-						<h3> {{ $user->name }} </h3>
+
+						<h3>
+							<a href=" {{ url('user', $post->user->id) }} ">{{ $user->name }}</a>
+						</h3>
 
 					</div>
 
@@ -44,7 +46,7 @@
         				<b>O autorovi</b>
         			</p>
 
-            		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Careret maximam noctesque. Liberae adhibenda impetu probarent misisti animos plerisque incorrupte. Iucunde.</p>
+            		<p>{{ $user->about }}</p>
         			
         		</div>
 
@@ -63,7 +65,7 @@
 						<span class="profile-statistics">
 							Pocet clankov
 						</span><br>
-						<b>	10 </b>
+						<b>	{{ $user->num_of_articles }} </b>
 					</div>
 				
 				</div>

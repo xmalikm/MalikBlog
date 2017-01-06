@@ -1,4 +1,4 @@
-@extends('contentSidebar')
+@extends('contentWithSidebars')
 
 @section('content')
     <h1>Register page</h1>

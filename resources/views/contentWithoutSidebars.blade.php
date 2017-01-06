@@ -8,6 +8,13 @@
 
 @section('mainContent')
 	
+	<div class="row">
+		<div class="col-lg-8 col-md-8">
+			{{-- breadcrumbs --}}
+			<h5>@yield('breadcrumbs')</h5>
+		</div>
+	</div>
+
 	{{-- buttony na zoradovanie clankov --}}
 	@yield('sortingButtons')
 
@@ -15,20 +22,15 @@
 	<div class="row" style="margin-top: 50px;">
 			
 		{{-- lava strana -> posty --}}
-		<div class="col-lg-8 col-md-8 col-sm-8" style="">
+		<div class="col-lg-12 col-md-12 col-sm-12" style="">
 			
-			{{-- treba sem presunut nadpis !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! --}}
+			{{-- nadpis --}}
+			<h1>@yield('pageTitle')</h1>
+
+			{{-- obsah --}}
         	@yield('content')
 
 		</div>{{-- lava strana --}}
-
-		{{-- prava strana -> sidebary --}}
-		<div class="col-lg-4  col-md-4 col-sm-4">
-
-			{{-- sidebary --}}
-			@yield('sidebars')
-
-		</div>{{-- prava strana -> sidebary --}}
 
 	</div>{{-- druhy row: posty + dalsie sidebary --}}
 

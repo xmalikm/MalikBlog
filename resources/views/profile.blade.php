@@ -1,16 +1,19 @@
-@extends('contentSidebar')
+@extends('contentWithSidebars')
 
 {{-- title stranky --}}
 @section('title', $title)
+
+@section('breadcrumbs')
+	{!! Breadcrumbs::render('showUser', $user) !!}
+@endsection
 
 {{-- buttony na zoradovanie clankov --}}
 @section('sortingButtons')
 
 	{{-- prvy row: kategorie + pravy sidebar --}}
-	@include('partials/_blogCategories')
+	@include('partials/_sorting')
 
 @endsection
-
 
 @section('content')
 
