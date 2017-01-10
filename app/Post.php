@@ -11,6 +11,7 @@ class Post extends Model
 		'title', 'text', 'slug', 'category_id', 'blog_photo'
 	];
 
+	// treba sa na to pozriet
 	public function getCreatedAtAttribute($value) {
 		$c = Carbon::parse($value);
         return $c->format('Y-m-d') .' o '. $c->format('H:i');
@@ -33,6 +34,11 @@ class Post extends Model
 		$this->attributes['text'] = ucfirst($value);
 	}
 
+	public function hit() {
+		$this->attributes['unique_views']++;
+		$this->save();
+	}
+
 	public function user() {
 		return $this->belongsTo('App\User');
 	}
@@ -43,6 +49,10 @@ class Post extends Model
 
 	public function tags() {
 		return $this->belongsToMany('App\Tag');
+	}
+
+	public function views() {
+		return $this->hasMany('App\View');
 	}
 
 	public function str_slug($text) {

@@ -24,7 +24,75 @@
     @endif
 
 	{!! Form::open(['url' => url('post'), 'method' => 'post', 'enctype' => 'multipart/form-data', 'data-parsley-validate' => '']) !!}
-		@include('partials.blogForm')
+		{{-- spolocny form --}}
+		{{-- @include('partials.blogForm') --}}
+
+		@if(Session::has('newCatMessage'))
+			<div class="alert alert-success alert-dismissable fade in">
+	    		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+	    		<strong> {{Session::get('newCatMessage')}} </strong>
+ 			</div>
+		@endif
+
+		{{-- kategoria blogu --}}
+		<div class="form-group">
+			{!! Form::label('text', 'Kategória') !!}
+			{{-- ak editujem blog -> zobraz kategoriu blogu, ak vytvaram novy blog -> zobraz defaultnu kategoriu --}}
+			{{ Form::select('category_id', $categories, isset($post->category_id) ? $post->category_id : 0, ['class' => 'form-control']) }}
+				<a href="{{ Route('category.create') }}" class="btn btn-primary" id = "new-category" >Alebo vytvor novu kategoriu</a>
+		</div>{{-- kategoria blogu --}}
+
+		{{-- nazov blogu --}}
+		<div class="form-group">
+			{!! Form::label('text', 'Nadpis') !!}
+			{!! Form::text('title', null, [
+				'class' => 'form-control',
+				'placeholder' => 'Nadpis článku',
+				'required' => '',
+				'maxlength' => 255
+			]) !!}
+		</div>{{-- nazov blogu --}}
+
+		{{-- obsah clanku --}}
+		<div class="form-group">
+			{!! Form::label('text', 'Obsah') !!}
+			{!! Form::textarea('text', null, [
+				'class' => 'form-control',
+				'placeholder' => 'Obsah článku',
+				'rows' => 16,
+				'required' => ''
+			]) !!}
+		</div>{{-- obsah clanku --}}
+
+		{{-- obrazok blogu --}}
+		<div class="form-group">
+			{!! Form::label('text', 'Obrázok') !!}
+			{{ Form::file('blog_photo') }}
+		</div>
+		{{-- obrazok blogu --}}
+
+		{{-- tagy blogu --}}
+		<div class="form-group">
+			{!! Form::label('text', 'Tagy') !!}
+			{!! Form::text('tags', isset($tags) ? $tags : null, [
+				'placeholder' => 'Zadaj slová alebo výrazy',
+				'id' => 'input-tags',
+			]) !!}
+		</div>{{-- tagy blogu --}}
+
+		{{-- subbmit button --}}
+		<div class="form-group">
+			{!! Form::button('Vytvor článok', [
+				'type' => 'submit',
+				'class' => 'btn btn-primary'
+			]) !!}
+		</div>{{-- subbmit button --}}
+
+		{{-- button naspat --}}
+		<span>
+			<a href="{{ URL::previous() }}">Naspäť</a>
+		</span>{{-- button naspat --}}
+
 	{!! Form::close() !!}
 
 @endsection

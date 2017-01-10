@@ -63,7 +63,7 @@
 
 					<div class="well">
 						<span class="profile-statistics">
-							Pocet clankov
+							Počet článkov
 						</span><br>
 						<b>	{{ $user->num_of_articles }} </b>
 					</div>
@@ -74,9 +74,9 @@
 
 					<div class="well">
 						<span class="profile-statistics">
-							Priemerna citanost
+							Priemerná čítateľnosť
 						</span><br>
-						<b>	10 </b>
+						<b>	{{ $user->getAvgReadability() }} </b>
 					</div>
 				
 				</div>
@@ -85,7 +85,7 @@
 
 					<div class="well">
 						<span class="profile-statistics">
-							Priemerna diskutovanost
+							Priemerná diskutovanosť
 						</span><br>
 						<b>	10 </b>
 					</div>

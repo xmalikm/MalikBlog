@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Events\PostViewed;
 use App\Http\Requests\SavePostRequest;
 use App\Post;
 use App\Tag;
+use App\Traits\CategoryTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Image;
-use App\Traits\CategoryTrait;
 
 class PostController extends Controller
 {
@@ -83,6 +84,8 @@ class PostController extends Controller
     {
         $this->post = Post::findOrFail($id);
         $user = $this->post->user;
+        event(new PostViewed($this->post->id));
+
         return view('posts.show')
             ->with('post', $this->post) // dany clanok
             ->with('user', $user);  // info o autorovi clanku, ktore je zobrazene po boku

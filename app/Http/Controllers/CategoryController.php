@@ -14,12 +14,6 @@ class CategoryController extends Controller
 
     use CategoryTrait;
 
-    // public function createSession() {
-    //     Session::put('postSession', $_POST['session']);
-    //     \Illuminate\Support\Facades\Log::debug('je to: '. Session::get('postSession'));
-    //     return response()->json(null, 200);
-    // }
-
     /**
      * Display a listing of the resource.
      *
@@ -69,19 +63,19 @@ class CategoryController extends Controller
             // Session::forget('postSession');
         }
         
-        Category::create($request->all());
+        $category = Category::create($request->all());
         $categories = $this->getCatsArray();
 
         if(isset($post)) {
             // tento redirect spravit cez session !!!!!!!!!!!!!!!
             return redirect(Session::get('previousUrl'))
-                ->with('newCatMessage', 'Nová kategória bola pridaná!')
+                ->with('newCatMessage', 'Nová kategória bola pridaná! Môžete si ju vybrať!')
                 ->with('post', $post)
                 ->with('categories', $categories);
         }
         else {
             return redirect(Session::get('previousUrl'))
-                ->with('newCatMessage', 'Nová kategória bola pridaná!')
+                ->with('newCatMessage', 'Nová kategória bola pridaná! Môžete si ju vybrať!')
                 ->with('categories', $categories);
         }
             

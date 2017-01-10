@@ -10,16 +10,11 @@
 	{!! Form::label('text', 'Kategória') !!}
 	{{-- ak editujem blog -> zobraz kategoriu blogu, ak vytvaram novy blog -> zobraz defaultnu kategoriu --}}
 	{{ Form::select('category_id', $categories, isset($post->category_id) ? $post->category_id : 0, ['class' => 'form-control']) }}
-	{{-- {{Session::forget('postSession')}} --}}
-	{{-- {{Session::forget('previousUrl')}} --}}
-	{{-- {{Session::put('postSession', "ahoooooooooooooooooooooooj")}} --}}
 	@if(Route::currentRouteName() == 'post.edit')
 		<a href="{{ Route('category.create') }}?post={{$post->id}}" class="btn btn-primary" id = "new-category" >Alebo vytvor novu kategoriu</a>
 	@else
 		<a href="{{ Route('category.create') }}" class="btn btn-primary" id = "new-category" >Alebo vytvor novu kategoriu</a>
 	@endif
-	<div id = 'msg'>This message will be replaced using Ajax. 
-         Click the button to replace the message.</div>
 </div>{{-- kategoria blogu --}}
 
 {{-- nazov blogu --}}

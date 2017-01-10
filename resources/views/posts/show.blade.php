@@ -42,12 +42,12 @@
 
 	<br> {{-- treba nahradit css-kom!!!!!!!!!!!!!!!!!!!!!!!!!!!!! --}}
 
-	{{-- datum autor --}}
+	{{-- datum autor citanost--}}
 	<div class="row">
 
 		<div class="col-lg-12 col-md-12">
 
-			<small> {{ $post->createdAt }} | {{ $post->user->name }}</small>
+			<small> {{ $post->created_at }} | {{ $post->user->name }} | Prečítané: {{ $post->unique_views }} </small>
 
 		</div>
 

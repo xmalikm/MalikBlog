@@ -13,8 +13,8 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'App\Events\BlogCreated' => [
-            'App\Listeners\HandleTagsAndPicture',
+        'App\Events\PostViewed' => [
+            'App\Listeners\HandlePostViews',
         ],
     ];
 
