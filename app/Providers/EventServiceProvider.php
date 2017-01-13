@@ -16,6 +16,10 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\PostViewed' => [
             'App\Listeners\HandlePostViews',
         ],
+        'App\Events\PostCreated' => [
+            'App\Listeners\IncrNumOfPosts',
+        ],
+
     ];
 
     /**

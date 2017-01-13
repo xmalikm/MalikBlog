@@ -37,6 +37,7 @@
 		<a href="" class = "pull-right"><img src="{{ asset('images/icons/google-icon.png') }}" class = "social-media"></a>
 		<span class="pull-right">FORM - treba spravit</span>
 		<h2>VYMAZAT STARU FOTKU USERA!!!!</h2>
+		<h2>osetrovat metody!!!!</h2>
 	</div>
 
 	@include('partials/_headerNavbar')
