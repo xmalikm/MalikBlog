@@ -12,20 +12,36 @@
 */
 
 Route::get('/', 'PostController@index');
-Route::resource('category', 'CategoryController', ['except' => ['update', 'edit']]);
-// Route::get('categories', 'CategoryController@index');
-// Route::get('categories/new', 'CategoryController@store');
-Route::get('blogers', function(){
-	return view('blogers');
-});
+// resource operacie pre category model
+Route::resource('category', 'CategoryController', ['only' => ['store', 'show', 'destroy']]);
+// resource operacie pre user model
 Route::resource('post', 'PostController');
+
+// zoradenie clankov:
+// podla najnovsieho
+Route::get('newest-posts', 'PostController@getNewest');
+// podla najviac zobrazeneho
+Route::get('most-viewed', 'PostController@getMostViewed');
+
+// vylistovanie vsetkych clankov s danym tagom
 Route::get('tag/{id}', 'TagController@show');
-Route::get('user/{id}', 'UserController@showUserProfile');
 
 Auth::routes();
-
 Route::get('logout', 'Auth\LogoutController@logout');
+
+// zoradenie blogerov podla daneho kriteria
+Route::post('sort-blogers', 'UserController@sortBlogers');
+// vylistovanie vsetkych blogerov
+Route::get('blogers', 'UserController@index');
+// ukaz profil uzivatela s id-com 'id'
+Route::get('user/{id}', 'UserController@showUserProfile');
+// ukaz profil prihlaseneho uzivatela
 Route::get('profile', 'UserController@show');
+// vsetky posty prihlaseneho uzivatela
+Route::get('profile/my-posts', 'UserController@myPosts');
+// formular pre upravu profilu
 Route::get('profile/edit', ['as' => 'profile.edit', 'uses' => 'UserController@edit']);
+// uprava profilu prihlaseneho uzivatela
 Route::put('profile', 'UserController@update');
-// Route::post('/session', 'CategoryController@createSession');
+// vymazanie profilu prihlaseneho uzivatela
+Route::delete('profile', 'UserController@destroy');

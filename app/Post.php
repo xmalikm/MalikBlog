@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
 	protected $fillable = [
-		'title', 'text', 'slug', 'category_id', 'blog_photo'
+		'title', 'text', 'slug', 'category_id', 'blog_photo', 'unique_views'
 	];
 
 	// treba sa na to pozriet
@@ -32,11 +32,6 @@ class Post extends Model
 
 	public function setTextAttribute($value) {
 		$this->attributes['text'] = ucfirst($value);
-	}
-
-	public function hit() {
-		$this->attributes['unique_views']++;
-		$this->save();
 	}
 
 	public function user() {

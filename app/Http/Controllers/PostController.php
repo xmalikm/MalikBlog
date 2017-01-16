@@ -35,11 +35,11 @@ class PostController extends Controller
     {
         $posts = $this->postService->getAllPosts();
 
-        return view('posts.index')
+        return view('posts.indexPost')
             ->with([
                 'posts' => $posts,
                 'title' => 'Všetky články',
-                ]);
+            ]);
     }
 
     // formular pre vytvorenie noveho clanku
@@ -51,9 +51,11 @@ class PostController extends Controller
         $categoriesArray = $this->categoryService->getCatsArray();
 
         return view('posts.create')
-            ->with('title', 'Nový blog')
-            ->with('tags', '')
-            ->with('categories', $categoriesArray);;
+            ->with([
+                'title' => 'Nový blog',
+                'tags' => '',
+                'catsArray' => $categoriesArray,
+            ]);
     }
 
     // samotne vytvorenie(logika) noveho clanku
@@ -62,8 +64,10 @@ class PostController extends Controller
         $post = $this->postService->createNewPost($request);
         
         return view('posts.show')
-            ->with('post', $post)
-            ->with('user', $post->user);
+            ->with([
+                'post' => $post,
+                'user' => $post->user,
+            ]);
     }
 
     // zobrazenie konkretneho clanku
@@ -71,10 +75,12 @@ class PostController extends Controller
     {
         // najde post a vyvola event 'PostViewed'
         $post = $this->postService->showPost($id);
-
+        
         return view('posts.show')
-            ->with('post', $post) // dany clanok
-            ->with('user', $post->user);  // info o autorovi clanku, ktore je zobrazene po boku
+            ->with([
+                'post' => $post, // dany clanok
+                'user' => $post->user,// info o autorovi clanku, ktore je zobrazene po boku
+            ]);  
     }
 
     /**
@@ -97,10 +103,12 @@ class PostController extends Controller
         $categoriesArray = $this->categoryService->getCatsArray();
 
         return view('posts.edit')
-            ->with('title', 'Edit post')
-            ->with('post', $post)
-            ->with('tags', $tagString)
-            ->with('categories', $categoriesArray);
+            ->with([
+                'title' => 'Edit post',
+                'post' => $post,
+                'tags' => $tagString,
+                'catsArray' => $categoriesArray,
+            ]);
     }
 
     /**
@@ -132,9 +140,30 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy($id) {
+        $this->postService->deletePost($id);
+        return back()
+            ->with('postDeleted', 'Článok bol úspešne vymazaný!');
+    }
+
+    public function getNewest() {
+        $posts = Post::orderBy('created_at', 'desc')->get();
+
+        return view('posts.indexPost')
+            ->with([
+                'posts' => $posts,
+                'title' => 'Články podľa dátumu',
+            ]);
+    }
+
+    public function getMostViewed() {
+        $posts = Post::orderBy('unique_views', 'desc')->get();
+
+        return view('posts.indexPost')
+            ->with([
+                'posts' => $posts,
+                'title' => 'Články podľa počtu zobrazení',
+            ]);
     }
 
 }

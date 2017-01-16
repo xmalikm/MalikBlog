@@ -15,6 +15,12 @@
 	<div class="row">
 		<div class="col-md-12">
 
+			{{ Form::open(['url' => url('profile'), 'method' => 'delete']) }}
+
+				 {{ Form::submit('Vymazat profil', ['class' => 'btn btn-danger']) }}
+
+			{{ Form::close()}}
+
 			{{-- profilova fotka --}}
 			<img src=" {{asset('uploads/profile_photos/'. $user->profile_photo)}}" style="width: 200px; height: 250px; border: 1px solid grey;">
 			<h2>{{ $user->name }}</h2>
@@ -26,7 +32,7 @@
 			<a href="edit hesla" class="btn btn-primary">Zmena hesla</a>
 
 		</div>
-	</div>{{-- avatar + informacie --}}	
+	</div>{{-- avatar + informacie --}}
 
 	<div class="row">
 		<div class="col-md-4">
@@ -42,7 +48,7 @@
 				<span class="profile-statistics">
 					Priemerná čitateľnosť
 				</span><br>
-				<b>	{{ $user->getAvgReadability() }} </b>
+				<b>	{{ $user->avg_readability }} </b>
 			</div>
 		</div>
 		<div class="col-md-4">
@@ -59,35 +65,5 @@
 	<div class="row">
 		
 	</div>{{-- clanky usera --}}
-
-	<div class="table-responsive">          
-	  	<table class="table">
-		    <thead>
-		      <tr>
-		        <th>#</th>
-		        <th>Nadpis</th>
-		        <th>Ukaza clanku</th>
-		        <th>Kategoria</th>
-		        <th>Vytvorene</th>
-		        <th>Naposledy upravene</th>
-		        <th>!!</th>
-		      </tr>
-		    </thead>
-	    	<tbody>
-	    		@foreach($user->posts as $post)
-					<tr>
-					<td>{{ $post->id }}</td>
-					<td>{{ $post->title }}</td>
-					<td>{{ $post->textTeaser }}</td>
-					<td>{{ $post->category }}</td>
-					<td>{{ $post->created_at }}</td>
-					<td>{{ $post->updated_at }}</td>
-					<td><a href="{{ route('post.edit', $post->id) }}" class="btn btn-primary">Uprav blog</a>
-						<a href=" delete " class="btn btn-success">Vymaz</a></td>
-					</tr>
-				@endforeach
-	    	</tbody>
-	    </table>
-    </div>
 
 @endsection

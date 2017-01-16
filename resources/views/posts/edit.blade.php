@@ -25,6 +25,10 @@
         </ul>
     @endif
 
+	{{-- bootstrap modal - obsahuje form pre vytvorenie novej kategorie
+		 musi byt umiestneny mimo formularu, pretoze sam obsahuje druhy formular --}}
+  	@include('partials/_newCatModal')
+
 	{!! Form::model($post, ['url' => url('post', $post->id), 'method' => 'put', 'enctype' => 'multipart/form-data', 'data-parsley-validate' => '']) !!}
 		{{-- spolocny form --}}
 		{{-- @include('partials.blogForm') --}}
@@ -40,9 +44,12 @@
 		<div class="form-group">
 			{!! Form::label('text', 'Kategória') !!}
 			{{-- ak editujem blog -> zobraz kategoriu blogu, ak vytvaram novy blog -> zobraz defaultnu kategoriu --}}
-			{{ Form::select('category_id', $categories, isset($post->category_id) ? $post->category_id : 0, ['class' => 'form-control']) }}
-			<a href="{{ Route('category.create') }}?post={{$post->id}}" class="btn btn-primary" id = "new-category" >Alebo vytvor novu kategoriu</a>
+			{{ Form::select('category_id', $catsArray, isset($post->category_id) ? $post->category_id : 0, ['class' => 'form-control']) }}
 		</div>{{-- kategoria blogu --}}
+		<!-- Trigger the modal with a button -->
+  		
+  		{{-- button pre otvorenie vyssie uvedeneho modalu pre novu kategoriu --}}
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Alebo vytvor novu kategoriu</button>
 
 		{{-- nazov blogu --}}
 		<div class="form-group">

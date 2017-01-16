@@ -10,8 +10,8 @@ class TagController extends Controller
     public function show($id) {
     	$tag = Tag::findOrFail($id);
 
-    	return view('posts.index')
+    	return view('tags.indexTag')
     		->with('title', "Články s tagom " . "<b>" . $tag->name . "</b>")
-    		->with('posts', $tag->posts);
+    		->with('tag', $tag);
     }
 }

@@ -7,9 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class View extends Model
 {
     protected $fillable = [
-    	'user_id',
-    	'ip',
     	'post_id',
+        'ip',
     	'created_at',
     	'updated_at'
     ];

@@ -6,17 +6,39 @@ use App\Http\Requests\SaveUserRequest;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Image;
+use app\Services\CategoryService;
 use app\Services\UserService;
 
 class UserController extends Controller
 {
 
     public $userService;
+    public $categoryService;
 
-    public function __construct(UserService $userService) {
+    public function __construct(UserService $userService, CategoryService $categoryService) {
         $this->userService = $userService;
-        $this->middleware('auth', ['except' => ['showUserProfile']]);
+        $this->categoryService = $categoryService;
+        $this->middleware('auth', ['except' => ['showUserProfile', 'index']]);
+    }
+
+    public function index() {
+        $users = User::all();
+
+        return view('user.indexUser')
+            ->with([
+                'users' => $users,
+                'title' => 'Všetci blogery'
+            ]);
+    }
+
+    // zoznam blogov aktualne prihlaseneho uzivatela
+    public function myPosts() {
+        $user = Auth::user();
+
+        return view('user.showMyPosts')
+            ->with('user', $user);
     }
 
 	// informacie o zaregistrovanom uzivatelovi, ktore su dostupe pre kazdeho
@@ -59,6 +81,43 @@ class UserController extends Controller
         return view('user.showMyProfile')
             ->with('user', $user)
             ->with('title', $user->name);
+    }
+
+    public function destroy() {
+        if($this->userService->deleteProfile()) {
+            return Redirect::route('login')
+                ->with('userDeleted', 'Je nám ľúto že odchádzate :(');
+        }
+
+    }
+
+    public function sortBlogers(Request $request) {
+        // hodnota select formu
+        $sort = $request->input('sort');
+
+        switch ($sort) {
+            case 'read':
+                $users = User::orderBy('avgRead')->get();
+
+                return view('user.indexUser')
+                    ->with([
+                        'users' => $users,
+                        'title' => 'Všetci blogery'
+                    ]);
+                break;
+
+            case 'like':
+                return 'like';
+                break;
+
+            case 'registration':
+                return 'registration';
+                break;
+
+            default:
+                return null;
+                break;
+        }
     }
 
 }

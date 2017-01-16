@@ -43,13 +43,25 @@ Breadcrumbs::register('editMyProfile', function($breadcrumbs) {
 });
 
 // profil konkretneho uzivatela: home/meno uzivatela
-Breadcrumbs::register('showUser', function($breadcrumbs, $user) {
+Breadcrumbs::register('blogers', function($breadcrumbs) {
     $breadcrumbs->parent('home');
+    $breadcrumbs->push("Všetci blogery", url('blogers'));
+});
+
+// profil konkretneho uzivatela: home/meno uzivatela
+Breadcrumbs::register('showUser', function($breadcrumbs, $user) {
+    $breadcrumbs->parent('blogers');
     $breadcrumbs->push($user->name, url('user', $user->id));
 });
 
-// vsetky kategorie: home/vsetky kategorie
-Breadcrumbs::register('categories', function($breadcrumbs) {
+// konkretna kategoria: home/kategoria
+Breadcrumbs::register('category', function($breadcrumbs, $category) {
     $breadcrumbs->parent('home');
-    $breadcrumbs->push("Všetky kategórie", route('category.index'));
+    $breadcrumbs->push($category->name, url('category', $category->id));
+});
+
+// konkretny tag: home/tag
+Breadcrumbs::register('tag', function($breadcrumbs, $tag) {
+    $breadcrumbs->parent('home');
+    $breadcrumbs->push($tag->name, url('tag', $tag->id));
 });

@@ -5,10 +5,10 @@
 	<title> @yield('title') | Malik blog </title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<!-- jQuery library -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<!-- Latest compiled JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	{{-- Custom bootstrap css --}}
@@ -36,15 +36,14 @@
 		<a href="" class = "pull-right"><img src="{{ asset('images/icons/facebook-icon.png') }}" class = "social-media"></a>
 		<a href="" class = "pull-right"><img src="{{ asset('images/icons/google-icon.png') }}" class = "social-media"></a>
 		<span class="pull-right">FORM - treba spravit</span>
-		<h2>VYMAZAT STARU FOTKU USERA!!!!</h2>
 		<h2>osetrovat metody!!!!</h2>
 	</div>
 
 	@include('partials/_headerNavbar')
 
-
 	{{-- hlavny kontajner --}}	
 	<div class="container-fluid container-body">
+	@yield('categories')
 
 		{{-- forma, v ktorej sa zobrazuje obsah --}}
 		@yield('mainContent')

@@ -15,9 +15,6 @@
 		</div>
 	</div>
 
-	{{-- buttony na zoradovanie clankov --}}
-	@yield('sortingButtons')
-
 	{{-- druhy row: posty + dalsie sidebary --}}
 	<div class="row" style="margin-top: 50px;">
 			

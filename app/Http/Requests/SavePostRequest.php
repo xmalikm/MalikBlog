@@ -28,6 +28,7 @@ class SavePostRequest extends FormRequest
             'title' => 'required|max:255',
             'text' => 'required',
             'category_id' => 'required',
+            'blog_photo' => 'mimes:jpeg,jpg,png,gif'
         ];
     }
 
@@ -36,6 +37,8 @@ class SavePostRequest extends FormRequest
             'title.required' => 'Nezadali ste nadpis',
             'text.required' => 'Nezadali ste text',
             'category_id.required' => 'Nezadali ste kategóriu',
+            'blog_photo.mimes' => 'Nespravny format obrazku',
+            'blog_photo.size' => 'Obrazok moze mat najviac 1Mb',
         ];
     }
 }

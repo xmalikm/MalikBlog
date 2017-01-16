@@ -3,16 +3,13 @@
 {{-- title stranky --}}
 @section('title', $title)
 
-@section('breadcrumbs')
-	{!! Breadcrumbs::render('showUser', $user) !!}
+{{-- kategorie clankov --}}
+@section('categories')
+	@include('partials/_categories')
 @endsection
 
-{{-- buttony na zoradovanie clankov --}}
-@section('sortingButtons')
-
-	{{-- prvy row: kategorie + pravy sidebar --}}
-	@include('partials/_sorting')
-
+@section('breadcrumbs')
+	{!! Breadcrumbs::render('showUser', $user) !!}
 @endsection
 
 @section('content')

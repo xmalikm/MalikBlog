@@ -1,4 +1,4 @@
-@extends('contentSidebar')
+@extends('contentWithoutSidebars')
 
 @section('content')
     <h1>Zmena passwordu</h1>

@@ -1,5 +1,9 @@
 @extends('contentWithSidebars')
 
+@section('categories')
+	@include('partials/_categories')
+@endsection
+
 @section('breadcrumbs')
 	{!! Breadcrumbs::render('showPost', $post) !!}
 @endsection
@@ -33,7 +37,6 @@
 	<div class="row">
 
 		<div class="col-lg-12 col-md-12">
-
 			<img src=" {{asset('uploads/blog_photos/'. $post->blog_photo)}}" style="width: 500; height: 300px; border: 1px solid grey;">
 
 		</div>
@@ -47,7 +50,7 @@
 
 		<div class="col-lg-12 col-md-12">
 
-			<small> {{ $post->created_at }} | {{ $post->user->name }} | Prečítané: {{ $post->unique_views }} </small>
+			<small> {{ $post->created_at }} | {{ $post->user->name }} | Prečítané: {{ $post->unique_views }}x </small>
 
 		</div>
 

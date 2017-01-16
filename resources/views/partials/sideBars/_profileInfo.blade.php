@@ -15,7 +15,7 @@
 					<div class="info">
 
 						<h3>
-							<a href=" {{ url('user', $post->user->id) }} ">{{ $user->name }}</a>
+							<a href=" {{ url('user', $user->id) }} ">{{ $user->name }}</a>
 						</h3>
 
 					</div>
@@ -76,7 +76,7 @@
 						<span class="profile-statistics">
 							Priemerná čítateľnosť
 						</span><br>
-						<b>	{{ $user->getAvgReadability() }} </b>
+						<b>	{{ $user->avg_readability }} </b>
 					</div>
 				
 				</div>

@@ -6,17 +6,21 @@ use App\Events\PostCreated;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Auth;
+use app\Services\UserService;
 
 class IncrNumOfPosts
 {
+
+    protected $userService;
+
     /**
      * Create the event listener.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(UserService $userService)
     {
-        //
+        $this->userService = $userService;
     }
 
     /**
@@ -27,8 +31,9 @@ class IncrNumOfPosts
      */
     public function handle(PostCreated $event)
     {
-        $user = Auth::user();
-        $user->num_of_articles++;
-        $user->save();
+        // zvys pocet clankov prihlaseneho uzivatela
+        $this->userService->incrNumOfArticles();
+        // aktualizuj citanost clankov prihlaseneho uzivatela
+        $this->userService->updateReadability();
     }
 }

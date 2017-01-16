@@ -3,46 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Category;
-use App\Post;
-use App\Traits\CategoryTrait;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\URL;
+use app\Services\CategoryService;
 
 class CategoryController extends Controller
 {
 
-    use CategoryTrait;
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $categories = Category::all();
+    public $categoryService;
+    public $postService;
 
-        return view('categories.indexCategory')
-            ->with('categories', $categories)
-            ->with('title', 'Kategórie');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        Session::flash('previousUrl',URL::previous());
-
-        if(isset($_GET['post'])) {
-            Session::flash('postSession', $_GET['post']);
-        }
-
-        return view('categories.createCategory')
-            ->with('title', 'Nova kategoria');
+    public function __construct(CategoryService $categoryService) {
+        $this->categoryService = $categoryService;
     }
 
     /**
@@ -53,32 +25,12 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        // zvaliduje novu kategoriu a vytvori ju
+        $this->categoryService->createCategory($request);
 
-        // ak sme vytvorili novu kategoriu pri editacii clanku,
-        // potrebujeme mat ulozeny tento clanok
-        if(Session::has('postSession')) {
-            $id = Session::get('postSession');
-            // treba osetrit na find or fail
-            $post = Post::find($id);
-            // Session::forget('postSession');
-        }
-        
-        $category = Category::create($request->all());
-        $categories = $this->getCatsArray();
-
-        if(isset($post)) {
-            // tento redirect spravit cez session !!!!!!!!!!!!!!!
-            return redirect(Session::get('previousUrl'))
-                ->with('newCatMessage', 'Nová kategória bola pridaná! Môžete si ju vybrať!')
-                ->with('post', $post)
-                ->with('categories', $categories);
-        }
-        else {
-            return redirect(Session::get('previousUrl'))
-                ->with('newCatMessage', 'Nová kategória bola pridaná! Môžete si ju vybrať!')
-                ->with('categories', $categories);
-        }
-            
+        // ak validacia presla, vrati sa a vypise success spravu
+        return back()
+            ->with('newCatMessage', 'Nová kategória bola pridaná! Môžete si ju vybrať!');
     }
 
     /**
@@ -89,7 +41,13 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        //
+        $category = $this->categoryService->findCategory($id);
+
+        return view('categories.indexCategory')
+            ->with([
+                'title' => 'Články z kategórie <b>'. $category->name ."</b>",
+                'category' => $category,
+            ]);
     }
 
     /**

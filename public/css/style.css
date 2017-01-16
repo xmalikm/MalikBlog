@@ -92,6 +92,11 @@ li.dropdown .dropdown-menu-login {
 	color: red;
 	font-weight: 800;
 }
+.categories {
+	display: none;
+}
+
+
 
 @media only screen and (min-width: 768px) {
 	.container-body {
@@ -101,6 +106,14 @@ li.dropdown .dropdown-menu-login {
 	.panel-table {
 		border-radius: 0;
 		margin-top: 0;
+	}
+
+	.categories {
+		display: block;
+	}
+
+	.categories-mobile {
+		display: none;
 	}
 }
 

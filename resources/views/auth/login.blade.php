@@ -8,6 +8,10 @@
 
 @section('content')
     <h1>Login page</h1>
+@if(Session::has('userDeleted'))
+        <h2 class="text-danger text-center"><b> {{ Session::get('userDeleted') }} </b></h2>
+    @endif
+    
 
     {{-- prihlasovaci formular --}}
     {{ Form::open(['url' => url('/login'), 'method' => 'post', 'data-parsley-validate' => '']) }}

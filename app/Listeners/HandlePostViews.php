@@ -9,17 +9,23 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use app\Services\PostService;
+use app\Services\UserService;
 
 class HandlePostViews
 {
+
+    protected $postService;
+    protected $userService;
     /**
      * Create the event listener.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(PostService $postService, UserService $userService)
     {
-        //
+        $this->postService = $postService;
+        $this->userService = $userService;
     }
 
     /**
@@ -41,7 +47,11 @@ class HandlePostViews
                 }
             }
 
+        // vytvor novy 'views' zaznam
         View::create(['ip' => $_SERVER["REMOTE_ADDR"], 'post_id' => $event->post_id]);
-        $post->hit();
+        // inkrementuj citanost clanku
+        $this->postService->incrReadability($post->id);
+        // aktualizuj priemernu citanost autora clanku
+        $this->userService->updateReadability($post->user->id);
     }
 }
