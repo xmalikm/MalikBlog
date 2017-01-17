@@ -13,16 +13,16 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'App\Events\PostViewed' => [
-            'App\Listeners\HandlePostViews',
-        ],
-        'App\Events\PostCreated' => [
-            'App\Listeners\IncrNumOfPosts',
-        ],
-        'App\Events\PostDeleted' => [
-            'App\Listeners\DecNumOfPosts',
-        ],
+        //
+    ];
 
+    /**
+     * Subscriber, ktory pocuva na eventy PostCreated, PostDeleted a PostViewed.
+     * Obsahuje metody, ktore obsluhuju tieto eventy.
+     *
+     */
+    protected $subscribe = [
+        'App\Listeners\PostEventSubscriber',
     ];
 
     /**

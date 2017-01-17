@@ -71,15 +71,14 @@ class UserService extends BaseService{
         $this->user->save();
     }
 
-    public function incrNumOfArticles() {
-        $this->user = $this->getLoggedUser();
-        $this->user->num_of_articles++;
-        $this->user->save();
-    }
-
-    public function decNumOfArticles() {
-        $this->user = $this->getLoggedUser();
-        $this->user->num_of_articles--;
+    // updatuje sa pocet clankov prihlaseneho uzivatela
+    public function updateNumOfPosts() {
+        // aktualne prihlaseny uzivatel
+        $this->user = $this->getLoggedUser();        
+        // pocet vsetkych jeho clankov
+        $articles = count($this->user->posts);
+        // aktualizacia poctu clankov v databaze
+        $this->user->num_of_articles = $articles;
         $this->user->save();
     }
 
