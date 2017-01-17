@@ -93,7 +93,8 @@
 	<div class="row">
 		
 		<div class="col-lg-12 col-md-12">
-			
+			<a href=" {{ url('post/like', $post->id) }} " class="btn btn-info">Článok sa mi páči</a>
+			{{$post->isLiked}}
 			<h1>karma clanku</h1>	
 			@include('partials/_tags')
 

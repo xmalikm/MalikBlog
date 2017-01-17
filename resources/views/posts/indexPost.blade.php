@@ -24,7 +24,6 @@
 @section('pageTitle', $title)
 
 @section('content')
-	
 	@foreach($posts as $post)
 
 		{{-- ukazka clanku --}}

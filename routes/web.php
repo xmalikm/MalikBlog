@@ -45,3 +45,6 @@ Route::get('profile/edit', ['as' => 'profile.edit', 'uses' => 'UserController@ed
 Route::put('profile', 'UserController@update');
 // vymazanie profilu prihlaseneho uzivatela
 Route::delete('profile', 'UserController@destroy');
+
+// routes pre lajky
+Route::get('post/like/{id}', 'LikeController@likePost');

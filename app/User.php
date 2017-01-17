@@ -31,4 +31,8 @@ class User extends Authenticatable
         return $this->hasMany('App\Post');
     }
 
+    public function likedPosts() {
+        return $this->morphedByMany('App\Post', 'likeable');
+    }
+
 }

@@ -34,21 +34,36 @@ class Post extends Model
 		$this->attributes['text'] = ucfirst($value);
 	}
 
+	// clanok moze byt napisany jednym uzivatelom
 	public function user() {
 		return $this->belongsTo('App\User');
 	}
 
+	// clanok moze patrit iba do jednej kategorie
 	public function category() {
 		return $this->belongsTo('App\Category');
 	}
 
+	// clanok moze obsahovat viacero tagov
 	public function tags() {
 		return $this->belongsToMany('App\Tag');
 	}
 
+	// clanok moze mat viacero videni
 	public function views() {
 		return $this->hasMany('App\View');
 	}
+
+	// clanok moze dostat viecero likov od jednotlivych uzivatelov
+	public function likes() {
+		return $this->morphToMany('App\User', 'likeable');
+	}
+
+	public function getIsLikedAttribute()
+    {
+        $like = $this->likes()->whereUserId(\Illuminate\Support\Facades\Auth::id())->first();
+        return (!is_null($like)) ? true : false;
+    }
 
 	public function str_slug($text) {
       // replace non letter or digits by -
