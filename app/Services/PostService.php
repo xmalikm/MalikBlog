@@ -40,6 +40,8 @@ class PostService extends BaseService{
         $this->post = $user->posts()->create($request->only(['title', 'text','category_id']));
         // pocet videni pri vytvoreni postu inicializuj na 0
         $this->post->unique_views = 0;
+        // popularity pri vytvoreni postu inicializuj na 0.0
+        $this->post->popularity = 0.0;
         
         // nasledne sa vytvori obrazok a do db sa ulozi jeho nazov
         // ak request z formularu obsahuje subor(obrazok)
@@ -57,7 +59,7 @@ class PostService extends BaseService{
 
         // pri vytvoreni postu sa vyvola event, ktory zvysi pocet postov 
         // prihlaseneho uzivatela a aktualizuje citanost clankov uzivatela
-        event(new PostCreated());
+        event(new PostCreated($user));
 
         // nakoniec model uloz
         $this->post->save();
@@ -94,23 +96,16 @@ class PostService extends BaseService{
 	public function deletePost($id) {
 		// najdeme dany clanok
 		$this->post = Post::findOrFail($id);
-		$tags = $this->post->tags;
-		$category = $this->post->category;
+		// treba nacitat tagy modelu, inak ich neeviduje, neviem preco
+		$this->post->tags;
 		// vymazeme post
 		$this->post->delete();
 		// vymazeme obrazok clanku
 		$this->deletePhoto($this->post);
-		// prejdeme kazdy tag a skontrolujeme ci ho nejaky clanok obsahuje
-		foreach ($tags as $tag) {
-			$this->checkTagExistence($tag);
-		}
-		// ak kategoria nepatri mezi zakladnych 6 kategorii a ziaden
-		// blog nepatri do tejto kategorie, vymazeme ju
-		$this->checkCategoryExistence($category);
 
-		// pri vymazani postu sa vyvola event, ktory znizi pocet postov 
-        // prihlaseneho uzivatela a aktualizuje citanost clankov uzivatela
-        event(new PostDeleted());
+		// pri vymazani postu sa vyvola event, ktory aktualizuje statistiky usera,
+		// prejde tagy a kategorie, ktore neprisluchaju ziadnemu postu a vymaze ich
+        event(new PostDeleted($this->post));
 	}
 
 	// vrat dany post ak existuje a vyvolaj event
@@ -136,25 +131,5 @@ class PostService extends BaseService{
 	        $post->tags()->sync( $tagIds ?: [] );
 		}
 	}
-
-	public function incrReadability($id) {
-    	$this->post = Post::findOrFail($id);
-    	$this->post->unique_views++;
-    	$this->post->save();
-    }
-
-    // kontrola existencie tagu
-    public function checkTagExistence($tag) {
-    	// ak tento tag nema ziadny post, vymazeme ho
-    	if(!count($tag->posts)) {
-    		$tag->delete();
-    	}
-    }
-
-    // kontrola existencie kategorie
-    public function checkCategoryExistence($category) {
-    	if( ($category->id > 7) && (count($category->posts) == 0) )
-    		$category->delete();
-    }
 
 }

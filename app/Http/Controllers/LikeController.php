@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Like;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use app\Services\LikeService;
 
 class LikeController extends Controller
 {

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLikeablesTable extends Migration
+class AddAvgPopularityToUsers extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,8 @@ class CreateLikeablesTable extends Migration
      */
     public function up()
     {
-        Schema::create('likeables', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('user_id');
-            $table->integer('likeable_id');
-            $table->string('likeable_type');
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            $table->float('avg_popularity',6,2)->default(0.0)->after('avg_readability');
         });
     }
 
@@ -29,6 +25,8 @@ class CreateLikeablesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('likeables');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('avg_popularity');
+        });
     }
 }

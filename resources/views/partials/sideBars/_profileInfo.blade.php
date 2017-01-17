@@ -59,7 +59,7 @@
         	
         	<div class="row text-center">
         		
-				<div class="col-lg-4 profile-boxes">
+				<div class="col-lg-3 profile-boxes">
 
 					<div class="well">
 						<span class="profile-statistics">
@@ -70,7 +70,7 @@
 				
 				</div>
 
-				<div class="col-lg-4 profile-boxes">
+				<div class="col-lg-3 profile-boxes">
 
 					<div class="well">
 						<span class="profile-statistics">
@@ -81,7 +81,18 @@
 				
 				</div>
 
-				<div class="col-lg-4 profile-boxes">
+				<div class="col-lg-3 profile-boxes">
+
+					<div class="well">
+						<span class="profile-statistics">
+							Priemerná popularita
+						</span><br>
+						<b>	{{ $user->avg_popularity }} </b>
+					</div>
+				
+				</div>
+
+				<div class="col-lg-3 profile-boxes">
 
 					<div class="well">
 						<span class="profile-statistics">

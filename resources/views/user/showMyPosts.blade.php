@@ -12,7 +12,7 @@
 @section('content')
 
 	@if(Session::has('postDeleted'))
-        <h2 class="text-danger bg-danger text-center"><b> {{ Session::get('postDeleted') }} </b></h2>
+        <span class="text-danger bg-danger" id = "post_deleted"><b> {{ Session::get('postDeleted') }} </b></span>
     @endif
 
 	<div class="table-responsive">          
@@ -52,5 +52,17 @@
 	    	</tbody>
 	    </table>
     </div>
+
+@endsection
+
+@section('scripts')
+	
+	<script>
+		window.setTimeout(function() {
+		  $("#post_deleted").fadeTo(500, 0).slideUp(500, function(){
+		    $(this).remove(); 
+		  });
+		}, 3000);
+	</script>
 
 @endsection

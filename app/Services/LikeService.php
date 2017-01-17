@@ -2,8 +2,11 @@
 
 namespace app\Services;
 
+use App\Events\PostLiked;
 use App\Like;
+use Illuminate\Support\Facades\Auth;
 use Validator;
+use app\Services\PostService;
 
 
 /**
@@ -13,9 +16,10 @@ use Validator;
 class LikeService {
 
     protected $errors;
+    public $postService;
 
-	public function __construct() {
-        //
+	public function __construct(PostService $postService) {
+        $this->postService = $postService;
 	}
 
     // spracovanie lajku daneho uzivatela
@@ -30,6 +34,9 @@ class LikeService {
                 'likeable_id' => $id,
                 'likeable_type' => $type,
             ]);
+
+            if($type === 'App\Post')
+                event(new PostLiked($id));
         }
     }
 

@@ -2,27 +2,28 @@
 
 namespace App\Events;
 
+use App\Post;
 use Illuminate\Broadcasting\Channel;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Broadcasting\PresenceChannel;
+use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Queue\SerializesModels;
 
-class PostDeleted
+class PostLiked
 {
     use InteractsWithSockets, SerializesModels;
 
-    public $post;
+    public $post_id;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($post)
+    public function __construct($post_id)
     {
-        $this->post = $post;
+        $this->post_id = $post_id;
     }
 
     /**

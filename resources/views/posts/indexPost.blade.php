@@ -55,7 +55,7 @@
 					</p>
 
 				{{-- doplnkove info --}}
-				<small> {{ $post->created_at }} | Prečítané: {{ $post->unique_views }}x | Diskusia: 5 komentov</small>
+				<small> {{ $post->created_at }} | Prečítané: {{ $post->unique_views }}x | Popularita: {{ $post->popularity }} | Diskusia: 5 komentov</small>
 
 			</div>{{-- info k clanku --}}
 
