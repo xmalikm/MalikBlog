@@ -17,12 +17,12 @@
 
 	{{-- druhy row: posty + dalsie sidebary --}}
 	<div class="row" style="margin-top: 50px;">
+			{{-- nadpis --}}
+			<h1>@yield('pageTitle')</h1>
 			
 		{{-- lava strana -> posty --}}
 		<div class="col-lg-12 col-md-12 col-sm-12" style="">
 			
-			{{-- nadpis --}}
-			<h1>@yield('pageTitle')</h1>
 
 			{{-- obsah --}}
         	@yield('content')

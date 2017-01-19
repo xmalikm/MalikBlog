@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\SaveUserRequest;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -25,11 +26,11 @@ class UserController extends Controller
 
     public function index() {
         $users = User::all();
-
+      
         return view('user.indexUser')
             ->with([
                 'users' => $users,
-                'title' => 'Všetci blogery'
+                'title' => 'Všetci blogery',
             ]);
     }
 
@@ -92,32 +93,44 @@ class UserController extends Controller
     }
 
     public function sortBlogers(Request $request) {
-        // hodnota select formu
-        $sort = $request->input('sort');
+        // stlpec, podla ktoreho sa ma triedit
+        $sortBy = $request->input('sortBy');
+        // sposob triedenia(asc, desc)
+        $sortFrom = $request->input('sortFrom');
 
-        switch ($sort) {
-            case 'read':
-                $users = User::orderBy('avgRead')->get();
-
-                return view('user.indexUser')
-                    ->with([
-                        'users' => $users,
-                        'title' => 'Všetci blogery'
-                    ]);
+        switch ($sortBy) {
+            case 'avg_readability':
+                if($sortFrom === 'asc')
+                    $title = 'Zoradené podľa <b>priemernej čítanosti</b> od <b>najmenšieho</b>';
+                if($sortFrom === 'desc')
+                    $title = 'Zoradené podľa <b>priemernej čítanosti</b> od <b>najväčšieho</b>';
                 break;
 
-            case 'like':
-                return 'like';
+            case 'avg_popularity':
+                if($sortFrom === 'asc')
+                    $title = 'Zoradené podľa <b>priemernej popularity</b> od <b>najmenšieho</b>';
+                if($sortFrom === 'desc')
+                    $title = 'Zoradené podľa <b>priemernej popularity</b> od <b>najväčšieho</b>';
                 break;
 
-            case 'registration':
-                return 'registration';
+            case 'created_at':
+                if($sortFrom === 'asc')
+                    $title = 'Zoradené podľa <b>dátumu registracie</b> od <b>najstaršej</b>';
+                if($sortFrom === 'desc')
+                    $title = 'Zoradené podľa <b>dátumu registracie</b> od <b>najnovšej</b>';
                 break;
 
             default:
                 return null;
                 break;
         }
+
+        $users = User::orderBy($sortBy, $sortFrom)->get();
+        return view('user.indexUser')
+            ->with([
+                'users' => $users,
+                'title' => $title,
+            ]);
     }
 
 }

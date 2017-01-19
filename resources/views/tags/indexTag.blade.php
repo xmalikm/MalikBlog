@@ -40,11 +40,11 @@
 				</p>
 
 				{{-- nadpis clanku --}}
-				<h3 style="margin-top: 0;"><a href="{{ url('post', $post->id) }}">{{ $post->title }}</a></h3>
+				<h3 style="margin-top: 0;"><a href="{{ route('post.show', ['id' => $post->id, 'slug' => $post->slug]) }}">{{ $post->title }}</a></h3>
 
 				{{-- uryvok --}}
 				<p>
-					{{ $post->text_teaser }} <br><a href="{{ url('post', $post->id) }}">viac&raquo;</a>
+					{{ $post->text_teaser }} <br><a href="{{ route('post.show', ['id' => $post->id, 'slug' => $post->slug]) }}">viac&raquo;</a>
 					</p>
 
 				{{-- doplnkove info --}}
@@ -60,6 +60,6 @@
 
 @section('sidebars')
 
-	@include('partials/sideBars/_mostViewed')
+	{{-- @include('partials/sideBars/_mostViewed') --}}
 
 @endsection

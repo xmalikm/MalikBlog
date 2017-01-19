@@ -96,7 +96,9 @@ li.dropdown .dropdown-menu-login {
 	display: none;
 }
 
-
+.tooltip-inner {
+	font-size: 16px;
+}
 
 @media only screen and (min-width: 768px) {
 	.container-body {

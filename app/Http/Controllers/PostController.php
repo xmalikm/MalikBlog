@@ -6,6 +6,7 @@ use App\Category;
 use App\Http\Requests\SavePostRequest;
 use App\Post;
 use App\Tag;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Image;
@@ -34,7 +35,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = $this->postService->getAllPosts();
-
+        
         return view('posts.indexPost')
             ->with([
                 'posts' => $posts,
@@ -62,11 +63,12 @@ class PostController extends Controller
     public function store(SavePostRequest $request)
     {
         $post = $this->postService->createNewPost($request);
-        
+        $likes = $post->likes;
         return view('posts.show')
             ->with([
                 'post' => $post,
                 'user' => $post->user,
+                'likes' => $likes, // uzivatelia, ktorim sa tento clanok paci
             ]);
     }
 
@@ -75,14 +77,15 @@ class PostController extends Controller
     {
         // najde post a vyvola event 'PostViewed'
         $post = $this->postService->showPost($id);
-        
+        $likes = $post->likes;
         return view('posts.show')
             ->with([
                 'post' => $post, // dany clanok
                 'user' => $post->user,// info o autorovi clanku, ktore je zobrazene po boku
+                'likes' => $likes, // uzivatelia, ktorim sa tento clanok paci
             ]);  
     }
-
+    
     /**
      * Show the form for editing the specified resource.
      *
@@ -128,10 +131,14 @@ class PostController extends Controller
         // metoda updatePost, v ktorej sa vykonava editacia postu
         // vracia editovany post
         $post = $this->postService->updatePost($request, $id);
+        $likes = $post->likes;
 
         return view('posts.show')
-            ->with('post', $post)
-            ->with('user', $post->user);
+            ->with([
+                'post' => $post,
+                'user' => $post->user,
+                'likes' => $likes, // uzivatelia, ktorim sa tento clanok paci
+            ]);
     }
 
     /**
@@ -142,8 +149,9 @@ class PostController extends Controller
      */
     public function destroy($id) {
         $this->postService->deletePost($id);
-        return back()
-            ->with('postDeleted', 'Článok bol úspešne vymazaný!');
+        return response()->json([
+            'msg' => 'Článok bol úspešne vymazaný!'
+        ], 200);
     }
 
     public function getNewest() {

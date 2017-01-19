@@ -22,16 +22,22 @@
 
 		<h3><b>Zoradit podla</b></h3>
 		{{-- select box --}}
-		<div class="col-lg-4">
 		<div class="form-group">
-			{!! Form::select('sort', [
-					'read' => 'priemernej čítanosti',
-			   		'like' => 'karmy',
-			   		'registration' => 'dátumu registrácie'], 'read', ['class' => 'form-control']
-			) !!}
+			<div class="col-lg-4">
+				{!! Form::select('sortBy', [
+						'avg_readability' => 'priemernej čítanosti',
+				   		'avg_popularity' => 'karmy',
+				   		'created_at' => 'dátumu registrácie'], 'read', ['class' => 'form-control']
+				) !!}
+			</div>
+			<div class="col-lg-4">
+				{!! Form::select('sortFrom', [
+						'desc' => 'od najväčšieho',
+			   			'asc' => 'od najmenšieho',
+			   		], 'desc', ['class' => 'form-control']
+				) !!}
+			</div>
 		</div>
-		</div>
-
 		{{-- submit button --}}
         <div class="form-group">
             {!! Form::button('Zoradiť', [
@@ -81,9 +87,9 @@
 
 						<div class="well">
 							<span class="profile-statistics">
-								Priemerná diskutovanosť
+								Priemerna popularita
 							</span><br>
-							<b>	10 </b>
+							<b>	{{ $user->avg_popularity }} </b>
 						</div>
 					
 					</div>

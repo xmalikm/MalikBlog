@@ -42,7 +42,7 @@ class CategoryController extends Controller
     public function show($id)
     {
         $category = $this->categoryService->findCategory($id);
-
+        
         return view('categories.indexCategory')
             ->with([
                 'title' => 'Články z kategórie <b>'. $category->name ."</b>",

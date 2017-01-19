@@ -25,7 +25,6 @@
 			{{-- foto clanku --}}
 			<div class="col-lg-4">
 
-				{{-- <img src="http://placehold.it/200x160" class="logo"> --}}
 				<img src=" {{asset('uploads/blog_photos/'. $post->blog_photo)}}" style="width: 200px; height: 160px; border: 1px solid grey;">
 							
 			</div>{{-- foto clanku --}}
@@ -60,6 +59,6 @@
 
 @section('sidebars')
 
-	@include('partials/sideBars/_mostViewed')
+	@include('partials/sideBars/_newAndPopular')
 
 @endsection

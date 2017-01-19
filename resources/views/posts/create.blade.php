@@ -42,7 +42,7 @@
 		<div class="form-group">
 			{!! Form::label('text', 'Kategória') !!}
 			{{-- ak editujem blog -> zobraz kategoriu blogu, ak vytvaram novy blog -> zobraz defaultnu kategoriu --}}
-			{{ Form::select('category_id', $catsArray, isset($post->category_id) ? $post->category_id : 0, ['class' => 'form-control']) }}
+			{{ Form::select('category_id', $catsArray, isset($post->category_id) ? $post->category_id : 1, ['class' => 'form-control']) }}
 		</div>{{-- kategoria blogu --}}
 
 		{{-- button pre otvorenie vyssie uvedeneho modalu pre novu kategoriu --}}
@@ -51,7 +51,7 @@
 		{{-- nazov blogu --}}
 		<div class="form-group">
 			{!! Form::label('text', 'Nadpis') !!}
-			{!! Form::text('title', null, [
+			{!! Form::text('title', 'nadpis', [
 				'class' => 'form-control',
 				'placeholder' => 'Nadpis článku',
 				'required' => '',
@@ -62,7 +62,7 @@
 		{{-- obsah clanku --}}
 		<div class="form-group">
 			{!! Form::label('text', 'Obsah') !!}
-			{!! Form::textarea('text', null, [
+			{!! Form::textarea('text', 'no ahoj moj', [
 				'class' => 'form-control',
 				'placeholder' => 'Obsah článku',
 				'rows' => 16,

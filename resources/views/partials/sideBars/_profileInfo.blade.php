@@ -87,7 +87,7 @@
 						<span class="profile-statistics">
 							Priemerná popularita
 						</span><br>
-						<b>	{{ $user->avg_popularity }} </b>
+						<b>	<span id="avg_popularity">{{ $user->avg_popularity }}</span> </b>
 					</div>
 				
 				</div>

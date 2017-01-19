@@ -37,7 +37,10 @@ class LikeService {
 
             if($type === 'App\Post')
                 event(new PostLiked($id));
+            return true;
         }
+        else
+            return null;
     }
 
 }

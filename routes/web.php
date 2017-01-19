@@ -15,7 +15,8 @@ Route::get('/', 'PostController@index');
 // resource operacie pre category model
 Route::resource('category', 'CategoryController', ['only' => ['store', 'show', 'destroy']]);
 // resource operacie pre user model
-Route::resource('post', 'PostController');
+Route::resource('post', 'PostController', ['except' => ['show']]);
+Route::get('post/{id}/{slug}', ['as' => 'post.show', 'uses' => 'PostController@show']);
 
 // zoradenie clankov:
 // podla najnovsieho
@@ -47,4 +48,4 @@ Route::put('profile', 'UserController@update');
 Route::delete('profile', 'UserController@destroy');
 
 // routes pre lajky
-Route::get('post/like/{id}', 'LikeController@likePost');
+Route::post('post/like/{id}', 'LikeController@likePost');

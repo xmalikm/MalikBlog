@@ -5,6 +5,7 @@
 	<title> @yield('title') | Malik blog </title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<!-- jQuery library -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<!-- Latest compiled and minified CSS -->
@@ -36,7 +37,7 @@
 		<a href="" class = "pull-right"><img src="{{ asset('images/icons/facebook-icon.png') }}" class = "social-media"></a>
 		<a href="" class = "pull-right"><img src="{{ asset('images/icons/google-icon.png') }}" class = "social-media"></a>
 		<span class="pull-right">FORM - treba spravit</span>
-		<h2>post eventy - spravit trait</h2>
+		<h4>helper metody: url na klikatelne linky, vkladanie obrazkov do clankov</h4>
 		<h2>osetrovat metody!!!!</h2>
 	</div>
 
