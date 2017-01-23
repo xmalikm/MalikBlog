@@ -49,3 +49,10 @@ Route::delete('profile', 'UserController@destroy');
 
 // routes pre lajky
 Route::post('post/like/{id}', 'LikeController@likePost');
+
+// routes pre handlovanie komentarov
+
+// vytvorenie noveho komentaru
+Route::post('comment', 'CommentController@store');
+// editacia existujuceho komentaru
+Route::put('comment/{id}', 'CommentController@update');

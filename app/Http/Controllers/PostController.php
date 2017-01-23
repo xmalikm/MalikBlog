@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Category;
 use App\Http\Requests\SavePostRequest;
 use App\Post;
-use App\Tag;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Image;
 use app\Services\CategoryService;
 use app\Services\PostService;
 use app\Services\TagService;
@@ -77,13 +74,19 @@ class PostController extends Controller
     {
         // najde post a vyvola event 'PostViewed'
         $post = $this->postService->showPost($id);
-        $likes = $post->likes;
+        $postsFromAuthor = $post->user->posts->where('id', '!=', $post->id);
+        $postsFromCat = $post->category->posts->where('id', '!=', $post->id);
+        $recentPosts = $this->postService->getRecentPosts();
         return view('posts.show')
             ->with([
                 'post' => $post, // dany clanok
                 'user' => $post->user,// info o autorovi clanku, ktore je zobrazene po boku
-                'likes' => $likes, // uzivatelia, ktorim sa tento clanok paci
-            ]);  
+                'likes' => $post->likes, // uzivatelia, ktorim sa tento clanok paci
+                'comments' => $post->comments,
+                'postsFromAuthor' => $postsFromAuthor,
+                'postsFromCat' => $postsFromCat,
+                'recentPosts' => $recentPosts,
+            ]);
     }
     
     /**

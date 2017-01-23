@@ -38,6 +38,7 @@
 		<a href="" class = "pull-right"><img src="{{ asset('images/icons/google-icon.png') }}" class = "social-media"></a>
 		<span class="pull-right">FORM - treba spravit</span>
 		<h4>helper metody: url na klikatelne linky, vkladanie obrazkov do clankov</h4>
+		<h4>nadpis motto: podelte sa o svoje zazitky</h4>
 		<h2>osetrovat metody!!!!</h2>
 	</div>
 

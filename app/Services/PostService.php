@@ -2,6 +2,7 @@
 
 namespace app\Services;
 
+use App\Category;
 use App\Events\PostCreated;
 use App\Events\PostDeleted;
 use App\Events\PostViewed;
@@ -117,6 +118,25 @@ class PostService extends BaseService{
 		$this->post = Post::findOrFail($id);
 
         return $this->post;
+	}
+
+	public function getRecentPosts() {
+		$categories = Category::all();
+		// pole postov, bude obsahovat 6 postov - jeden z kazdej kategorie
+		$recentPosts = [];
+
+		foreach ($categories as $category) {
+			if(count($recentPosts) == 5)
+				break;
+
+			if(count($category->posts)) {
+				array_push($recentPosts, $category->posts->sortByDesc('created_at')->first());
+			}
+			else
+				continue;
+		}
+		
+		return $recentPosts;
 	}
 
 	public function handleTags($tags, $post) {

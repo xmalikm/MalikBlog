@@ -66,6 +66,7 @@
 							Počet článkov
 						</span><br>
 						<b>	{{ $user->num_of_articles }} </b>
+						{{-- <b>	{{ $user->ahoj }} </b> --}}
 					</div>
 				
 				</div>

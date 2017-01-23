@@ -54,6 +54,11 @@ class Post extends Model
 		return $this->hasMany('App\View');
 	}
 
+	// clanok moze mat viacero komentarov
+	public function comments() {
+		return $this->hasMany('App\Comment');
+	}
+
 	// clanok moze dostat viecero likov od jednotlivych uzivatelov
 	public function likes() {
 		return $this->morphToMany('App\User', 'likeable');

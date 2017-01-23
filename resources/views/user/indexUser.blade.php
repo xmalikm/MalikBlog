@@ -18,26 +18,30 @@
 @section('content')
 
 	{{-- sortovanie blogerov podla kriterii --}}
-	{!! Form::open(['url' => url('sort-blogers'), 'method' => 'post']) !!}
+	{!! Form::open(['url' => url('sort-blogers'), 'method' => 'post', 'id' => 'sortBloggers']) !!}
 
-		<h3><b>Zoradit podla</b></h3>
+		<h3 onclick="ahoj()"><b>Zoradit podla</b></h3>
 		{{-- select box --}}
 		<div class="form-group">
 			<div class="col-lg-4">
 				{!! Form::select('sortBy', [
-						'avg_readability' => 'priemernej čítanosti',
-				   		'avg_popularity' => 'karmy',
-				   		'created_at' => 'dátumu registrácie'], 'read', ['class' => 'form-control']
+						'unique_views' => 'priemernej čítanosti',
+				   		'popularity' => 'karmy',
+				   		'created_at' => 'dátumu registrácie'], 'read', ['class' => 'form-control', 'id' => 'sortBy']
 				) !!}
 			</div>
 			<div class="col-lg-4">
 				{!! Form::select('sortFrom', [
 						'desc' => 'od najväčšieho',
 			   			'asc' => 'od najmenšieho',
-			   		], 'desc', ['class' => 'form-control']
+			   		], 'desc', ['class' => 'form-control', 'id' => 'sortFrom']
 				) !!}
 			</div>
 		</div>
+
+		{{ Form::hidden('sortByMsg', null, ['id' => 'sortByMsg']) }}
+		{{ Form::hidden('sortFromMsg', null, ['id' => 'sortFromMsg']) }}
+
 		{{-- submit button --}}
         <div class="form-group">
             {!! Form::button('Zoradiť', [
@@ -67,7 +71,7 @@
 							<span class="profile-statistics">
 								Počet článkov
 							</span><br>
-							<b>	{{ $user->num_of_articles }} </b>
+							<b>	{{ $user->numOfArticles }} </b>
 						</div>
 					
 					</div>
@@ -78,7 +82,7 @@
 							<span class="profile-statistics">
 								Priemerná čítateľnosť
 							</span><br>
-							<b>	{{ $user->avg_readability }} </b>
+							<b>	{{ $user->avgReadability }} </b>
 						</div>
 					
 					</div>
@@ -89,7 +93,7 @@
 							<span class="profile-statistics">
 								Priemerna popularita
 							</span><br>
-							<b>	{{ $user->avg_popularity }} </b>
+							<b>	{{ $user->avgPopularity }} </b>
 						</div>
 					
 					</div>
@@ -105,5 +109,22 @@
 @section('sidebars')
 
 	@include('partials/sideBars/_mostViewed')
+
+@endsection
+
+@section('scripts')
+
+	<script>
+		$('#sortBloggers').on('submit', function(){
+			// vybrate kriteria z formularu, podla ktorych sa bude sortovat
+			var $sortBy = $('#sortBy :selected').text();
+			var $sortFrom = $('#sortFrom :selected').text();
+
+			// dva skryte inputy vo formulari naplnime tymito hodnotami
+			// ulahci nam to vypis podla coho zoradujeme blogerov
+			$('#sortByMsg').val($sortBy);
+			$('#sortFromMsg').val($sortFrom);
+		});
+	</script>
 
 @endsection

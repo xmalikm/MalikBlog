@@ -7,6 +7,7 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Image;
 use app\Services\CategoryService;
@@ -92,40 +93,34 @@ class UserController extends Controller
 
     }
 
+    public function sortMessage($sortBy, $sortFrom) {
+        return 'Zoradené podľa <b>'. $sortBy .'</b> od <b>'. $sortFrom .'</b>';
+    }
+
     public function sortBlogers(Request $request) {
         // stlpec, podla ktoreho sa ma triedit
         $sortBy = $request->input('sortBy');
         // sposob triedenia(asc, desc)
         $sortFrom = $request->input('sortFrom');
 
-        switch ($sortBy) {
-            case 'avg_readability':
-                if($sortFrom === 'asc')
-                    $title = 'Zoradené podľa <b>priemernej čítanosti</b> od <b>najmenšieho</b>';
-                if($sortFrom === 'desc')
-                    $title = 'Zoradené podľa <b>priemernej čítanosti</b> od <b>najväčšieho</b>';
-                break;
+        // dva stringy, ktore budeme vypisovat ako informaciu pre uzivatela
+        // su to hodnoty select option tagov - teda kriteria triedenia
+        $sortByMsg = $request->input('sortByMsg');
+        $sortFromMsg = $request->input('sortFromMsg');
 
-            case 'avg_popularity':
-                if($sortFrom === 'asc')
-                    $title = 'Zoradené podľa <b>priemernej popularity</b> od <b>najmenšieho</b>';
-                if($sortFrom === 'desc')
-                    $title = 'Zoradené podľa <b>priemernej popularity</b> od <b>najväčšieho</b>';
-                break;
+        // string, ktory bude vypisany ako informacie pre usera podla coho sa sortovalo
+        $title = $this->sortMessage($sortByMsg, $sortFromMsg);
+    
+        if($sortBy === 'created_at')
+            $users = User::orderBy($sortBy, $sortFrom)->get();
+        else
+            $users = User::leftJoin('posts', 'users.id', '=', 'posts.user_id')
+                ->select('users.id', 'users.name', 'users.profile_photo', DB::raw('avg(posts.'. $sortBy .') as '.$sortBy))
+                ->orderBy($sortBy, $sortFrom)
+                ->groupBy('users.id')
+                ->groupBy('users.name')
+                ->groupBy('users.profile_photo')->get();
 
-            case 'created_at':
-                if($sortFrom === 'asc')
-                    $title = 'Zoradené podľa <b>dátumu registracie</b> od <b>najstaršej</b>';
-                if($sortFrom === 'desc')
-                    $title = 'Zoradené podľa <b>dátumu registracie</b> od <b>najnovšej</b>';
-                break;
-
-            default:
-                return null;
-                break;
-        }
-
-        $users = User::orderBy($sortBy, $sortFrom)->get();
         return view('user.indexUser')
             ->with([
                 'users' => $users,

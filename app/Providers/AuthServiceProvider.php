@@ -27,6 +27,10 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        // autorizacia editovania komentaru
+        // editovat komentar moze iba autor komentaru
+        Gate::define('updateComment', function ($user, $comment) {
+            return $user->id == $comment->user_id;
+        });
     }
 }
