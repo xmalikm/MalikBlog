@@ -22,6 +22,7 @@ class CreatePostsTable extends Migration
             $table->string('slug');
             $table->string('blog_photo');
             $table->integer('unique_views')->unsigned();
+             $table->float('popularity',6,2)->default(0.0);
             $table->timestamps();
         });
     }

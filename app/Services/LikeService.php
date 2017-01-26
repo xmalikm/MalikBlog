@@ -5,29 +5,25 @@ namespace app\Services;
 use App\Events\PostLiked;
 use App\Like;
 use Illuminate\Support\Facades\Auth;
-use Validator;
-use app\Services\PostService;
-
 
 /**
- * Service class Post modelu
- * Obsahuje celu business logiku modelu
+ * Service class Like modelu
+ * Obsahuje business logiku modelu
  */
 class LikeService {
 
-    protected $errors;
-    public $postService;
 
-	public function __construct(PostService $postService) {
-        $this->postService = $postService;
+	public function __construct() {
+        //
 	}
 
     // spracovanie lajku daneho uzivatela
     public function handleLike($type, $id) {
-        // najskor skontrolujeme, ci uz uzivatel lajkoval clanok
+        // najskor skontrolujeme, ci uz uzivatel lajkoval bud clanok alebo
+        // komentar, podla toho, co lajkuje
         $existing_like = Like::where('likeable_type', $type)->where('likeable_id', $id)->where('user_id', Auth::id())->first();
 
-        // ak neexistuje zaznam pre tento post v likeable tabulke, vytvorime novy
+        // ak neexistuje zaznam pre tento post alebo komentar v likeable tabulke, vytvorime novy
         if(is_null($existing_like)) {
             Like::create([
                 'user_id' => Auth::id(),
@@ -35,11 +31,16 @@ class LikeService {
                 'likeable_type' => $type,
             ]);
 
+            // ak lajkujeme post
             if($type === 'App\Post')
+                // event, ktory zvysi popularitu clanku
                 event(new PostLiked($id));
+
+            // ak sa vytvoril novy lajk vrat true
             return true;
         }
         else
+            // ak uz lajk od uzivatela existuje, vrat false
             return null;
     }
 

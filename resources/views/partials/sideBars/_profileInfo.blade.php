@@ -66,7 +66,6 @@
 							Počet článkov
 						</span><br>
 						<b>	{{ $user->num_of_articles }} </b>
-						{{-- <b>	{{ $user->ahoj }} </b> --}}
 					</div>
 				
 				</div>
@@ -88,7 +87,7 @@
 						<span class="profile-statistics">
 							Priemerná popularita
 						</span><br>
-						<b>	<span id="avg_popularity">{{ $user->avg_popularity }}</span> </b>
+						<b>	<span id="avg-popularity">{{ $user->avg_popularity }}</span> </b>
 					</div>
 				
 				</div>
@@ -99,7 +98,7 @@
 						<span class="profile-statistics">
 							Priemerná diskutovanosť
 						</span><br>
-						<b>	10 </b>
+						<b>	<span id="avg-comments">{{ $user->avg_comments }}</span> </b>
 					</div>
 				
 				</div>

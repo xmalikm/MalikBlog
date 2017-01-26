@@ -11,18 +11,23 @@
 |
 */
 
-Route::get('/', 'PostController@index');
+Route::get('/', function (){
+	return view('welcome');
+});
 // resource operacie pre category model
 Route::resource('category', 'CategoryController', ['only' => ['store', 'show', 'destroy']]);
 // resource operacie pre user model
 Route::resource('post', 'PostController', ['except' => ['show']]);
-Route::get('post/{id}/{slug}', ['as' => 'post.show', 'uses' => 'PostController@show']);
+Route::get('post/{id}/{slug?}', ['as' => 'post.show', 'uses' => 'PostController@show'])
+	->where('id', '[0-9]+');
 
 // zoradenie clankov:
 // podla najnovsieho
 Route::get('newest-posts', 'PostController@getNewest');
 // podla najviac zobrazeneho
 Route::get('most-viewed', 'PostController@getMostViewed');
+// podla najviac komentarov
+Route::get('most-discussed', 'PostController@getMostDiscussed');
 
 // vylistovanie vsetkych clankov s danym tagom
 Route::get('tag/{id}', 'TagController@show');
@@ -49,6 +54,7 @@ Route::delete('profile', 'UserController@destroy');
 
 // routes pre lajky
 Route::post('post/like/{id}', 'LikeController@likePost');
+Route::post('post/comment/like/{id}', 'LikeController@likeComment');
 
 // routes pre handlovanie komentarov
 

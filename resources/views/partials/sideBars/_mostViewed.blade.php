@@ -19,10 +19,12 @@
         <div class="tab-content">
             <div id="today" class="tab-pane fade in active">
                 <ol>
-                    @foreach($mostViewed['today'] as $post)
+                    @forelse($mostViewed['today'] as $post)
                         <li><a href="{{ url('post', $post->id) }}"><span style="color: black; text-decoration: none;">{{ $post->user->name }}:</span> {{ $post->title }}</a> <small>{{ $post->unique_views }}</small></li>
                         <hr>
-                    @endforeach
+                    @empty
+                        <p>Dnes ešte neboli pridané žiadne články</p>
+                    @endforelse
                 </ol>
             </div>
             <div id="3days" class="tab-pane fade">

@@ -4,6 +4,7 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Post extends Model
 {
@@ -66,7 +67,7 @@ class Post extends Model
 
 	public function getIsLikedAttribute()
     {
-        $like = $this->likes()->whereUserId(\Illuminate\Support\Facades\Auth::id())->first();
+        $like = $this->likes()->whereUserId(Auth::id())->first();
         return (!is_null($like)) ? true : false;
     }
 

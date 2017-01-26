@@ -42,7 +42,7 @@
 		<div class="form-group">
 			{!! Form::label('text', 'Kategória') !!}
 			{{-- ak editujem blog -> zobraz kategoriu blogu, ak vytvaram novy blog -> zobraz defaultnu kategoriu --}}
-			{{ Form::select('category_id', $catsArray, isset($post->category_id) ? $post->category_id : 1, ['class' => 'form-control']) }}
+			{{ Form::select('category_id', $catsArray, Session::has('newCat') ? Session::get('newCat') : 0, ['class' => 'form-control']) }}
 		</div>{{-- kategoria blogu --}}
 
 		{{-- button pre otvorenie vyssie uvedeneho modalu pre novu kategoriu --}}
@@ -128,11 +128,5 @@
 	
 	<script src=" {{ asset('js/selectize-js/selectize.js') }} "></script>
 	<script src=" {{ asset('js/parsley.min.js') }} "></script>
-	<script>
-		$('#input-tags').selectize({
-			persist: false,
-			createOnBlur: true,
-			create: true
-		});
-	</script>
+	<script src=" {{ asset('js/blog-js/create-edit.js') }} "></script>
 @endsection

@@ -108,6 +108,10 @@ li.dropdown .dropdown-menu-login {
 	padding-left: 0;
 }
 
+span.like-comment-btn:hover {
+	cursor: pointer;
+}
+
 @media only screen and (min-width: 768px) {
 	.container-body {
 		margin: 10px 0;

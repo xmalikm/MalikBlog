@@ -36,6 +36,12 @@ Breadcrumbs::register('showMyProfile', function($breadcrumbs) {
     $breadcrumbs->push('Môj profil', url('profile'));
 });
 
+// profil prihlaseneho uzivatela: home/profil
+Breadcrumbs::register('showMyPosts', function($breadcrumbs) {
+    $breadcrumbs->parent('home');
+    $breadcrumbs->push('Môje články', url('profile/my-posts'));
+});
+
 // editacia profilu prihlaseneho uzivatela: home/profil/uprava profilu
 Breadcrumbs::register('editMyProfile', function($breadcrumbs) {
     $breadcrumbs->parent('showMyProfile');

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Like;
+use App\Comment;
+use App\Post;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use app\Services\LikeService;
 
 class LikeController extends Controller
@@ -20,20 +20,52 @@ class LikeController extends Controller
 	public function likePost($id) {
 		// kontrola ci post existuje alebo validacia alebo nieco
 
+		// spracovanie lajku od uzivatela
 		$response = $this->likeService->handleLike('App\Post', $id);
-		$post = \App\Post::find($id);
+		$post = Post::find($id);
+		// v db sa uz nachadza zaznam s lajkom tohto uzivatela
 		if($response == null) {
-			$msg = "Popularitu článku si už zvýšil!";
-			return response()->json(array('msg'=> $msg), 200);
+			// posli error message
+			$errorMsg = "Popularitu článku si už zvýšil!";
+			
+			return response()->json(array('errorMsg'=> $errorMsg), 200);
 		}
+		// uzivatel este clanok nelajkol
 		else {
-			$msg = "Článok sa mi páči";
-			$popularity = $post->popularity;
-			$avg_popularity = $post->user->avg_popularity;
-			return response()->json(['msg'=> $msg, 'popularity' => $popularity, 'avg_popularity' => $avg_popularity], 200);
+			// vratime hodnoty, ktore chceme na stranke aktualizovat
+			return response()->json([
+				'msg'=> "Článok sa mi páči",
+				// popularita clanku
+				'popularity' => $post->popularity,
+				// priemerna popularita autora clanku
+				'avg_popularity' => $post->user->avg_popularity,
+			], 200);
 		}
+	}
 
-		
+	public function likeComment($id) {
+		// kontrola ci post existuje alebo validacia alebo nieco
+
+		// spracovanie lajku od uzivatela
+		$response = $this->likeService->handleLike('App\Comment', $id);
+
+		$comment = Comment::find($id);
+
+		// v db sa uz nachadza zaznam s lajkom tohto uzivatela
+		if($response == null) {
+			// posli error message
+			$errorMsg = "Komentár sa ti už páči!";
+			
+			return response()->json(array('errorMsg'=> $errorMsg), 200);
+		}
+		// uzivatel este komentar nelajkol
+		else {
+			// vratime hodnoty, ktore chceme na stranke aktualizovat
+			return response()->json([
+				'msg'=> "Komentár sa mi páči",
+				'numOfLikes' => count($comment->likes),
+			], 200);
+		}
 	}
 
 }

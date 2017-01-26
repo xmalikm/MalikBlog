@@ -2,8 +2,10 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
+use App\Post;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -49,7 +51,7 @@ class User extends Authenticatable
         if(!$this->posts->avg('popularity'))
             return 0;
         else
-            return $this->posts->avg('popularity');
+            return round($this->posts->avg('popularity'), 2);
     }
 
     // vrati priemernu citanost clankov uzivatela
@@ -59,7 +61,24 @@ class User extends Authenticatable
         if(!$this->posts->avg('unique_views'))
             return 0;
         else
-            return $this->posts->avg('unique_views');
+            return round($this->posts->avg('unique_views'), 2);
+    }
+
+    // vrati priemerny pocet komentarov v clankoch uzivatela
+    public function getAvgCommentsAttribute() {
+        // osetrenie situacie, ked je pocet clankov uzivatela 0 -> pretoze avg(0) == null
+        // vtedy vratime 0, inak sa vrati priemerna hodnota
+        if(!$this->comments->count())
+            return 0;
+        else {
+            // pocet komentarov vsetkych clankov uzivatela
+            $commentsCount = Post::join('comments', 'posts.id', '=', 'comments.post_id')
+                            ->where('posts.user_id', $this->id)
+                            ->select(DB::raw('COUNT(comments.id) as pocet'))
+                            ->get()->first()->pocet;
+
+            return round($commentsCount/$this->posts->count(), 2);
+        }
     }
 
     // vrati pocet clankov uzivatela

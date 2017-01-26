@@ -3,25 +3,19 @@
 namespace app\Services;
 
 use App\Category;
-use Validator;
 use app\Services\BaseService;
 
 
 /**
- * Service class Post modelu
- * Obsahuje celu business logiku modelu
+ * Service class Category modelu
+ * Obsahuje business logiku modelu
  */
 class CategoryService extends BaseService{
 
-    protected $errors;
 
 	public function __construct() {
         //
 	}
-
-    public function findCategory($id) {
-        return Category::findOrFail($id);
-    }
 
     // vytvori a vrati novu kategoriu
     public function createCategory($request) {
@@ -39,6 +33,7 @@ class CategoryService extends BaseService{
         // samotna validacia uzivatelskeho vstupu, ktora je definovana v BaseService triede
         $this->validate($request, $rules, $messages);
 
+        // vrati sa novovytvorena kategoria
         return Category::create($request->only('name'));
     }
 
@@ -48,7 +43,9 @@ class CategoryService extends BaseService{
         $categories = Category::all();
         // asociativne pole vsetkych kategorii
         $catsArray = [];
-        $catsArray[0] = 'Vyberte kategoriu';
+        // prva polozka s select tagu
+        $catsArray[''] = 'Vyberte kategoriu';
+
         foreach ($categories as $category) {
             $catsArray[$category->id] = $category->name;
         }

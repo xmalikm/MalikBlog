@@ -4,7 +4,7 @@
 @section('title', 'Moje články' )
 
 @section('breadcrumbs')
-	{!! Breadcrumbs::render('showMyProfile') !!}
+	{!! Breadcrumbs::render('showMyPosts') !!}
 @endsection
 
 @section('pageTitle', 'Moje články')
@@ -29,14 +29,14 @@
 		      </tr>
 		    </thead>
 	    	<tbody>
-	    		@foreach($user->posts as $post)
+	    		@foreach($posts as $post)
 					<tr id="post_{{$post->id}}">
 					<td>{{ $loop->iteration }}</td>	{{-- cislo iteracie, koli cislovaniu zaznamov v tabulke --}}
 					<td><a href=" {{ route('post.show', ['id' => $post->id, 'slug' => $post->slug]) }} "> <img src=" {{ asset('uploads/blog_photos/'. $post->blog_photo) }} " style="width: 40px; height: 40px;"> {{ $post->title }} </a></td>
 					<td>{{ $post->category->name }}</td>
 					<td>{{ $post->unique_views }}</td>
-					<td>este nie je</td>
-					<td>este nie je</td>
+					<td>{{ $post->popularity }}</td>
+					<td>{{ count($post->comments) }}</td>
 					<td>{{ $post->created_at }}</td>
 					<td>{{ $post->updated_at }}</td>
 					<td><a href="{{ route('post.edit', $post->id) }}" class="btn btn-primary">Uprav blog</a>
@@ -56,35 +56,6 @@
 
 @section('scripts')
 	
-	<script>
-		
-		function deletePost(id){
-            $.ajax({
-            	type:'DELETE',
-               	headers: {
-					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-  				},
-               	url:'/post/'+id,
-               	data:'_token = <?php echo csrf_token() ?>',
-               	success:function(data){
-               		$('#post_'+id).remove();
-               		$("#post_deleted").html(data.msg);
-
-               	}
-            });
-         }
-
-		$(document).on({
-			ajaxStart: function() { $("#ajax_loader").css('display', 'inline'); },
-		    ajaxStop: function() {
-		    	$("#ajax_loader").css('display', 'none');
-		    	window.setTimeout(function() {
-				  $("#post_deleted").fadeTo(500, 0).slideUp(500, function(){
-				    $(this).remove(); 
-				  });
-				}, 1500);
-		    }    
-		});
-	</script>
+	<script src=" {{ asset('js/blog-js/user.js') }} "></script>
 
 @endsection

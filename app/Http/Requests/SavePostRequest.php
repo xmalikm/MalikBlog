@@ -5,6 +5,10 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * Trieda urcena na validaciu inputov pri vytvarani alebo editacii clanku
+ *
+ */
 class SavePostRequest extends FormRequest
 {
     /**
@@ -25,20 +29,20 @@ class SavePostRequest extends FormRequest
     public function rules()
     {
         return [
+            'category_id' => 'required',
             'title' => 'required|max:255',
             'text' => 'required',
-            'category_id' => 'required',
-            'blog_photo' => 'mimes:jpeg,jpg,png,gif'
+            'blog_photo' => 'max:1024|mimes:jpeg,jpg,png,gif'
         ];
     }
 
     public function messages() {
         return [
+            'category_id.required' => 'Nezadali ste kategóriu',
             'title.required' => 'Nezadali ste nadpis',
             'text.required' => 'Nezadali ste text',
-            'category_id.required' => 'Nezadali ste kategóriu',
             'blog_photo.mimes' => 'Nespravny format obrazku',
-            'blog_photo.size' => 'Obrazok moze mat najviac 1Mb',
+            'blog_photo.max' => 'Obrazok moze mat najviac 1Mb',
         ];
     }
 }

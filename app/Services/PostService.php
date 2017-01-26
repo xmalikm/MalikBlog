@@ -2,17 +2,15 @@
 
 namespace app\Services;
 
-use App\Category;
-use App\Events\PostCreated;
 use App\Events\PostDeleted;
-use App\Events\PostViewed;
 use App\Post;
+use Illuminate\Support\Facades\Auth;
 use app\Services\BaseService;
-use app\Services\TagtService;
+use app\Services\TagService;
 
 /**
  * Service class Post modelu
- * Obsahuje celu business logiku modelu
+ * Obsahuje business logiku modelu
  */
 class PostService extends BaseService{
 
@@ -25,23 +23,15 @@ class PostService extends BaseService{
 		$this->tagService = $tagService;
 	}
 
-	public function getAllPosts() {
-		return Post::orderBy('created_at', 'desc')->get();
-	}
-
-	public function findPost($id) {
-		return Post::findOrFail($id);
-	}
-
+	// vytvorenie noveho postu
 	public function createNewPost($request) {
 
 		// prihlaseny uzivatel
-        $user = $this->getLoggedUser();
+        $user = Auth::user();
         // najskor sa ulozi nadpis, text clanku a kategoria
         $this->post = $user->posts()->create($request->only(['title', 'text','category_id']));
-        // pocet videni pri vytvoreni postu inicializuj na 0
+        // pocet videni a popularitu pri vytvoreni postu inicializuj na 0
         $this->post->unique_views = 0;
-        // popularity pri vytvoreni postu inicializuj na 0.0
         $this->post->popularity = 0.0;
         
         // nasledne sa vytvori obrazok a do db sa ulozi jeho nazov
@@ -56,11 +46,8 @@ class PostService extends BaseService{
         	$this->post->blog_photo = 'default.png';
         }
 
+		// ak sa pridali nove tagy, vytvorime ich
         $this->handleTags($request->input('tags'), $this->post);
-
-        // pri vytvoreni postu sa vyvola event, ktory zvysi pocet postov 
-        // prihlaseneho uzivatela a aktualizuje citanost clankov uzivatela
-        event(new PostCreated($user));
 
         // nakoniec model uloz
         $this->post->save();
@@ -68,6 +55,7 @@ class PostService extends BaseService{
         return $this->post;
 	}
 
+	// aktualizacia clanku
 	public function updatePost($request, $id) {
 		// dany post
 		$this->post = Post::findOrFail($id);
@@ -88,6 +76,7 @@ class PostService extends BaseService{
             $this->post->save();
         }
 
+        // ak sa pridali nove tagy, vytvorime ich
         $this->handleTags($request->input('tags'), $this->post);
 
         return $this->post;
@@ -97,48 +86,25 @@ class PostService extends BaseService{
 	public function deletePost($id) {
 		// najdeme dany clanok
 		$this->post = Post::findOrFail($id);
+		
 		// treba nacitat tagy modelu, inak ich neeviduje, neviem preco
 		$this->post->tags;
+		
+		// pred samotnym vymazanim clanku musime vymazat lajky clanku a komentarov
+		// pretoze s clankom sa vymazu aj vsetky jeho komentare
+		$this->deleteLikes($this->post->id);
+
 		// vymazeme post
 		$this->post->delete();
 		// vymazeme obrazok clanku
 		$this->deletePhoto($this->post);
 
-		// pri vymazani postu sa vyvola event, ktory aktualizuje statistiky usera,
-		// prejde tagy a kategorie, ktore neprisluchaju ziadnemu postu a vymaze ich
+		// pri vymazani postu sa vyvola event, prejde tagy a kategorie, ktore
+		// neprisluchaju ziadnemu postu a vymaze ich
         event(new PostDeleted($this->post));
 	}
 
-	// vrat dany post ak existuje a vyvolaj event
-	public function showPost($id) {
-		// event inkrementuje pocet zobrazeni postu
-        event(new PostViewed($id));
-        
-        // ziskaj post s uz aktualizovanym poctom zobrazeni
-		$this->post = Post::findOrFail($id);
-
-        return $this->post;
-	}
-
-	public function getRecentPosts() {
-		$categories = Category::all();
-		// pole postov, bude obsahovat 6 postov - jeden z kazdej kategorie
-		$recentPosts = [];
-
-		foreach ($categories as $category) {
-			if(count($recentPosts) == 5)
-				break;
-
-			if(count($category->posts)) {
-				array_push($recentPosts, $category->posts->sortByDesc('created_at')->first());
-			}
-			else
-				continue;
-		}
-		
-		return $recentPosts;
-	}
-
+	// zabezpecuje vytvaranie novych tagov k clanku
 	public function handleTags($tags, $post) {
 		// pole tagov
 		$splitTagsArray = [];
@@ -150,6 +116,14 @@ class PostService extends BaseService{
 			// synchronizacia tagov s modelom
 	        $post->tags()->sync( $tagIds ?: [] );
 		}
+	}
+
+	public function deleteLikes($post_id) {
+		\App\Like::whereIn('likeable_id', function($query) use ($post_id) {
+            $query->select('id')
+                  ->from('comments')
+                  ->where('post_id', $post_id);
+        })->orWhere('likeable_id', $post_id)->delete();
 	}
 
 }

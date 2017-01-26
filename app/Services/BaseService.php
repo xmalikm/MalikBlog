@@ -21,11 +21,6 @@ class BaseService {
 		//
 	}
 
-	// aktualne prihlaseny uzivatel
-	public function getLoggedUser() {
-		return Auth::user();
-	}
-
 	// vytvorenie obrazku, nahrateho userom
     // ulozenie obrazku do daneho folder-u
     // return nazvu suboru

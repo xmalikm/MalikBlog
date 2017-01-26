@@ -29,32 +29,15 @@ class PostEventSubscriber
     }
 
     /**
-     * Handluje event - vytvorenie noveho postu.
-     */
-    public function onPostCreate($event) {
-        // aktualizuj pocet clankov prihlaseneho uzivatela
-        $this->updateNumOfPosts();
-        // aktualizuj priemernu citanost clankov prihlaseneho uzivatela
-        $this->updateReadability($event->user);
-        // aktualizuj priemernu popularitu clankov prihlaseneho uzivatela
-        $this->updatePopularity($event->user);
-    }
-
-    /**
      * Handluje event - vymazanie postu.
      */
     public function onPostDelete($event) {
+        $post_id = $event->post->id;
         // kategoria clanku
         $category = $event->post->category;
         // tagy clanku
         $tags = $event->post->tags;
-        // aktualizuj pocet clankov prihlaseneho uzivatela
-        $this->updateNumOfPosts();
-        // aktualizuj priemernu citanost clankov prihlaseneho uzivatela
-        $this->updateReadability($event->post->user);
-        // aktualizuj priemernu popularitu clankov prihlaseneho uzivatela
-        $this->updatePopularity($event->post->user);
-
+        
         // ak kategoria nepatri mezi zakladnych 6 kategorii a ziaden
         // blog nepatri do tejto kategorie, vymazeme ju
         $this->checkCategoryExistence($category);
@@ -63,7 +46,12 @@ class PostEventSubscriber
         foreach ($tags as $tag) {
             $this->checkTagExistence($tag);
         }
-        Like::where('likeable_id', $event->post->id)->where('likeable_type', 'App\Post')->delete();
+        
+        Like::whereIn('likeable_id', function($query) use ($post_id) {
+            $query->select('id')
+                  ->from('comments')
+                  ->where('post_id', $post_id);
+        })->orWhere('likeable_id', $post_id)->delete();
     }
 
     /**
@@ -71,7 +59,7 @@ class PostEventSubscriber
      */
     public function onPostView($event) {
        // konkretny post + jeho eager-loadnute zaznamy v tabulke 'views'
-        $post = Post::with('views')->find($event->post_id);
+        $post = Post::with('views')->findOrFail($event->post_id);
 
         // skontrolovanie kazdeho zaznamu vo 'views'
         foreach ($post->views as $view) {
@@ -87,18 +75,12 @@ class PostEventSubscriber
         $this->incrReadability($post->id);
         // inkrementuj popularitu clanku zobrazenim
         $this->incrPopularity($post->id, 'view');
-        // aktualizuj priemernu citanost autora clanku
-        $this->updateReadability($post->user);
-        // aktualizuj priemernu popularitu clankov prihlaseneho uzivatela
-        $this->updatePopularity($post->user);
     }
 
     public function onPostLike($event) {
         $post = Post::findOrFail($event->post_id);
         // inkrementuj popularitu clanku lajknutim
         $this->incrPopularity($event->post_id, 'like');
-        // aktualizuj priemernu popularitu clankov prihlaseneho uzivatela
-        $this->updatePopularity($post->user);
     }
 
      /**
@@ -108,11 +90,6 @@ class PostEventSubscriber
      */
     public function subscribe($events)
     {
-        $events->listen(
-            'App\Events\PostCreated',
-            'App\Listeners\PostEventSubscriber@onPostCreate'
-        );
-
         $events->listen(
             'App\Events\PostDeleted',
             'App\Listeners\PostEventSubscriber@onPostDelete'

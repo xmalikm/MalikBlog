@@ -133,11 +133,5 @@
 	
 	<script src=" {{ asset('js/selectize-js/selectize.js') }} "></script>
 	<script src=" {{ asset('js/parsley.min.js') }} "></script>
-	<script>
-		$('#input-tags').selectize({
-			persist: false,
-			createOnBlur: true,
-			create: true
-		});
-	</script>
+	<script src=" {{ asset('js/blog-js/create-edit.js') }} "></script>
 @endsection

@@ -20,7 +20,7 @@
 	{{-- sortovanie blogerov podla kriterii --}}
 	{!! Form::open(['url' => url('sort-blogers'), 'method' => 'post', 'id' => 'sortBloggers']) !!}
 
-		<h3 onclick="ahoj()"><b>Zoradit podla</b></h3>
+		<h3><b>Zoradit podla</b></h3>
 		{{-- select box --}}
 		<div class="form-group">
 			<div class="col-lg-4">
@@ -114,17 +114,6 @@
 
 @section('scripts')
 
-	<script>
-		$('#sortBloggers').on('submit', function(){
-			// vybrate kriteria z formularu, podla ktorych sa bude sortovat
-			var $sortBy = $('#sortBy :selected').text();
-			var $sortFrom = $('#sortFrom :selected').text();
-
-			// dva skryte inputy vo formulari naplnime tymito hodnotami
-			// ulahci nam to vypis podla coho zoradujeme blogerov
-			$('#sortByMsg').val($sortBy);
-			$('#sortFromMsg').val($sortFrom);
-		});
-	</script>
+	<script src=" {{ asset('js/blog-js/user.js') }} "></script>
 
 @endsection

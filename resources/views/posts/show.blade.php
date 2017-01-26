@@ -17,7 +17,7 @@
    		<div class="col-lg-12 col-md-12">
 
        		<h3 class="text-left" >Blog <b style="color: red;">{{ $post->user->name }} </b> </h3>
-
+			<h4>{{ $post->category->name }}</h4>
        	</div>
 
 	</div>
@@ -50,7 +50,7 @@
 
 		<div class="col-lg-12 col-md-12">
 
-			<small> {{ $post->created_at }} | {{ $post->user->name }} | Prečítané: {{ $post->unique_views }}x | Popularita: <span id="popularity">{{ $post->popularity }}</span> </small>
+			<small> {{ $post->created_at }} | {{ $post->user->name }} | Prečítané: {{ $post->unique_views }}x | Popularita: <span id="post-popularity">{{ $post->popularity }}</span> | Diskusia: <span class="post-comments">{{ count($post->comments) }}</span> komentov </small>
 
 		</div>
 
@@ -102,8 +102,17 @@
 		<div class="col-lg-12 col-md-12">
 
 			@if(Auth::user())
-				<button id="likePostBtn" class="btn btn-info">Článok sa mi páči</button><img id="ajax_loader" src="{{asset('images/loader.gif')}}" style="display: none;">
-				<div id = 'msg'></div>
+				@if($post->isLiked)
+					{{-- ak uz uzivatel podporil clanok --}}
+					<button class="btn btn-info" id="post-liked-btn">Článok sa mi páči</button>
+				@else
+					{{-- uzivatel este clanok nepodporil --}}
+					<div id="like-post">
+						<button id="like-post-btn" class="btn btn-info">Podpor článok</button>
+						<img id="ajax_loader" src="{{asset('images/loader.gif')}}" style="display: none;">
+					</div>
+				@endif
+				<div id = 'error-post-msg'></div>
 			@endif
 			@include('partials/_tags')
 
@@ -122,7 +131,7 @@
 		    		<strong> {{Session::get('discussionAllowed')}} </strong>
 	 			</div>
 			@endif
-			<h2><b>Diskusia <span id="num_of_comments">{{ count($comments) }}</span> komentarov</b><img id="ajax_loader2" src="{{asset('images/loader.gif')}}" style="display: none;"></h2>
+			<h2><b>Diskusia <span class="post-comments">{{ count($comments) }}</span> komentarov</b><img id="ajax_loader2" src="{{asset('images/loader.gif')}}" style="display: none;"></h2>
 
 			{{-- diskusia k clanku - pridavanie komentarov --}}
 			{{-- ak je uzivatel prihlaseny, zobrazi sa toggle button, ktory zobrazuje formular na pridanie noveho komentaru --}}
@@ -133,7 +142,7 @@
 			    	
 			    	{{-- formular na pridanie noveho komentaru --}}
 					{{ Form::open(['url' => url(''), 'method' => 'post', 'data-parsley-validate' => '', 'id' => 'addCommentForm']) }}
-
+						<span class="comment-error-msg"></span>
 						{{-- obsah komentaru --}}
 						<div class="form-group">
 							{!! Form::textarea('commentBody', 'toto je komentar', [
@@ -142,7 +151,6 @@
 								'placeholder' => 'Pridaj komentar',
 								'autofocus' => true,
 								'rows' => 5,
-								'required' => true,
 							]) !!}
 						</div>{{-- obsah komentaru --}}
 						
@@ -258,44 +266,94 @@
 			@endif
 		<br>
 		<br>
+			<div id="allComments">
 
-			{{-- cyklus pre vypis vsetkych komentarov --}}
-			@foreach($comments as $comment)
-				<div class="comment" id="{{ $comment->id }}">
-					<img src="{{ asset('uploads/profile_photos/'. $comment->user->profile_photo) }}" style="width: 50px; height: 50px; float: left; margin-right: 18px;">
-					@can('updateComment', $comment)
-						<button class="btn btn-info btn-xs show-edit-comment-btn">Upraviť komentár</button>
-					@endcan
-					<p><b>Meno: </b> {{$comment->user->name}}</p>
-					<p class="commentBody" style="margin-left: 68px;"><b>Koment: </b> {{$comment->body}}</p>
-					
-					{{-- formular na pridanie noveho komentaru --}}
-					{{ Form::open(['method' => 'post', 'data-parsley-validate' => '', 'class' => 'edit-comment-form']) }}
+				<div class="comment" id="comment-template" style="display: none;">
+						<img style="width: 50px; height: 50px; float: left; margin-right: 18px;">
+						<button class="btn btn-info btn-xs show-edit-comment-btn">Upraviť komentár &nbsp</button>
 
-						{{-- obsah komentaru --}}
-						<div class="form-group">
-							{!! Form::textarea('commentBody', null, [
-								'class' => 'form-control',
-								'id' => 'body',
-								'placeholder' => 'Pridaj komentar',
-								'autofocus' => true,
-								'rows' => 3,
-							]) !!}
-						</div>{{-- obsah komentaru --}}
-							
-						{{-- submit button --}}
-					    <div class="form-group">
-					        {!! Form::button('Uprav', [
-					            'type' => 'submit',
-					            'class' => 'btn btn btn-primary pull-right'
-					        ]) !!}
-					    </div>
+						<span class="comment-likes">+ 0</span>&nbsp<span class="glyphicon glyphicon-thumbs-up like-comment-btn"></span>
 
-					{{ Form::close() }}
+						<p class="user-name"><b>Meno: </b> </p>
+						<p class="commentBody" style="margin-left: 68px;"><b>Koment: </b> </p>
+						
+						{{-- formular na pridanie noveho komentaru --}}
+						{{ Form::open(['method' => 'post', 'data-parsley-validate' => '', 'class' => 'edit-comment-form']) }}
+							<span class="comment-error-msg"></span>
+							{{-- obsah komentaru --}}
+							<div class="form-group">
+								{!! Form::textarea('commentBody', null, [
+									'class' => 'form-control',
+									'id' => 'body',
+									'placeholder' => 'Pridaj komentar',
+									'autofocus' => true,
+									'rows' => 3,
+								]) !!}
+							</div>{{-- obsah komentaru --}}
+								
+							{{-- submit button --}}
+						    <div class="form-group">
+						        {!! Form::button('Uprav', [
+						            'type' => 'submit',
+						            'class' => 'btn btn btn-primary pull-right'
+						        ]) !!}
+						    </div>
+
+						{{ Form::close() }}
+						<img class="edit-ajax-loader pull-right" src="{{asset('images/loader.gif')}}" style="display: none; width: 10%; position: relative; top: -20px;">
 				</div>
-				<br>
-			@endforeach
 
+				{{-- cyklus pre vypis vsetkych komentarov --}}
+				@foreach($comments as $comment)
+					<div class="comment" id="{{ $comment->id }}">
+						<img src="{{ asset('uploads/profile_photos/'. $comment->user->profile_photo) }}" style="width: 50px; height: 50px; float: left; margin-right: 18px;">
+						@can('updateComment', $comment)
+							<button class="btn btn-info btn-xs show-edit-comment-btn">Upraviť komentár &nbsp</button>
+						@endcan
+
+						{{-- lajkovanie komentaru --}}
+						@if(Auth::user())
+							{{-- ak uz uzivatel lajkol tento komentar --}}
+							@if($comment->isLiked)
+								<span class="comment-likes">{{ '+ '.count($comment->likes) }}</span>&nbsp<span class="glyphicon glyphicon-thumbs-up comment-liked-btn" style="border: 1px solid red;"></span>
+							{{-- uzivatel este komentar nelajkoval --}}
+							@else
+								<span class="comment-likes">{{ '+ '.count($comment->likes) }}</span>&nbsp<span class="glyphicon glyphicon-thumbs-up like-comment-btn"></span>
+							@endif
+							<span class = 'comment-like-error-msg'></span>
+						@endif
+
+						<p><b>Meno: </b> {{$comment->user->name}}</p>
+						<p class="commentBody" style="margin-left: 68px;"><b>Koment: </b> {{$comment->body}}</p>
+						
+						{{-- formular na pridanie noveho komentaru --}}
+						{{ Form::open(['method' => 'post', 'data-parsley-validate' => '', 'class' => 'edit-comment-form']) }}
+							<span class="comment-error-msg"></span>
+							{{-- obsah komentaru --}}
+							<div class="form-group">
+								{!! Form::textarea('commentBody', null, [
+									'class' => 'form-control',
+									'id' => 'body',
+									'placeholder' => 'Pridaj komentar',
+									'autofocus' => true,
+									'rows' => 3,
+								]) !!}
+							</div>{{-- obsah komentaru --}}
+								
+							{{-- submit button --}}
+						    <div class="form-group">
+						        {!! Form::button('Uprav', [
+						            'type' => 'submit',
+						            'class' => 'btn btn btn-primary pull-right'
+						        ]) !!}
+						    </div>
+
+						{{ Form::close() }}
+						<img class="edit-ajax-loader pull-right" src="{{asset('images/loader.gif')}}" style="display: none; width: 10%; position: relative; top: -20px;">
+					</div>
+					<br>
+				@endforeach
+			</div>
 		</div>
 
 		<div class="col-md-6">
@@ -337,7 +395,7 @@
 		<div id="recent-posts" class="col-md-12" style="border-top: 2px solid grey;">
 			<h3>Mohlo by vás zaujímať</h3>
 			@foreach($recentPosts as $recentPost)
-				<div class="col-md-4">
+				<div class="col-md-3">
 					<img src="{{ asset('uploads/blog_photos/'. $recentPost->blog_photo) }}" style="width: 180px; height: 150px; display: block;">
 					<a href="{{ url('category', $recentPost->category->id) }}" style="color: grey;">{{$recentPost->category->name}}</a>
 					<br>
@@ -358,169 +416,11 @@
 @section('scripts')
 
 	<script>
-
-
-		$(document).ready(function() {
-
-
-			// ak sa uzivatel prihlasil na to aby komentoval clanok, zoscrolluj
-			// stranku na miesto, kde sa nachadza diskusia
-			function scrollToComment() {
-				// najdenie elementu s danym id-ckom
-				var discussionAllowed = document.getElementById('discussionAllowed');
-					// ak tento element existuje, zoscrolluj stranku na dany element rychlostou 1s
-					if(discussionAllowed) {
-						// collapse element nastavime aby sa pri zobrazeni otvoril
-						// teda hned sa nam zobrazi formular a mozme pisat komentar
-						$('#commentForm').addClass('in');
-					    $('html, body').animate({
-					        scrollTop: $('#discussionAllowed').offset().top-30
-					    }, 1000, 'swing');
-					}
-			}
-
-			// volanie funkcie na zoscrollovanie k diskusii
-	        scrollToComment();
-
-	        // funkcia najskor odstrani vsetky ajaxStart a ajaxStop eventy na stranke
-	        // a nasledne ich zaregistruje nanovo s prisluchajucimi funkciami
-	        function bindAjaxEvent(loader) {
-	        	// odregistrujeme ajax eventy z dokumentu
-	        	$(document).off('ajaxStart ajaxStop');
-	        	// nanovo zaregistrujeme ajax eventy
-				$(document).on({
-					// pri starte ajax volania sa zobrazi animacia nacitavania
-				    ajaxStart: function() { loader.css('display', 'inline'); },
-				    // ked ajax volanie skonci, animaciu nacitavania skryjeme
-				    ajaxStop: function() { loader.css('display', 'none'); }    
-				});
-	        }
-
-			$('#likePostBtn').on('click', function() {
-				// image - animacia nacitavania, ktora sa zobrazi pocas ajax procesu
-				var $ajaxLoader = $('#ajax_loader');
-				// zaregistrujeme 2 ajax eventy - pre zaciatok a koniec ajax volania
-				bindAjaxEvent($ajaxLoader);
-
-				// samotny ajax
-	            $.ajax({
-	            	type:'POST',
-	               	headers: {
-						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-	  				},
-	               	url:'/post/like/{{ $post->id }}',
-	               	data:'_token = <?php echo csrf_token() ?>',
-	               	success:function(data){
-	               		// informacna sprava, ktora sa zobrazi uzivatelovi po lajknuti
-	               	   	$("#msg").html(data.msg);
-	               	   	// hodnoty ktore sa lajknutim zmenia
-	               	  	$('#popularity').html(data.popularity);
-	               	  	$('#avg_popularity').html(data.avg_popularity);
-	               	}
-	            });
-	        });
-
-	        $('#addCommentForm').on('submit', function(event) {
-	        	// zabranenie klasickeho submitnutia formularu
-	        	event.preventDefault();
-	        	// image - animacia nacitavania, ktora sa zobrazi pocas ajax procesu
-	        	var $ajaxLoader = $('#ajax_loader2');
-	        	// zaregistrujeme 2 ajax eventy - pre zaciatok a koniec ajax volania
-	        	bindAjaxEvent($ajaxLoader);
-	   			// obsah komentaru
-	        	var comment = $('#body').val();
-
-	        	// samotny ajax
-	        	$.ajax({
-	            	type:'POST',
-	               	headers: {
-						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-	  				},
-	               	url:'/comment',
-	               	data:{post_id: {{$post->id}}, user_id: {{Auth::id()}}, body: comment},
-	               	success:function(data){
-	               		// clearneme obsah inputu pre vkladanie komentaru
-	               		$('#body').val("");
-	               		// aktualizujeme pocet komentarov clanku
-	               		$('#num_of_comments').html(data.numOfComments);
-
-	               		// vytvorenie noveho komentara, ktory bude appendnuty
-	               			// div element, ktory bude obalovat novy komentar
-	               		var $newComment = $('<div>', {id: 'new_comment', style: 'border: 1px solid red;'}),
-	               			// fotka autora komentaru
-	               			$userPhoto = $('<img>', {src: data.userPhoto, style: 'width: 50px; height: 50px; float: left; margin-right: 18px;'}),
-	               			// meno autora
-	               			$userName = $('<p>').append($('<span>').html('<b>Meno: </b>')).append(data.user),
-	               			// samotny komentar
-	               			$commentBody = $('<p>').append($('<span>').html('<b>Koment: </b>')).append(data.comment);
-
-	               		// vsetky vytvorene elementy spojime dokopy
-	               		$newComment.append($userPhoto)
-	               				   .append($userName)
-	               				   .append($commentBody);
-	               				   
-	               		// cely komentar pripojime do diskusie pod clankom
-	               		$('#allComments').prepend($newComment);
-	               	}
-	            });
-	        });
-
-
-	        // event handler pre click event na button 'Editovat komentar'
-	        $('.show-edit-comment-btn').on('click', function() {
-	        		// wraper pre kazdy jeden komentar -> rodicovsky div element buttona, na ktory klikame
-	        	var $parentDiv = $(this).parent(),
-	        		// potomok div elementu, ktory obsahuje telo komentara
-	        		$commentBody = $parentDiv.find('p.commentBody'),
-	        		// skryty formular pre editaciu komentaru, ktory obsahuje kazdy komentar
-	        		$editCommentForm = $parentDiv.find('form.edit-comment-form'),
-	        		// pole edit formularu, v ktorom sa upravuje komentar
-	        		$commentInput = $editCommentForm.find('#body');
-	        	
-	        	// povodny text komentara zmizne
-
-				$commentBody.fadeToggle(300);
-
-	        	// $commentBody.fadeToggle(50, function() {
-	        		// a zobrazi sa formular s povodnym komentarom, v ktorom moze autor komentaru upravit tento komentar
-	        		$commentInput.val($commentBody.text());
-	        		$editCommentForm.fadeToggle(300);
-
-	        		// pre submitnutie tohto formulara registrujeme novy event
-	        		$editCommentForm.on('submit', function(event) {
-	        			// kedze sa bude vykonavat ajax volanie, zabranime odoslaniu formulara
-	        			event.preventDefault();
-
-	        			// samotne ajax volanie
-			        	$.ajax({
-			            	type:'PUT',
-			               	headers: {
-								'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-			  				},
-			               	url:'/comment/' + $parentDiv.attr('id'), // id komentara ako parameter v route
-			               	data: {commentBody: $commentInput.val()}, // text komentara, posiela sa ako data v requeste
-			               	success:function(data){
-			               		if(data.errorMsg)
-			               			alert(data.errorMsg);
-			               		else {
-			               			$commentBody.html($commentInput.val());
-						        	$editCommentForm.fadeOut(300);
-			               			$commentBody.fadeIn(300);
-			               		}
-			               	}
-			            }); // ajax volanie
-
-	        		}); // submit event pre edit formular komentu
-
-	        	// }); // callback funkcia pre fadeOut-nutie povodneho komentaru
-
-	        }); // handler pre click event na edit button komentaru
-
-	        // tooltip - zobrazuje, ktorym uzivatelom sa paci dany clanok
-	        $('.tooltip-likes').tooltip({html: true});
-
-	    });
-
+		// v externom js subore potrebujeme id-cka prihlaseneho uzivatela a zobrazeneho postu
+		// tieto premenne treba naplnit v blade subore
+		var postId = {{$post->id}},
+			userId = {{Auth::id()}};
 	</script>
+	<script src=" {{ asset('js/blog-js/show-post.js') }} "></script>
 
 @endsection

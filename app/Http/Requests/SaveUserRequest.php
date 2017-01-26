@@ -27,6 +27,7 @@ class SaveUserRequest extends FormRequest
         return [
             'name' => 'required|max:20',
             'email' => 'required|email',
+            'profile_photo' => 'max:1024|mimes:jpeg,jpg,png,gif'
         ];
     }
 
@@ -36,6 +37,8 @@ class SaveUserRequest extends FormRequest
             'name.max' => 'Meno moze mat najviac 20 znakov',
             'email.required' => 'Nezadal si e-mail',
             'email.unique' => 'Tento e-mail uz existuje',
+            'profile_photo.mimes' => 'Nespravny format obrazku',
+            'profile_photo.max' => 'Obrazok moze mat najviac 1Mb',
         ];
     }
 }

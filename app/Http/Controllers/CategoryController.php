@@ -9,39 +9,29 @@ use app\Services\CategoryService;
 class CategoryController extends Controller
 {
 
-
     public $categoryService;
-    public $postService;
 
     public function __construct(CategoryService $categoryService) {
         $this->categoryService = $categoryService;
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    // vytvorenie novej kategorie
     public function store(Request $request)
     {
         // zvaliduje novu kategoriu a vytvori ju
-        $this->categoryService->createCategory($request);
+        $newCategory = $this->categoryService->createCategory($request);
 
-        // ak validacia presla, vrati sa a vypise success spravu
+        // ak validacia presla, vrati sa spat
         return back()
-            ->with('newCatMessage', 'Nová kategória bola pridaná! Môžete si ju vybrať!');
+            ->with('newCatMessage', 'Nová kategória bola pridaná!') // sprava pre uzivatela
+            ->with('newCat', $newCategory->id); // vytvorenu kategoriu nastavime vo view ako vybratu
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    // vylistovanie clankov z danej kategorie
     public function show($id)
     {
-        $category = $this->categoryService->findCategory($id);
+        // najdeme kategoriu s danym id-ckom
+        $category = Category::findOrFail($id);
         
         return view('categories.indexCategory')
             ->with([
@@ -49,38 +39,5 @@ class CategoryController extends Controller
                 'category' => $category,
             ]);
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+    
 }
