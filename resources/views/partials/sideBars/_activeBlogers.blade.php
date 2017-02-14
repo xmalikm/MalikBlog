@@ -1,21 +1,34 @@
+{{-- zoznam najaktivnejsich autorov --}}
+<section class="active-bloggers">
+    {{-- row --}}
+    <div class="row">
+        <div class="col-lg-12">
+            {{-- napdis --}}
+            <h3 class="title title-marker">Najaktívnejší autori</h3>
 
- {{-- sidebar -> najcitanejsie blogy za urcite obdobie --}}
-<div class="panel panel-info panel-table">
+            <ul>
+                {{-- zoznam autorov --}}
+                @forelse($activeBlogers as $user)
 
-    {{-- nadpis --}}
-    <div class="panel-heading panel-table-heading">
-        <h3 class="text-center">Najaktívnejší autori</h3>
-    </div>
-
-	{{-- telo --}}
-    <div class="panel-body">
-        <ol>
-            @foreach($activeBlogers as $activeBloger)
-                <li><a href=" {{ url('user', $activeBloger->id) }} "><img src=" {{asset('uploads/profile_photos/'. $activeBloger->profile_photo)}}" style="width: 50px; height: 50px; border: 1px solid grey;"> {{ $activeBloger->name}} </a> <small>- články:{{ $activeBloger->num_of_articles }}</small></li>
-                <hr>
-            @endforeach
-        </ol>
-
-    </div>{{-- panel body --}}
-
-</div>{{-- najcitanejsie blogy --}}
+                    <li>
+                        {{-- odrazka v zozname --}}
+                        <span class="glyphicon glyphicon glyphicon-chevron-right"></span>&nbsp
+                        {{-- profilova foto uzivatela --}}
+                        <a href=" {{ url('user', $user->id) }} ">
+                            <img src="{{asset('uploads/profile_photos/'. $user->profile_photo)}}" class="img-circle author-avatar">
+                        </a>
+                        {{-- meno uzivatela --}}
+                        <h5 class="title" style="display: inline-block;">
+                            <a  href=" {{ url('user', $user->id) }} "> {{ $user->name }}</a>
+                        </h5>
+                        {{-- pocet clankov uzivatela --}}
+                        <span class="badge num-of-articles" title="Počet článkov kategórie">
+                           {{ $user->numOfArticles }}
+                        </span>
+                    </li>
+                    
+                @endforeach
+            </ul>
+        </div>
+    </div>{{-- row --}}
+</section>{{-- kategorie --}} 

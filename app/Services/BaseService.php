@@ -30,11 +30,11 @@ class BaseService {
         // ak je dany model instanciou Post modelu
         if($model instanceof Post)
             // uloz obrazok do adresara pre clanky
-        	Image::make($photo)->resize(500, 300)->save( public_path('uploads/blog_photos/' . $fileName));
+        	Image::make($photo)->resize(650, 350)->save( public_path('uploads/blog_photos/' . $fileName));
         // ak je dany model instanciou User modelu
         else if($model instanceof User)
             // uloz obrazok do adresara pre uzivatelov
-        	Image::make($photo)->resize(500, 300)->save( public_path('uploads/profile_photos/' . $fileName));
+        	Image::make($photo)->resize(650, 350)->save( public_path('uploads/profile_photos/' . $fileName));
         // inak vrat null
         else
         	return null;

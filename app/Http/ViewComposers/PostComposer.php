@@ -5,6 +5,7 @@ namespace App\Http\ViewComposers;
 use App\Category;
 use App\Post;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 /**
@@ -24,16 +25,19 @@ class PostComposer
         $mostViewed['today'] = Post::with('user')
             ->whereDate('created_at', '=', Carbon::today()->toDateString())
             ->orderBy('unique_views', 'desc')
+            ->limit(5)
             ->get();
 
         $mostViewed['3days'] = Post::with('user')
             ->whereDate('created_at', '>=', Carbon::today()->subDay(2)->toDateString())
             ->orderBy('unique_views', 'desc')
+            ->limit(5)
             ->get();
 
         $mostViewed['7days'] = Post::with('user')
             ->whereDate('created_at', '>=', Carbon::today()->subDay(6)->toDateString())
             ->orderBy('unique_views', 'desc')
+            ->limit(5)
             ->get();
 
         $view->with('mostViewed', $mostViewed);
@@ -41,10 +45,13 @@ class PostComposer
 
     // najnovsie a najpopularnejsie clanky
     public function getNewAndPopular(View $view) {
-        $newPopular['newest'] = \App\Post::orderBy('created_at', 'desc')->limit(5)->get();
-        $newPopular['mostPopular'] = \App\Post::orderBy('popularity', 'desc')->limit(5)->get();
+        $newest = \App\Post::orderBy('created_at', 'desc')->limit(5)->get();
+        $popular = \App\Post::orderBy('popularity', 'desc')->limit(5)->get();
 
-        $view->with('newPopular', $newPopular);
+        $view->with([
+                'newest' => $newest,
+                'popular' => $popular
+            ]);
     }
 
     // zobraz dalsie clanky od autora, dalsie clanky z tej istej kategorie
@@ -55,7 +62,7 @@ class PostComposer
 
         // vracia najnovsi clanok z prvych styroch kategorii, ktore obsahuju nejaky clanok
         $recentPosts = $this->getRecentPosts($post);
-
+        
         $view->with([
             'postsFromAuthor' => $post->user->posts->where('id', '!=', $post->id)->take(5), // dalsie clanky autora
             'postsFromCat' => $post->category->posts->where('id', '!=', $post->id)->take(5), // dalsie clanky z danej kategorie

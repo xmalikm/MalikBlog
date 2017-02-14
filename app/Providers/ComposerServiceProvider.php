@@ -44,7 +44,7 @@ class ComposerServiceProvider extends ServiceProvider
 
         // sidebar s najnovsimi a najpopularnejsimi clankami
         View::composer(
-            ['categories.indexCategory'],
+            ['categories.indexCategory', 'welcome'],
             'App\Http\ViewComposers\PostComposer@getNewAndPopular'
         );
 

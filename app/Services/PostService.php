@@ -2,9 +2,11 @@
 
 namespace app\Services;
 
+use App\Category;
 use App\Events\PostDeleted;
 use App\Post;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use app\Services\BaseService;
 use app\Services\TagService;
 
@@ -124,6 +126,46 @@ class PostService extends BaseService{
                   ->from('comments')
                   ->where('post_id', $post_id);
         })->orWhere('likeable_id', $post_id)->delete();
+	}
+
+	// clanky podla kategorii
+	public function getByCategory() {
+		// kategorie zoradene podla poctu clankov od najvacsieho
+		$categories = Category::leftJoin('posts', 'categories.id', '=', 'posts.category_id')
+                ->select('categories.id', 'posts.user_id', DB::raw('count(posts.id) as countPosts'))
+                ->limit(3)
+                ->orderBy('countPosts', 'desc')
+                ->groupBy('categories.id', 'posts.user_id')->get();
+        // pole clankov z danych kategorii
+        $catPosts = [];
+        // pole naplnime clankami z prvych troch kategorii, ktore sme najskor zoradili
+        for ($i=0; $i < count($categories); $i++) { 
+            $catId = $categories[$i]->id;
+            $catPosts[$i] = Category::find($catId)->posts->take(5);
+        }
+        return $catPosts;
+	}
+
+	// nahodne clanky
+	public function getRandomPosts() {
+		$posts = Post::orderBy(DB::raw('rand()'))->limit(4)->get();
+
+		return $posts;
+	}
+
+	// najviac diskutovane clanky
+	public function getMostDiscussed($limit = null) {
+		// nastavenie limitu na pocet vysledkov, ak nejaky je
+		$limit = isset($limit) ? $limit : 1000;
+
+		$posts = Post::with('user')->leftJoin('comments', 'posts.id', '=', 'comments.post_id')
+                   ->select('posts.id', 'posts.user_id', 'posts.category_id', 'posts.title', 'posts.slug', 'posts.blog_photo', 'posts.unique_views', 'posts.popularity', 'posts.created_at', DB::raw('count(comments.id) as countComments'))
+                   ->orderBy('countComments', 'desc')
+                   ->groupBy('posts.id', 'posts.user_id', 'posts.category_id', 'posts.title', 'posts.slug','posts.blog_photo','posts.unique_views', 'posts.popularity','posts.created_at')
+                   ->limit($limit)
+                   ->get();
+                   
+        return $posts;
 	}
 
 }

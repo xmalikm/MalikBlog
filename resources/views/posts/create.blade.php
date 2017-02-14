@@ -12,7 +12,14 @@
 	{!! Breadcrumbs::render('createPost') !!}
 @endsection
 
-@section('pageTitle', 'Nový článok')
+@section('pageTitle')
+	{{-- nadpis --}}
+	<div class="row">
+		<div class="col-lg-12 col-md-12 text-center post-title">
+			<h1 class="title-marker"><a href=""> Nový clánok </a></h1>
+		</div>
+	</div>{{-- nadpis --}}
+@endsection
 
 @section('content')
  	@if(count($errors) >0)

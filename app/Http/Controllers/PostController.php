@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use app\Services\CategoryService;
+use app\Services\CommentService;
 use app\Services\PostService;
 use app\Services\TagService;
 
@@ -21,13 +22,43 @@ class PostController extends Controller
     public $postService;
     public $categoryService;
     public $tagService;
+    public $commentService;
 
-    public function __construct(PostService $postService, CategoryService $categoryService, TagService $tagService) {
+    public function __construct(PostService $postService, CategoryService $categoryService, TagService $tagService, CommentService $commentService) {
         $this->postService = $postService;
         $this->categoryService = $categoryService;
         $this->tagService = $tagService;
+        $this->commentService = $commentService;
         // auth middleware -> zabezpeci ze na prezeranie definovanych stranok musi byt uzivatel prihlaseny
         $this->middleware('auth', ['except' => ['index', 'show']]);
+    }
+
+    public function welcome() {
+        // clanky do slideru
+        $sliderPosts = Post::orderBy('created_at', 'desc')->limit(6)->get();
+        // clanky podla kategorii
+        $catPosts = $this->postService->getByCategory();
+        // random clanky
+        $randomPosts = $this->postService->getRandomPosts();
+        // kategorie ktore obsahuju clanky
+        $postsCategories = $this->categoryService->getCatsWithPosts();
+        // najviac diskutovane clanky
+        $discussedPosts = $this->postService->getMostDiscussed(5);
+        // komentare uzivatelov
+        $usersComments = $this->commentService->getComments();
+        // tagy clankov
+        $tags = $this->tagService->getAllTags();
+
+        return view('welcome')
+            ->with([
+                'sliderPosts' => $sliderPosts,
+                'catPosts' => $catPosts,
+                'randomPosts' => $randomPosts,
+                'postsCategories' => $postsCategories,
+                'discussedPosts' => $discussedPosts,
+                'usersComments' => $usersComments,
+                'tags' => $tags,
+            ]);
     }
 
     // vylistovanie vsetkych clankov zoradenych podla datumu
@@ -165,11 +196,7 @@ class PostController extends Controller
 
     // clanky zoradene od najviac diskutovanych
     public function getMostDiscussed() {
-        $posts = Post::with('user')->leftJoin('comments', 'posts.id', '=', 'comments.post_id')
-                    ->select('posts.id', 'posts.user_id', 'posts.category_id', 'posts.title', 'posts.blog_photo', 'posts.unique_views', 'posts.popularity', 'posts.created_at', DB::raw('count(comments.id) as countComments'))
-                    ->orderBy('countComments', 'desc')
-                    ->groupBy('posts.id', 'posts.user_id', 'posts.category_id', 'posts.title','posts.blog_photo','posts.unique_views', 'posts.popularity','posts.created_at')
-                    ->get();
+       $posts = $this->postService->getMostDiscussed();
 
         return view('posts.indexPost')
             ->with([

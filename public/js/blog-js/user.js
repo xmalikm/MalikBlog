@@ -1,12 +1,12 @@
-$('#sortBloggers').on('submit', function(){
+$('#sort-users').on('submit', function(){
 	// vybrate kriteria z formularu, podla ktorych sa bude sortovat
-	var $sortBy = $('#sortBy :selected').text();
-	var $sortFrom = $('#sortFrom :selected').text();
+	var $sortBy = $('#sort-by :selected').text();
+	var $sortFrom = $('#sort-from :selected').text();
 
 	// dva skryte inputy vo formulari naplnime tymito hodnotami
 	// ulahci nam to vypis podla coho zoradujeme blogerov
-	$('#sortByMsg').val($sortBy);
-	$('#sortFromMsg').val($sortFrom);
+	$('#sort-by-msg').val($sortBy);
+	$('#sort-from-msg').val($sortFrom);
 });
 
 function deletePost(id){
@@ -25,9 +25,9 @@ function deletePost(id){
  }
 
 $(document).on({
-	ajaxStart: function() { $("#ajax_loader").css('display', 'inline'); },
+	ajaxStart: function() { $("#ajax_loader3").css('display', 'inline'); },
     ajaxStop: function() {
-    	$("#ajax_loader").css('display', 'none');
+    	$("#ajax_loader3").css('display', 'none');
     	window.setTimeout(function() {
 		  $("#post_deleted").fadeTo(500, 0).slideUp(500, function(){
 		    $(this).remove(); 

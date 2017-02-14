@@ -3,7 +3,7 @@
 // domovska stranka: home/
 Breadcrumbs::register('home', function($breadcrumbs)
 {
-    $breadcrumbs->push('Home', url('/'));
+    $breadcrumbs->push('Home', url('/'), ['icon' => 'home.png']);
 });
 
 // vsetky clanky: home/vsetky clanky/

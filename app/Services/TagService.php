@@ -44,4 +44,9 @@ class TagService {
         return $string;
     }
 
+    // vrati vsetky tagy, ktore su v clankoch
+    public function getAllTags() {
+        return Tag::all();
+    }
+
 }

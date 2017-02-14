@@ -64,4 +64,11 @@ class CommentService {
         return $validator->fails();
     }
 
+    // komentare uzivatelov
+    public function getComments() {
+        $comments = Comment::with('user', 'post')->limit(5)->get();
+
+        return $comments;
+    }
+
 }

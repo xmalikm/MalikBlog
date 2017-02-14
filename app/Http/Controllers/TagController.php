@@ -11,7 +11,7 @@ class TagController extends Controller
     	$tag = Tag::findOrFail($id);
 
     	return view('tags.indexTag')
-    		->with('title', "Články s tagom " . "<b>" . $tag->name . "</b>")
+    		->with('title', "Články s tagom " . "<span class = 'text-highlighter'>" . $tag->name . "</span>")
     		->with('tag', $tag);
     }
 }

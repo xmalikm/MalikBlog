@@ -14,7 +14,14 @@
 	{!! Breadcrumbs::render('editPost', $post) !!}
 @endsection
 
-@section('pageTitle', 'Úprava článku')
+@section('pageTitle')
+	{{-- nadpis --}}
+	<div class="row">
+		<div class="col-lg-12 col-md-12 text-center post-title">
+			<h1><a href=""> Editovať clánok </a></h1>
+		</div>
+	</div>{{-- nadpis --}}
+@endsection
 
 @section('content')
  	@if(count($errors) >0)
@@ -29,7 +36,13 @@
 		 musi byt umiestneny mimo formularu, pretoze sam obsahuje druhy formular --}}
   	@include('partials/_newCatModal')
 
-	{!! Form::model($post, ['url' => url('post', $post->id), 'method' => 'put', 'enctype' => 'multipart/form-data', 'data-parsley-validate' => '']) !!}
+	{!! Form::model($post, [
+						'url' => url('post', $post->id),
+						'method' => 'put',
+						'id' => 'edit-post',
+						'enctype' => 'multipart/form-data',
+						'data-parsley-validate' => ''
+					]) !!}
 		{{-- spolocny form --}}
 		{{-- @include('partials.blogForm') --}}
 
@@ -75,13 +88,16 @@
 
 		{{-- obrazok blogu --}}
 		<div class="form-group">
-			{!! Form::label('text', 'Obrázok') !!}
-			{{-- aktualny obrazok clanku --}}
-			<img src=" {{asset('uploads/blog_photos/'. $post->blog_photo)}}" style="width: 200px; height: 250px; border: 1px solid grey;">
-			{{ Form::file('blog_photo') }}
-			{{-- {{ Form::close() }} --}}
-		</div>
-		{{-- obrazok blogu --}}
+			<div class="col-lg-6 file-input-wrapper">
+				{!! Form::label('text', 'Náhladový obrázok', ['class' => 'photo-label']) !!}
+				{{-- aktualny obrazok clanku --}}
+				<img class="photo" src=" {{asset('uploads/blog_photos/'. $post->blog_photo)}}">
+				{{ Form::file('blog_photo') }}
+			</div>
+		</div>{{-- obrazok blogu --}}
+		
+		{{-- clearnutie za obrazkom --}}
+		<div class="clear-content"></div>
 
 		{{-- tagy blogu --}}
 		<div class="form-group">

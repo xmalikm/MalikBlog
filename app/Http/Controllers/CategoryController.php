@@ -35,7 +35,7 @@ class CategoryController extends Controller
         
         return view('categories.indexCategory')
             ->with([
-                'title' => 'Články z kategórie <b>'. $category->name ."</b>",
+                'title' => 'Články z kategórie <span class = "text-highlighter">'. $category->name ."</span>",
                 'category' => $category,
             ]);
     }

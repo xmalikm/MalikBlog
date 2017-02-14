@@ -1,34 +1,25 @@
-{{-- 
-	Forma pre lavu a pravu stranu obsahu:
-		- lava strana -> uryvky clankov, clanky, kategorie,...
-		- prava strana -> rozne typy sidebarov 
---}}
+{{-- Hlavny obsah stranky bez sidebarov --}}
 
 @extends('master')
 
 @section('mainContent')
 	
 	<div class="row">
-		<div class="col-lg-8 col-md-8">
+		<div class="col-md-12">
 			{{-- breadcrumbs --}}
 			<h5>@yield('breadcrumbs')</h5>
 		</div>
 	</div>
 
-	{{-- druhy row: posty + dalsie sidebary --}}
-	<div class="row" style="margin-top: 50px;">
-			{{-- nadpis --}}
-			<h1>@yield('pageTitle')</h1>
-			
-		{{-- lava strana -> posty --}}
-		<div class="col-lg-12 col-md-12 col-sm-12" style="">
-			
+	{{-- hlavny content --}}
+	<div class="col-md-12 main-content-wrapper">
 
-			{{-- obsah --}}
-        	@yield('content')
+		{{-- nadpis stranky --}}
+		@yield('pageTitle')
 
-		</div>{{-- lava strana --}}
+		{{-- obsah stranky --}}
+	    @yield('content')
 
-	</div>{{-- druhy row: posty + dalsie sidebary --}}
+	</div>{{-- hlavny content --}}
 
 @endsection

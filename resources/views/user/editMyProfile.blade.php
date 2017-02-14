@@ -59,20 +59,23 @@
 
 				{{-- profilova foto --}}
 				<div class="form-group">
-					{!! Form::label('text', 'Profilová foto') !!}
-					<br>
-					@if(Route::currentRouteName() === 'profile.edit')
-						{{-- aktualny obrazok clanku --}}
-						<img src=" {{asset('uploads/profile_photos/'. $user->profile_photo)}}" style="width: 200px; height: 250px; border: 1px solid grey;">
-					@endif
-					{{ Form::file('profile_photo') }}
+					<div class="col-lg-6 file-input-wrapper">
+						{!! Form::label('text', 'Profilová foto', ['class' => 'photo-label']) !!}
+							{{-- aktualny obrazok clanku --}}
+							<img class="img-responsive photo" src=" {{asset('uploads/profile_photos/'. $user->profile_photo)}}">
+						{{ Form::file('profile_photo') }}
+					</div>{{-- profilova foto --}}
 				</div>
-				{{-- profilova foto --}}
 
-				{!! Form::button('Uprav profil', [
-					'type' => 'submit',
-					'class' => 'btn btn-primary'
-				]) !!}
+				{{-- clearnutie za obrazkom --}}
+				<div class="clear-content"></div>
+
+				<div class="form-group">
+					{!! Form::button('Uprav profil', [
+						'type' => 'submit',
+						'class' => 'btn btn-primary'
+					]) !!}
+				</div>
 
 			{!! Form::close() !!}
 

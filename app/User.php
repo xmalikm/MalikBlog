@@ -68,7 +68,7 @@ class User extends Authenticatable
     public function getAvgCommentsAttribute() {
         // osetrenie situacie, ked je pocet clankov uzivatela 0 -> pretoze avg(0) == null
         // vtedy vratime 0, inak sa vrati priemerna hodnota
-        if(!$this->comments->count())
+        if(!$this->posts->count())
             return 0;
         else {
             // pocet komentarov vsetkych clankov uzivatela

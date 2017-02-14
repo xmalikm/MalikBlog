@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function (){
-	return view('welcome');
-});
+Route::get('/', 'PostController@welcome');
 // resource operacie pre category model
 Route::resource('category', 'CategoryController', ['only' => ['store', 'show', 'destroy']]);
 // resource operacie pre user model

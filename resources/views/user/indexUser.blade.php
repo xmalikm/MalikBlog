@@ -13,12 +13,14 @@
 	{!! Breadcrumbs::render('blogers') !!}
 @endsection
 
-@section('pageTitle', $title)
+@section('pageTitle')
+<h2 class="title title-marker">{!! $title !!}</h2>
+@endsection
 
 @section('content')
 
 	{{-- sortovanie blogerov podla kriterii --}}
-	{!! Form::open(['url' => url('sort-blogers'), 'method' => 'post', 'id' => 'sortBloggers']) !!}
+	{!! Form::open(['url' => url('sort-blogers'), 'method' => 'post', 'id' => 'sort-users']) !!}
 
 		<h3><b>Zoradit podla</b></h3>
 		{{-- select box --}}
@@ -27,82 +29,98 @@
 				{!! Form::select('sortBy', [
 						'unique_views' => 'priemernej čítanosti',
 				   		'popularity' => 'karmy',
-				   		'created_at' => 'dátumu registrácie'], 'read', ['class' => 'form-control', 'id' => 'sortBy']
+				   		'created_at' => 'dátumu registrácie'], 'read', [
+				   		'class' => 'form-control',
+				   		'id' => 'sort-by'
+				   		]
 				) !!}
 			</div>
 			<div class="col-lg-4">
 				{!! Form::select('sortFrom', [
 						'desc' => 'od najväčšieho',
-			   			'asc' => 'od najmenšieho',
-			   		], 'desc', ['class' => 'form-control', 'id' => 'sortFrom']
+			   			'asc' => 'od najmenšieho'], 'desc', [
+			   			'class' => 'form-control',
+			   			'id' => 'sort-from'
+			   			]
 				) !!}
 			</div>
 		</div>
 
-		{{ Form::hidden('sortByMsg', null, ['id' => 'sortByMsg']) }}
-		{{ Form::hidden('sortFromMsg', null, ['id' => 'sortFromMsg']) }}
+		{{ Form::hidden('sortByMsg', null, ['id' => 'sort-by-msg']) }}
+		{{ Form::hidden('sortFromMsg', null, ['id' => 'sort-from-msg']) }}
 
 		{{-- submit button --}}
         <div class="form-group">
             {!! Form::button('Zoradiť', [
                 'type' => 'submit',
-                'class' => 'btn btn-primary'
+                'class' => 'btn btn-primary',
+                'id' => 'submit'
             ]) !!}
         </div>
 
 	{!! Form::close() !!}
 	
-	@foreach($users as $user)
+	<div class="row ">
+		{{-- zoznam uzivatelov --}}
+		<div class="users-list">
+			<ul>
+				@foreach($users as $user)
 
-		<div class="col-lg-7 col-md-7">
-			<!-- Media middle -->
-			<div class="media">
-				<div class="media-left media-bottom">
-			    	{{-- profilova fotka --}}
-					<a href="{{ url('user', $user->id) }}">
-						<img src=" {{asset('uploads/profile_photos/'. $user->profile_photo)}}" class="media-object" style="width: 120px; height: 140px; border: 1px solid grey;">
-					</a>
-				</div>
-				<div class="media-body">
-			    	<h4 class="media-heading"><a href="{{ url('user', $user->id) }}">{{ $user->name }}</a></h4>
-			    	<div class="col-lg-4">
+							<li>
+								<div class="user-sample-wrapper clear-content">
+									<div class="col-sm-4">
+										<div class="post-thumbnail">
+											{{-- profilova fotka --}}
+											<a href="{{ url('user', $user->id) }}">
+												<img src=" {{asset('uploads/profile_photos/'. $user->profile_photo)}}" class="img-responsive">
+											</a>
+										</div>
+									</div>
+									<div class="col-sm-8">
+										<div class="post-content">
+												{{-- meno autora --}}
+												<h4 class="title">
+													<a href="{{ url('user', $user->id) }}">{{ $user->name }}</a>
+												</h4>
+												{{-- statistiky uzivatela --}}
+												<div class="row">
+													{{-- pocet clankov --}}
+													<div class="col-lg-4 user-info-box">
+														<div class="well">
+															<span class="user-stats">
+																Počet článkov
+															</span><br>
+															<b>	{{ $user->numOfArticles }} </b>
+														</div>
+													</div>
+													{{-- priemerna citanost clankov --}}
+													<div class="col-lg-4 user-info-box">
+														<div class="well">
+															<span class="user-stats">
+																Priemerná čítateľnosť
+															</span><br>
+															<b>	{{ $user->avgReadability }} </b>
+														</div>
+													</div>
+													{{-- priemerna popularita clankov --}}
+													<div class="col-lg-4 user-info-box">
+														<div class="well">
+															<span class="user-stats">
+																Priemerna popularita
+															</span><br>
+															<b>	{{ $user->avgPopularity }} </b>
+														</div>
+													</div>
+												</div>
+										</div>
+									</div>
+								</div>
+							</li>
 
-						<div class="well">
-							<span class="profile-statistics">
-								Počet článkov
-							</span><br>
-							<b>	{{ $user->numOfArticles }} </b>
-						</div>
-					
-					</div>
-
-					<div class="col-lg-4 profile-boxes">
-
-						<div class="well">
-							<span class="profile-statistics">
-								Priemerná čítateľnosť
-							</span><br>
-							<b>	{{ $user->avgReadability }} </b>
-						</div>
-					
-					</div>
-
-					<div class="col-lg-4 profile-boxes">
-
-						<div class="well">
-							<span class="profile-statistics">
-								Priemerna popularita
-							</span><br>
-							<b>	{{ $user->avgPopularity }} </b>
-						</div>
-					
-					</div>
-				</div>
-			</div>
-			<hr>
+				@endforeach
+			</ul>{{-- zoznam uzivatelov --}}
 		</div>
-
-	@endforeach
+	</div>{{-- row --}}
 
 @endsection
 

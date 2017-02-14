@@ -15,11 +15,20 @@ class Post extends Model
 	// treba sa na to pozriet
 	public function getCreatedAtAttribute($value) {
 		$c = Carbon::parse($value);
+		// return $c->format('Y-m-d');
         return $c->format('Y-m-d') .' o '. $c->format('H:i');
 	}
 
 	public function getTextTeaserAttribute() {
-		return substr($this->text, 0, 140);
+		return (strlen($this->text) > 122) ? substr($this->text, 0, 122).'...' : $this->text;
+	}
+
+	public function getTitleTeaserAttribute() {
+		return (strlen($this->title) > 25) ? substr($this->title, 0, 23).'...' : $this->title;
+	}
+
+	public function getSidebarTitleTeaserAttribute() {
+		return (strlen($this->title) > 14) ? substr($this->title, 0, 14).'...' : $this->title;
 	}
 
 	public function getFullTextAttribute() {

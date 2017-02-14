@@ -55,7 +55,7 @@ class UserController extends Controller
     	$user = User::findOrFail($id);
 
     	return view('user.profile')
-    		->with('title', "Profil uživateľa " . "<b>" . $user->name . "</b>")
+    		->with('title', "Profil uživateľa " . "<span class = 'text-highlighter'>" . $user->name . "</span>")
     		->with('user', $user);
     }
 
@@ -93,13 +93,13 @@ class UserController extends Controller
         // su to hodnoty select option tagov - teda kriteria triedenia
         $sortByMsg = $request->input('sortByMsg');
         $sortFromMsg = $request->input('sortFromMsg');
+        // dd('je to '.$sortByMsg);
 
         // string, ktory bude vypisany ako informacie pre usera podla coho sa sortovalo
         $title = $this->sortMessage($sortByMsg, $sortFromMsg);
     
         // z user servisu si vratime zoradenych uzivatelov
         $users = $this->userService->getSortedBloggers($request);
-
         return view('user.indexUser')
             ->with([
                 'users' => $users,

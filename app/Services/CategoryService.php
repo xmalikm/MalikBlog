@@ -3,6 +3,7 @@
 namespace app\Services;
 
 use App\Category;
+use Illuminate\Support\Facades\DB;
 use app\Services\BaseService;
 
 
@@ -56,6 +57,15 @@ class CategoryService extends BaseService{
     // vsetky kategorie
     public function getAllCategories() {
         return Category::all();
+    }
+
+    public function getCatsWithPosts() {
+        $categories = Category::join('posts', 'categories.id', '=', 'posts.category_id')
+                  ->select('categories.id', 'categories.name', DB::raw('count(posts.id) as countPosts'))
+                  ->groupBy('categories.id', 'categories.name')
+                  ->get();
+
+        return $categories;
     }
 
 }

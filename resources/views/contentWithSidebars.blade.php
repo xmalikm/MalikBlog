@@ -1,45 +1,45 @@
-{{-- 
-	Forma pre lavu a pravu stranu obsahu:
-		- lava strana -> uryvky clankov, clanky, kategorie,...
-		- prava strana -> rozne typy sidebarov 
---}}
+{{-- Hlavny obsah stranky spolu so sidebarmi --}}
 
 @extends('master')
 
 @section('mainContent')
-	
+			
+	{{-- neviem ci to treba --}}
+	<div class="clear-div" style="clear: both"></div>
+	{{-- kategorie clankov --}}
+	@yield('categories')
+
+	{{-- breadcrumbs --}}
 	<div class="row">
-		<div class="col-lg-8 col-md-8">
-			{{-- breadcrumbs --}}
+		<div class="col-md-12">
 			<h5>@yield('breadcrumbs')</h5>
 		</div>
 	</div>
 
-	{{-- buttony na zoradovanie clankov --}}
-	@yield('sortingButtons')
+	{{-- hlavny content --}}
+	<div class="row">
+		<div class="col-md-7 main-content-wrapper">
 
-	{{-- druhy row: posty + dalsie sidebary --}}
-	<div class="row" style="margin-top: 50px;">
-			
-		{{-- lava strana -> posty --}}
-		<div class="col-lg-8 col-md-8 col-sm-8" style="">
-			
 			{{-- nadpis stranky --}}
-			<h1>@yield('pageTitle')</h1>
+			@yield('pageTitle')
+
+			{{-- buttony na zoradovanie clankov --}}
+			@yield('sortingButtons')
 
 			{{-- obsah stranky --}}
-        	@yield('content')
+		    @yield('content')
 
-		</div>{{-- lava strana --}}
+		</div>{{-- hlavny content --}}
 
-		{{-- prava strana -> sidebary --}}
-		<div class="col-lg-4  col-md-4 col-sm-4">
+		{{-- sidebary - pojdu do partials --}}
+		<aside>
+			<div class="col-md-4 col-md-offset-1 sidebar-wrapper">
 
-			{{-- sidebary --}}
-			@yield('sidebars')
+				{{-- sidebary --}}
+				@yield('sidebars')
 
-		</div>{{-- prava strana -> sidebary --}}
-
-	</div>{{-- druhy row: posty + dalsie sidebary --}}
+			</div>{{-- sidebar --}}
+		</aside>
+	</div>
 
 @endsection

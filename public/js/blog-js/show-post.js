@@ -36,7 +36,7 @@ $(document).ready(function() {
 	        // funkcia na handlovanie lajknutia komentaru
 	        function likeComment() {
 	        	// komentar, ktory lajkujeme
-	        	var $comment = $(this).parent(),
+	        	var $comment = $(this).parent().parent(),
 	        		// id-cko komentaru
 	        		$commentId = $comment.attr('id');
 
@@ -51,13 +51,12 @@ $(document).ready(function() {
 	               	success:function(data){
 	               		// ak lajknutie clanku prebehlo
 	               		if(data.msg) {
-	               			
 	               			// novy span, ktory nahradi povodny span na lajknutie komentaru
-	               			$commentLiked = $('<span>', {
-								'class': 'glyphicon glyphicon-thumbs-up comment-liked-btn',
-								style: 'border: 1px solid red;,'
+	               			$commentLiked = $('<img>', {
+								'src': thumb_up,
+								'title': 'Komentár sa ti páči',
+								style: 'width: 20px; height: 20px; margin-top: -10px;',
 	               			});
-
 	               			// namiesto povodneho spanu vlozime span, ktory uzivatela informuje, ze komentar uz lajkol
 	               			$comment.find('.like-comment-btn').replaceWith($commentLiked);
 
@@ -93,13 +92,14 @@ $(document).ready(function() {
 	               		if(data.msg) {
 
 	               			// namiesto povodneho buttonu vlozime button, ktory uzivatela informuje, ze clanok uz lajkol
-	               			$likePostDiv.replaceWith($('<button>', {
+	               			$likeButton = $('<button>', {
 	               				class: 'btn btn-info',
 	               				id: 'post-liked-btn'
-	               			}).text('Článok sa mi páči'));
+	               			}).html('<span class = "glyphicon glyphicon-ok"></span> Článok sa mi páči')
+	               			$likePostDiv.replaceWith($likeButton);
 
 	               	   		// hodnoty ktore sa lajknutim zmenia
-	               	  		$('#post-popularity').html(data.popularity);
+	               	  		$('#post-popularity span').html(data.popularity);
 	               	  		$('#avg-popularity').html(data.avg_popularity);
 	               		}
 
@@ -142,7 +142,7 @@ $(document).ready(function() {
 		               		// clearneme obsah inputu pre vkladanie komentaru
 		               		$('#body').val("");
 		               		// aktualizujeme pocet komentarov clanku
-		               		$('.post-comments').html(data.numOfComments);
+		               		$('#post-comments span').html(data.numOfComments);
 		               		// aktualizujeme priemerny pocet komentarov uzivatela
 		               		$('#avg-comments').text(data.avg_comments);
 
@@ -155,13 +155,15 @@ $(document).ready(function() {
 		               		// profilova foto autora komentaru
 		               		$newComment.find('img').first().attr('src', data.profile_photo);
 							// handler pre click event na edit button komentaru
-		               		$newComment.find('button.show-edit-comment-btn').on('click', editCommentHandler);
+		               		$newComment.find('.show-edit-comment-btn').on('click', editCommentHandler);
 		               		// handler pre click event na lajknutie komentaru
-		               		$newComment.find('span.like-comment-btn').on('click', likeComment);
+		               		$newComment.find('.like-comment-btn').on('click', likeComment);
 		               		// meno autora komentaru
-		               		$newComment.find('p.user-name').append(data.user.name);
+		               		$newComment.find('.user-name').append(data.user.name);
+		               		// datum vytvorenia komentaru
+		               		$newComment.find('.comment-date').append(data.comment.created_at);
 		               		// telo komentaru
-		               		$newComment.find('p.commentBody').append(data.comment.body);
+		               		$newComment.find('.commentBody').append(data.comment.body);
 
 		               		$('#allComments').prepend($newComment);
 
@@ -176,7 +178,7 @@ $(document).ready(function() {
 	        // handler pre click event na button 'Editovat komentar'
 	        function editCommentHandler() {
 	        	// wraper pre kazdy jeden komentar -> rodicovsky div element buttona, na ktory klikame
-	        	var $parentDiv = $(this).parent(),
+	        	var $parentDiv = $(this).parent().parent(),
 	        		// potomok div elementu, ktory obsahuje telo komentara
 	        		$commentBody = $parentDiv.find('p.commentBody'),
 	        		// skryty formular pre editaciu komentaru, ktory obsahuje kazdy komentar
@@ -232,7 +234,7 @@ $(document).ready(function() {
 	        $('.show-edit-comment-btn').on('click', editCommentHandler);
 
 	        // handler pre click event na lajknutie komentaru
-		    $('span.like-comment-btn').on('click', likeComment);
+		    $('.like-comment-btn').on('click', likeComment);
 
 	        // tooltip - zobrazuje, ktorym uzivatelom sa paci dany clanok
 	        $('.tooltip-likes').tooltip({html: true});
