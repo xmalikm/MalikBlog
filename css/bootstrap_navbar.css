@@ -1,0 +1,186 @@
+/*--------- Navbar menu ---------*/
+.navbar-inverse {
+	background-color: #202020;
+	border-color: #e72003;
+}
+.navbar-inverse .navbar-brand {
+	font-size: 13px;
+	color: #ffffff;
+}
+.navbar-brand img {
+	display: inline-block;
+}
+.navbar-inverse .navbar-brand:hover,
+.navbar-inverse .navbar-brand:focus {
+	color: #ffffff;
+}
+.navbar-inverse .navbar-text {
+	color: #ffffff;
+}
+.navbar-inverse .navbar-nav > li > a {
+	font-size: 13px;
+	color: #ffffff;
+}
+.navbar-inverse .navbar-nav > li > a:hover,
+.navbar-inverse .navbar-nav > li > a:focus {
+	color: #ffffff;
+}
+.navbar-inverse .navbar-nav > li > .dropdown-menu {
+	background-color: #202020;
+}
+.navbar-inverse .navbar-nav > li > .dropdown-menu > li > a {
+	color: #ffffff;
+}
+.navbar-inverse .navbar-nav > li > .dropdown-menu > li > a:hover,
+.navbar-inverse .navbar-nav > li > .dropdown-menu > li > a:focus {
+	color: #ffffff;
+	background-color: #e72003;
+}
+.navbar-inverse .navbar-nav > li > .dropdown-menu > li > .divider {
+	background-color: #e72003;
+}
+.navbar-inverse .navbar-nav .open .dropdown-menu > .active > a,
+.navbar-inverse .navbar-nav .open .dropdown-menu > .active > a:hover,
+.navbar-inverse .navbar-nav .open .dropdown-menu > .active > a:focus {
+	color: #ffffff;
+	background-color: #e72003;
+}
+.navbar-inverse .navbar-nav > .active > a,
+.navbar-inverse .navbar-nav > .active > a:hover,
+.navbar-inverse .navbar-nav > .active > a:focus {
+	color: #ffffff;
+	background-color: #e72003;
+}
+.navbar-inverse .navbar-nav > .open > a,
+.navbar-inverse .navbar-nav > .open > a:hover,
+.navbar-inverse .navbar-nav > .open > a:focus {
+	color: #ffffff;
+	background-color: #e72003;
+}
+.navbar-inverse .navbar-toggle {
+	border-color: #e72003;
+}
+.navbar-inverse .navbar-toggle:hover,
+.navbar-inverse .navbar-toggle:focus {
+	background-color: #e72003;
+}
+.navbar-inverse .navbar-toggle .icon-bar {
+	background-color: #ffffff;
+}
+.navbar-inverse .navbar-collapse,
+.navbar-inverse .navbar-form {
+	border-color: #ffffff;
+}
+.navbar-inverse .navbar-link {
+	color: #ffffff;
+}
+.navbar-inverse .navbar-link:hover {
+	color: #ffffff;
+}
+/* searchbar v navbare */
+.form-search {
+	margin: 5px 0 0 0;
+	padding-left: 10px;
+}
+.form-search .form-control {
+	padding: 4px 0 !important;
+}
+/*dropdown menu searchbaru*/
+.selectize-dropdown.single.form-control {
+	width: 100% !important;
+}
+/*obsah dropdown menu searchbaru*/
+.search-result {
+	border-bottom: 2px solid #dcdcdc;
+}
+/*nadpis clanku v search dropdown liste*/
+.search-result a {
+	font-weight: 400;
+	letter-spacing: 1px;
+	word-wrap: break-word;
+}
+/*obrazok clanku v search dropdown liste*/
+.search-result img {
+	width: 55px;
+	height: 55px;
+	float: left;
+	padding-right: 5px;
+}
+/*animacia nacitavania pri vyhladavani*/
+.selectize-control::before {
+    -moz-transition: opacity 0.2s;
+    -webkit-transition: opacity 0.2s;
+    transition: opacity 0.2s;
+    content: ' ';
+    z-index: 2;
+    position: absolute;
+    display: block;
+    top: 17px;
+    right: 45px;
+    width: 16px;
+    height: 16px;
+    background: url(../images/loader.gif);
+    background-size: 17px 17px;
+    opacity: 0;
+}
+.selectize-control.loading::before {
+    opacity: 1;
+}
+/*custom vlastnosti pre navbar*/
+.navbar-blog {
+	position: relative;
+	z-index: 150;
+	margin-bottom: -55px;
+	box-shadow: 0 2px 3px rgba(0,0,0, .4);
+	background-color: #202020;
+	border-color: #202020;
+	border-radius: 0 !important;
+	letter-spacing: 2px;
+	/*transition: all 0.5s ease;*/
+}
+
+/*.navbar-blog:after {
+	display:block;
+	content: '';
+	border-bottom: solid 3px red;  
+	transform: scaleX(0);  
+	transition: transform 250ms ease-in-out;
+}*/
+
+/*navbar pri scrollovani*/
+.navbar-scrolled {
+	position: fixed;
+	top: 0;
+	width: 100%;
+	border-color: black;
+}
+/*ikony v navbare*/
+.navbar-icon {
+	margin-right: 5px;
+}
+/*niektore ikony v menu budu okruhle*/
+.img-round {
+	border-radius: 0;
+}
+
+@media only screen and (min-width: 768px) {
+	/*-------- navbar menu --------*/
+	.navbar-default .navbar-nav .open .dropdown-menu > li > a {
+		color: #ffffff;
+	}
+	.navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
+	.navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+		color: #ffffff;
+	}
+	.navbar-default .navbar-nav .open .dropdown-menu > .active > a,
+	.navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
+	.navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+		color: #ffffff;
+		background-color: #e72003;
+	}
+	/*dropdown menu serachbaru*/
+	.selectize-dropdown.single.form-control {
+		width: 400px !important;
+		/*position: initial;*/
+	}
+}

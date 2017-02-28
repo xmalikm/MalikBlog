@@ -1,0 +1,60 @@
+/*CSS-ko pre registracny a prihlasovaci formular*/
+.form {
+    margin: 50px 15px;
+}
+/*header pre prihlasovaci/registracny formular*/
+.form-header {
+	position: absolute;
+	top: 0;
+	left: 0;
+    width: 100%;
+    height: 60px;
+    background-color: #eb172c;
+}
+/*kontajner pre vycentrovanie formularu*/
+.form-center {
+    position: relative;
+    margin-top: 30px;
+    margin: 0 auto;
+    max-width: 600px;
+    padding: 70px 40px 20px;
+    background: #FFF;
+    color: #000;
+    text-shadow: none;
+    -webkit-box-shadow: 4px 4px 20px 0px rgba(0,0,0,0.51);
+    -moz-box-shadow: 4px 4px 20px 0px rgba(0,0,0,0.51);
+    box-shadow: 4px 4px 20px 0px rgba(0,0,0,0.51);
+}
+/*farba linkov*/
+.form-center a {
+    color: #000;
+}
+/*----------- jednotlive casti formularu -----------*/
+.form-center .form-group {
+    margin-bottom: 15px;
+}
+.form-center .form-group .form-control {
+    height: auto!important;
+    padding: 8px 12px !important;
+}
+/*inputy formularu*/
+.form-group .input-group {
+    -webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.21)!important;
+    -moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.21)!important;
+    box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.21)!important;
+}
+/*addony do inputov*/
+.form-group span.input-group-addon i {
+    color: #eb172c;
+    font-size: 20px;
+}
+/*------------- error spravy -------------*/
+.form-center .help-block {
+    color: #eb172c;
+}
+.form-center .has-error .help-block {
+    color: #eb172c;
+}
+.form-center .has-error .control-label {
+    color: #eb172c;
+}

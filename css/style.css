@@ -1,0 +1,992 @@
+/*fonty*/
+@import url('https://fonts.googleapis.com/css?family=Montserrat:500');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300');
+@import url('https://fonts.googleapis.com/css?family=Poppins');
+
+/*GLOBALNE NASTAVENIA ELEMENTOV*/
+
+/*zakladne vlastnosti pre telo dokumentu*/
+html, body {
+	background-color: #f0f0f0;
+	font-size: 1em;
+	font-family: Arial, Times, serif;
+}
+/*koli fixnutemu headeru*/
+body {
+	padding-top: 230px;
+}
+* {
+    box-sizing: border-box;
+}
+/*default pre zoznamy*/
+ul {
+	list-style-type: none;
+	padding: 0;
+}
+/*border radius buttonov*/
+.btn {
+	border-radius: 0;
+}
+/*font style pre elementy*/
+.navbar-blog,
+.highlight-post-content h3,
+.title,
+.post-title a,
+.footer-title,
+#not-found-title {
+	font-family: 'Montserrat', sans-serif;
+}
+/*biela farba pisma*/
+.highlight-post-content *,
+.highlight-post-content a,
+.my-posts-list thead,
+.container-footer footer,
+.newsletter-content,
+.post-info-wrapper a#post-category,
+.get-started-wrapper {
+	color: #FFF;
+}
+/*cierna farba pisma*/
+.title a,
+.post-title a,
+.users-comments a {
+	color: #000;
+	text-decoration: none;
+	transition: all .2s;
+}
+.title a:hover,
+.post-title a:hover {
+	color: #e72003;
+}
+/*hover na navigacne sipky a slider*/
+/*hovernutie lajk koment buttonu*/
+.slider,
+#prev:hover,
+#next:hover,
+.like-comment-btn:hover {
+	cursor: pointer;
+}
+/*ikony + statistiky k clanku + like button komentaru*/
+.navbar-icon,
+.sidebar-icon,
+.by-comment .like-comment-btn,
+.by-comment .comment-liked-btn,
+.post-sample-info .post-info img {
+	width: 20px;
+	height: 20px;
+	display: inline-block;
+}
+/*avatar autora clanku - taky ako comment avatar*/
+.author-avatar,
+/*nahladova fotka clanku*/
+.my-posts-list tbody img,
+/*foto autora komentaru*/
+.comment img.comment-photo {
+	width: 45px;
+	height: 45px;
+}
+/*clearovanie po floatovani divu v zozname*/
+.clear-content::after {
+	content: '';
+	display: block;
+	clear: both;
+}
+/*vyznacenie textu*/
+.text-highlighter {
+	color: #e72003;
+}
+
+/*----------------- breadcrumbs -----------------*/
+ol.breadcrumb {
+	margin-bottom: 0;
+}
+
+/*---------heading stranky---------*/
+header {
+	padding: 0;
+}
+/*kontajner pre header*/
+header .container-header {
+	background-image: url('/../blog/images/bg.jpg');
+	background-size: 100% 100%;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	height: 230px;
+	line-height: 80px;
+}
+/*social media + vyhladavanie*/
+.social-media {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+/*ikony socialnych medii*/
+.social-media img.icon{
+	border-radius: 50%;
+    box-shadow: 1px 1px 5px black;
+	width: 35px;
+	display: inline-block;
+	margin:0 5px;
+}
+/*obrazok loga blogu*/
+.logo .blog-logo {
+	max-width: 100%;
+}
+
+/*------------- slider clankov -------------*/
+/*kontajner pre slider clankov*/
+.post-slider-container {
+	height: 350px;
+	position: relative;
+	padding: 0;
+	margin-top: 60px;
+}
+/*samotny slider*/
+.slider {
+	height: 100%;
+	overflow: hidden;
+	margin-top: -5px;
+}
+/*kontajnery pre clanky v slidery + obrazok -
+link v post slidery*/
+.highlight-post,
+.highlight-post-image {
+	position: relative;
+	height: 350px;
+}
+/*obrazok - link v post slidery*/
+.highlight-post-image {
+    display: block;
+    background-size: 100% 100%;
+}
+/*obrazok - link v post slidery*/
+.highlight-post-image::after {
+	content: no-close-quote;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 152px;
+    background: url(../images/image_shadow.png) repeat-x;
+    opacity: .9;
+}
+/*tmavsia vrstva, ktora sa zobrazi by hoverovani obrazku v slidery*/
+/*je inicializovana na opacity:0*/
+.image-overlay {
+	position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(40, 35, 40, 0.5);
+    background: rgba(0,0,0,.5);
+    -moz-transition: all 1s;
+    -webkit-transition: all 1s;
+    transition: all 1s;
+}
+/*pri hovernuti obrazku sa zmeni opacity overlay vrstvy na 1*/
+.highlight-post-image:hover .image-overlay {
+	opacity: 1;
+}
+/*obsah postu v slidery*/
+.highlight-post-content {
+	position: absolute;
+	z-index: 2;
+	bottom: 0;
+	width: 96%;
+	padding: 15px;
+	text-align: center;
+}
+/*nadpis clanku*/
+.highlight-post-content h3 {
+	margin: 5px 0;
+	text-shadow: 1px 1px 27px #5a4a4a;
+}
+/*datum vydania clanku*/
+.post-date {
+	margin: 0 5px;
+}
+/*navigacne sipky v slidery*/
+#prev, #next {
+	width: 38px;
+    position: absolute;
+    top: 0;
+    z-index: 3;
+    visibility: hidden;
+  	background-color: rgba(0, 0, 0, 0.65);
+}
+#next {
+	right: 0;
+}
+
+/*----------- kontajner pre hlavny obsah + sidebar -----------*/
+.container-body {
+	margin-top: 20px;
+	background-color: white;
+	position: relative;
+	padding: 60px 7px;
+	z-index: 149;
+	box-shadow: 0px 3px 10px -1px #a0a0a0;
+}
+/*wrapper pre telo dokumentu*/
+.body-wrapper {
+	padding: 0;
+	position: relative;
+	background-color: #f0f0f0;
+	z-index: 149;
+}
+
+/*----------------- main content wrapper -----------------*/
+
+/*-------- clanky z vybratej kategorie --------*/
+.posts-by {
+	margin-bottom: 20px;
+}
+/*nadpis pre rozne sekcie - nema ziadny margin zhora*/
+.title{
+	text-align: center;
+	position: relative;
+	margin: 0 0 5px 0;
+}
+
+
+/*vyznacovac nadpisu*/
+.title-marker {
+	position: relative;
+	margin-bottom: 10px;
+	padding-bottom: 5px;
+}
+/*pridava spodny border nadpisu*/
+.title-marker::after {
+	content: "";
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    height: 4px;
+    background: #e72003;
+}
+
+/*----------- dalsie clanky z kategorie -----------*/
+
+/*dalsie clanky z danej kategorie - maly nahlad*/
+/*prvy clanok zo zoznamu - maly nahlad*/
+.post-sample-small-list,
+.post-sample-small-list ul li:not(:first-child),
+.users-list ul li:not(:first-child) {
+	margin-top: 10px;
+}
+/*ukazka clanku - mensi nahlad*/
+.post-sample-small-list ul li:not(:last-child),
+/*spolocne!!!!!!!!!!!!*/
+.users-list ul li:not(:last-child)
+ {
+	border-bottom: 1px solid #d2d2d2;
+    padding-bottom: 10px;
+}
+/*zobrazenie nahladov clankov z kategorie od druheho v poradi*/
+.post-sample-small .post-thumbnail {
+	float: left;
+}
+/*fotka nahladu clanku z kategorie*/
+.post-sample-small .post-thumbnail img {
+	width: 90px;
+	height: 70px;
+}
+/*zobrazenie nahladov clankov z kategorie od druheho v poradi*/
+.post-sample-small .post-content {
+	display: table;
+	padding-left: 15px;
+}
+/*doplnkove informacie k ukazkam clankov*/
+.post-content small *,
+.highlight-post-content small * {
+	color: #a7a7a7;
+}
+
+/*----------------- clanky podla urciteho kriteria -----------------*/
+/*zoznam takychto clankov*/
+.post-sample-list {
+	margin-bottom: 30px;
+}
+.post-sample-wrapper > div:first-child,
+.post-sample-wrapper-row  {
+	padding: 0;
+}
+/*wrapper pre clanky podla kriteria*/
+.post-sample-wrapper:not(:last-child),
+/*spolocne s user listom*/
+.user-sample-wrapper:not(:last-child),
+.post-sample-wrapper-row:not(:last-child)
+ {
+	margin-bottom: 30px;
+	border-bottom: 1px solid #d2d2d2;
+    padding-bottom: 10px;
+}
+/*wrapper pre velke nahlady clankov - fotka clanku*/
+.post-sample-wrapper .post-thumbnail img,
+/*spolocne s user listom*/
+.user-sample-wrapper .post-thumbnail img,
+.post-sample-wrapper-row .post-thumbnail img {
+	margin: 0 auto;
+}
+/*wrapper pre informacie v ukazke clanku*/
+.post-sample-info {
+	text-align: center;
+}
+/*wrapper pre informacie v ukazke clanku*/
+/*nadpis clanku*/
+/*button kategoria postu pri ukazke clanku*/
+.post-sample-info a.post-category,
+.post-sample-info .post-title,
+.post-sample-info .read-more {
+	margin: 5px 0 0 0;
+}
+/*text ukazky clanku*/
+.post-sample-info .post-sample-text {
+	color: rgb(115, 115, 115);
+	font-family: 'Poppins', sans-serif;
+	text-align: justify;
+	margin: 5px 0 0 0;
+}
+/*wrapper pre informacie v ukazke clanku*/
+/*dodatocne info k clanku*/
+.post-sample-info .post-info:not(:first-child) {
+	margin-left: 10px;
+}
+
+/*----------------- sidebar -----------------*/
+/*zakazany overflow*/
+.sidebar-wrapper {
+	overflow: hidden;
+}
+.sidebar-wrapper > section {
+	margin-bottom: 20px;
+}
+/*sidebar ikona*/
+.sidebar-icon {
+	margin-left: 5px;
+}
+
+/*-------- zoznam kategorii --------*/
+/*jednotlive itemy zoznamu*/
+.categories-list ul li {
+	margin-top: 5px;
+}
+/*nazvy kategorii*/
+.categories-list ul a {
+	color: #6b7776;
+}
+
+/*------ komentare uzivatelov ------*/
+/*priestor medzi komentarmi*/
+.users-comments ul li:not(:first-child){
+	margin-top: 10px;
+}
+/*avatar autora komentaru*/
+.user-avatar {	
+	float: left;
+	width: 50px;
+	height: 50px;
+	margin-right: 10px;
+}
+/*meno autora + telo komentaru*/
+.users-comments a {
+	display: block
+}
+/*meno autora*/
+.autor-name {
+	font-weight: 700;
+}
+/*telo komentaru*/
+.comment-content {
+	font-style: italic;
+}
+.comment-content::before,
+.comment-content::after {
+	content: '"';
+}
+
+/*-------- tagy clankov --------*/
+/*butonny s tagmi*/
+.posts-tags .tags-list a {
+	margin: 5px;
+	font-weight: 800;
+}
+.posts-tags .tags-list .num-of-posts {
+	margin-left: 5px;
+}
+
+/*--------- kategorie ---------*/
+.categories {
+	display: none;
+}
+/*kategorie - mobilna verzia*/
+.categories-mobile button{
+	width: 100%;
+}
+
+/*----------- sort buttony -----------*/
+/*wrapper pre sort buttony*/
+.sort-wrapper {
+	text-align: center;
+	margin: 20px 0;
+}
+/*sort buttony*/
+.sort {
+	display: inline-block;
+}
+
+/*------------uzivatelia------------*/
+/*input na sortovanie uzivatelov*/
+#sort-users .form-group div {
+	padding: 0;
+	margin-top: 5px;
+}
+/*boxy s uzivateskymi statistikami*/
+.user-info-box {
+	padding-left: 10px;
+	padding-right: 10px;
+	font-size: 0.85em;
+}
+
+/*------------vytvorenie + editacia clanku------------*/
+/*input pre file*/
+.file-input-wrapper {
+	padding: 0;
+	display: block;
+}
+/*label file inputu*/
+.file-input-wrapper .photo-label {
+	display: block;
+}
+/*ukazka fotky clanku*/
+.file-input-wrapper .photo {
+	width: 100%;
+	margin: 0 auto;
+	margin-bottom: 15px;
+}
+/*samotny input*/
+.file-input-wrapper input[type='file'] {
+	margin-bottom: 10px;
+}
+
+/*----------- profil prihlaseneho uzivatela ----------*/
+/*profilova fotka*/
+#profile_photo {
+	margin: 0 auto;
+}
+/*wrapper pre informacie o uzivatelovi*/
+.profile-bio-wrapper {
+	text-align: center;
+}
+/*meno*/
+.profile-bio-wrapper #user_name{
+	margin-top: 10px;
+}
+/*email*/
+.profile-bio-wrapper #user_email {
+	word-wrap: break-word;
+}
+/*buttony pre editaciu profilu*/
+.profile-buttons {
+	margin-bottom: 10px;
+}
+.profile-buttons a{
+	display: block;
+	width: 100%;
+	margin-bottom: 5px;
+}
+/*vymazanie profilu*/
+#delete_profile input[type='submit']{
+	display: block;
+	width: 100%;
+	margin-bottom: 5px;
+}
+/*statistiky*/
+.divider {
+	border-top:1px solid rgba(0,0,0,0.1);
+}
+.emphasis {
+    border-top: 4px solid transparent;
+}
+.emphasis:hover {
+    border-top: 4px solid #e72003;
+}
+.emphasis h2{
+    margin-bottom:0;
+}
+
+/*---------zoznam uzivatelovych clankov---------*/
+.my-posts-list {
+    box-shadow: 0px 0px 12px 0px grey;
+}
+/*zahlavie tabulky*/
+.my-posts-list thead {
+	background-color: #e72003;
+}
+/*stlpce v zahlavi*/
+.my-posts-list thead th,
+.my-posts-list tbody tr td {
+	text-align: center;
+}
+/*animacia nacitavania*/
+#ajax_loader3 {
+	display: none;
+	margin-bottom: 10px;
+}
+
+/*-----------footer-----------*/
+.container-footer{
+	margin-top: 30px;
+}
+/*cast footeru s obsahom*/
+.footer-content {
+        box-shadow: 0px 12px 32px 0px #4a4a4a;
+    z-index: 1;
+    position: relative;
+}
+/*o autorovi*/
+/*foto*/
+.footer-content .about .about-image {
+	width: 60%;
+}
+/*text*/
+.footer-content .about .about-text {
+	margin-top: 10px;
+	text-align: justify;
+}
+/*kontakt*/
+.footer-content .contact,
+.footer-content .newsletter {
+	text-align: center;
+}
+/*obsah newslettera*/
+.newsletter-content {
+	background-color: #202020;
+    padding: 9px;
+}
+/*druha cast footeru*/
+.copyright {
+	background-color: #9c9c9c;
+	padding: 10px;
+	color: #000;
+}
+
+/*----------info k clanku - stranka clanku----------*/
+.post-info-wrapper a,
+.post-info-wrapper span{
+	color: grey;
+}
+/*wrapper pre info o clanku*/
+.post-info-wrapper {
+	text-align: center;
+}
+/*kategoria clanku*/
+.post-info-wrapper a#post-category {
+	display: block;
+	margin-top: 10px;
+}
+/*spany, v ktorych su informacie o clanku*/
+.post-info-wrapper span {
+	white-space: nowrap;
+}
+/*odsadenie od druheho spanu - info wrapper*/
+.post-info-wrapper span:not(:first-child) {
+	margin-left: 10px;
+}
+/*fotka clanku*/
+img.post-image {
+	width: 100%;
+	margin: 10px 0;
+}
+/*uzivatelia, ktorym sa paci clanok*/
+.post-likes-list {
+	margin: 10px;
+	text-align: center;
+}
+/*text clanku*/
+.post-text {
+	text-align: justify;
+}
+/*veci pod clankom - zdielanie na soc. sietach,*/
+/*uprava clanku,...*/
+.by-post {
+	margin-top: 20px;
+}
+.by-post a{
+	display: block;
+	margin: 5px 20px;
+}
+/*button - "clanok sa mi paci" */
+.like-post {
+	text-align: center;
+}
+/*-----------cast pre komentare-----------*/
+.comments-wrapper {
+	border-bottom: 2px solid grey;
+	margin-bottom: 20px;
+	padding-bottom: 20px;
+}
+/*animacia nacitavania*/
+.edit-ajax-loader,
+#ajax_loader2 {
+	margin-right: 5px;
+	margin-top: -2px;
+	display: none;
+}
+/*formular pre pridanie komentaru*/
+#comment-form {
+	margin-top: 20px;
+}
+/*error sprava*/
+span.comment-error-msg {
+	color: red;
+	font-weight: 600;
+}
+/*formular pre prihlasenie sa*/
+#comment-login {
+	text-align: center;
+}
+/*samotny komentar*/
+.comment img.comment-photo {
+	float: left;
+	margin-right: 18px;
+}
+/*datum*/
+.comment .comment-date {
+	color: grey;
+}
+/*telo*/
+.comment .commentBody {
+	background-color: #f3f3f3;
+	margin-left: 68px;
+}
+/*button na lajknutie komentaru*/
+.by-comment .like-comment-btn,
+.by-comment .comment-liked-btn {
+	margin-top: -10px;
+}
+/*like button komentaru*/
+.by-comment .comment-liked-btn {
+	color: green;
+}
+/*eidtacia komentaru*/
+.edit-comment-form {
+	display: none;
+	margin-top: 60px;
+}
+
+/*----------------- zoznam uzivatelov s najviac clankami -----------------*/
+/*fotky uzivatelov*/
+.active-bloggers .author-avatar {
+	width: 60px;
+	height: 60px;
+	border: 1px solid grey;
+}
+/*pocet clankov*/
+.active-bloggers .num-of-articles {
+	margin-left: 10px;
+}
+.active-bloggers ul li {
+	margin-bottom: 10px;
+}
+
+/*----------------- sidebar - o autorovi -----------------*/
+.posts-author .author-panel {
+	border-color: #cecece;
+}
+.author-panel .author-panel-heading h3 a{
+	color: #000;
+}
+/*--------- welly s uzivatelovymi statistikami ---------*/
+.author-panel .well {
+	border-radius: 0;
+	box-shadow: 1px 1px 7px #8a8a8a;
+}
+
+/*----------------- "chcem pisat blog" stranka -----------------*/
+/*wrapper pre background image s textom*/
+.get-blog-wrapper {
+	position: relative;
+	margin-bottom: 50px;
+}
+/*background image*/
+.background-image {
+	width: 100%;
+    height: 438px;
+    filter: brightness(50%);
+}
+/*wrapper pre text v background imagei*/
+.get-started-wrapper {
+	position: absolute;
+	bottom: 10%;
+	left: 0;
+	width: 100%;
+	padding: 0 15px;
+	text-align: center;
+}
+/*text v login wrapper*/
+.get-started-wrapper p {
+	width: 100%;
+	margin: 20px 0;
+	color: #e4e4e4;
+	font-size: 17px;
+	font-family: 'Open Sans', sans-serif;
+	line-height: 27px;
+}
+.register-text {
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 200;
+}
+.register-button {
+	line-height: 95px;
+}
+
+.moj {
+/*	border-color: #e72003;
+	background-color: transparent;
+	color: #e72003;
+	transition: all 0.5s ease;*/
+}
+.moj:hover {
+/*	background-color: #e72003;
+	color: #FFF;
+	border-color: #FFF;*/
+}
+
+/*----------------- media queries -----------------*/
+
+@media only screen and (min-width: 768px) {
+	/*pri desktopovom zobrazeni zvacsime padding po stranach*/
+	.container-body {
+		padding: 60px 15px;
+	}
+	
+	/*----------------- clanky podla kriteria -----------------*/
+
+	/*wrapper pre velke nahlady clankov - fotka clanku*/
+	.post-sample-wrapper .post-thumbnail img,
+	/*spolocle s user listom*/
+	.user-sample-wrapper .post-thumbnail img {
+		height: 200px;
+	}
+	/*wrapper pre informacie k clanku v nahlade*/
+	.post-sample-info {
+		text-align: left;
+	}
+	/*wrapper pre informacie v ukazke clanku*/
+	/*button kategoria postu pri ukazke clanku*/
+	.post-sample-info a.post-category {
+		margin-top: 0;
+	}
+	/*padding pre vodorovne ukazky clankov*/
+	.post-sample-wrapper-row  {
+		padding-right: 15px;
+	}
+	/*velkost obrazkov v "mohlo by vas zaujimat"*/
+	.post-sample-wrapper-row .post-thumbnail img {
+		width: 100%;
+		max-height: 185px;
+	}
+
+	/*----------------- sidebar -----------------*/
+	/*nadpisy pre rozne sekcie*/
+	.title {
+		text-align: left;
+	}
+	/*----------------- kategorie -----------------*/
+	.categories {
+		display: inline-block;
+	}
+	.categories-mobile {
+		display: none;
+	}
+
+	/*----profil aktualne prihlaseneho uzivatela---*/
+	.profile-info-wrapper {
+		margin-bottom: 10px;
+	}
+	/*profilova fotka*/
+	#profile_photo {
+		width: 100%;
+		height: 300px;
+	}
+	/*wrapper pre informacie o uzivatelovi*/
+	.profile-bio-wrapper {
+		text-align: left;
+	}
+	/*meno*/
+	.profile-bio-wrapper #user_name{
+		margin-top: 0;
+	}
+	/*buttony pre editaciu profilu*/
+	.profile-buttons a {
+		display: inline-block;
+		width: auto;
+	}
+	/*vymazanie profilu*/
+	#delete_profile {
+		display: inline-block;
+	}
+	#delete_profile input[type='submit'] {
+		display: inline-block;
+		width: auto;
+	}
+
+	/*------------vytvorenie + editacia clanku------------*/
+    /*ukazka fotky clanku*/
+	.file-input-wrapper .photo {
+		margin: 0;
+		margin-bottom: 15px;
+	}
+
+	/*----------tabulka - zoznam uzivatelovych clankov----------*/
+	/*nahladova fotka clanku*/
+	.my-posts-list tbody img {
+		width: 70px;
+		height: 65px;
+	}
+	/*buttony na upravu/vymazavanie clankov*/
+	.my-posts-list tbody a{
+		display: block;
+		width: 100%;
+	}
+	.my-posts-list tbody a:not(:first-child) {
+		margin-top: 5px;
+	}
+	/*nadpis clanku*/
+	.my-posts-list .post-title {
+		white-space: nowrap;
+	}
+
+	/*------------------ clanok ------------------*/
+	/*wrapper pre info k clanku*/
+	.post-info-wrapper {
+		text-align: left;
+	}
+	/*kategoria clanku*/
+	.post-info-wrapper a#post-category {
+		display: inline-block;
+		float: right;
+		margin: 0;
+	}
+	/*zoznam uzivatelov, ktorym sa paci clanok*/
+	.post-likes-list {
+		margin: 10px;
+		text-align: left;
+	}
+	/*button - "clanok sa mi paci" */
+	.like-post {
+		text-align: left;
+	}
+	/*veci pod clankom - zdielanie na soc. sietach,*/
+	/*uprava clanku,...*/
+	.by-post {
+		margin-top: 20px;
+	}
+	.by-post a{
+		display: inline;
+		margin: 0;
+	}
+	/*------------koment system------------*/
+	.comment img.comment-photo {
+		width: 70px;
+		height: 70px;
+	}
+
+	/*---------- "chcem pisat blog" stranka ---------*/
+	.get-started-wrapper {
+	    left: 7%;
+	    text-align: left;
+	}
+	/*odstaver textu vo wrappery*/
+	.get-started-wrapper p {
+	    width: 290px;
+	}
+
+}
+
+@media only screen and (min-width: 992px) {
+	/*----------------- header -----------------*/
+	/*vyska headeru*/
+	header div.row{
+		line-height: 15em;
+	}
+	/*vycentrovanie vyhladavacieho formularu*/
+	header .search-input {
+		margin-top: 110px;
+		line-height: 1em;
+	}
+	
+	/*----------- dalsie clanky z kategorie -----------*/
+	/*dalsie clanky z danej kategorie*/
+	.post-sample-small-list {
+		margin-top: 0;
+	}
+	/*aby bol prvy clanok a ostatne clanky z
+	kategorie zarovnane*/
+	.post-sample-small-list ul li:not(:last-child),
+	.users-list ul li:not(:last-child) {
+		margin-bottom: 23px;
+	}
+	/*velkost obrazkov v "mohlo by vas zaujimat"*/
+	.post-sample-wrapper-row .post-thumbnail img {
+		width: 100%;
+		height: 120px;
+	}
+	/*----------"mohlo by vas zaujimat" clanky----------*/
+	#recent-posts {
+		padding-top: 20px;
+	}
+	/*----------tabulka - zoznam uzivatelovych clankov----------*/
+	.my-posts-list {
+		margin: 0 50px 20px 50px;
+	    box-shadow: 0px 0px 12px 0px grey;
+	}
+	/*nadpis clanku v tabulke*/
+	.my-posts-list .post-title {
+		white-space: nowrap;
+	}
+	/*loader pri vymazani clanku*/
+	#ajax_loader3 {
+		display: none;
+		margin: 10px 50px;
+	}
+	/*sprava po vymazani clanku*/
+	#post_deleted {
+		margin-left: 50px;
+		margin-right: 50px;
+	}
+
+}
+
+@media only screen and (min-width: 1200px) {
+	/*vyska headeru*/
+	header div.row{
+		line-height: 13em;
+	}
+	/*vycentrovanie vyhladavacieho formularu*/
+	header .search-input {
+		margin-top: 86.5px;
+		line-height: 1em;
+	}
+
+	/*-------- uzivatelia --------*/
+	/*zoznam uzivatelov - druhy input*/
+	#sort-users #sort-from {
+		margin-left: 10px;
+	}
+	/*zoznam uzivatelov - submit button*/
+	#sort-users button {
+		margin-left: 20px;
+	}
+
+	/*---------- tabulka - zoznam uzivatelovych clankov ----------*/
+	/*nadpis clanku v tabulke*/
+	.my-posts-list .post-title{
+		white-space: normal;
+	}
+
+}
